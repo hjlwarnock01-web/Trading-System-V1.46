@@ -464,6 +464,236 @@
         .section-header:focus {
             outline-color: rgba(255, 255, 255, 0.5);
         }
+
+        /* Trading Entry Widget */
+        .entry-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            background: var(--bg-primary);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .entry-widget.minimized {
+            width: 200px;
+        }
+
+        .entry-widget.minimized .entry-content {
+            display: none;
+        }
+
+        .entry-header {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .entry-header:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+        }
+
+        .minimize-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .minimize-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .entry-content {
+            padding: 20px;
+        }
+
+        .entry-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .entry-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            transition: width 0.3s ease;
+        }
+
+        .entry-step-info {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .entry-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .entry-btn {
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--bg-primary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .entry-btn:hover {
+            border-color: var(--accent-blue);
+            background: var(--bg-secondary);
+            transform: translateX(5px);
+        }
+
+        .entry-btn.selected {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+
+        .entry-btn-long {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .entry-btn-long:hover, .entry-btn-long.selected {
+            background: var(--accent-green);
+            color: white;
+            border-color: var(--accent-green);
+        }
+
+        .entry-btn-short {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .entry-btn-short:hover, .entry-btn-short.selected {
+            background: var(--accent-red);
+            color: white;
+            border-color: var(--accent-red);
+        }
+
+        .entry-checklist {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .entry-checklist-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .entry-checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+
+        .entry-checklist-item.completed {
+            color: var(--accent-green);
+        }
+
+        .entry-checklist-icon {
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .entry-condition-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+        }
+
+        .entry-condition-btn:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .entry-condition-btn.ready {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #047857 100%);
+            font-size: 1.1em;
+            padding: 18px;
+        }
+
+        .entry-condition-btn.ready:hover {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+        }
+
+        .entry-reset-btn {
+            padding: 10px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+        }
+
+        .entry-reset-btn:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .entry-condition-label {
+            font-size: 0.85em;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        @media print {
+            .entry-widget { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -849,6 +1079,26 @@
         </div>
     </div>
 
+    <!-- Trading Entry System Widget -->
+    <div class="entry-widget" id="entryWidget">
+        <div class="entry-header" onclick="toggleEntryWidget()">
+            <span>Entry System</span>
+            <button class="minimize-btn" onclick="event.stopPropagation(); toggleEntryWidget()">−</button>
+        </div>
+        <div class="entry-content">
+            <div class="entry-progress">
+                <div class="entry-progress-fill" id="entryProgress"></div>
+            </div>
+            <div class="entry-step-info" id="entryStepInfo">Step 1 of 8</div>
+            <div id="entryMainContent"></div>
+            <div class="entry-checklist" id="entryChecklist" style="display: none;">
+                <div class="entry-checklist-title">Completed Steps:</div>
+                <div id="entryChecklistItems"></div>
+            </div>
+            <button class="entry-reset-btn" onclick="resetEntrySystem()" style="margin-top: 15px;">Reset Entry System</button>
+        </div>
+    </div>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -1156,6 +1406,263 @@
                     toggleSection(e.target);
                 }
             }
+        });
+
+        // Trading Entry System
+        let entryState = {
+            currentStep: 0,
+            direction: null, // 'long' or 'short'
+            type: null, // 'type1' or 'type2'
+            conditions: [],
+            completedSteps: []
+        };
+
+        const entrySteps = [
+            {
+                name: 'Direction Selection',
+                description: 'Select trade direction',
+                render: () => `
+                    <div class="entry-buttons">
+                        <button class="entry-btn entry-btn-long" onclick="selectDirection('long')">
+                            LONG Entry
+                        </button>
+                        <button class="entry-btn entry-btn-short" onclick="selectDirection('short')">
+                            SHORT Entry
+                        </button>
+                    </div>
+                `
+            },
+            {
+                name: 'Type Selection',
+                description: 'Select entry type',
+                render: () => `
+                    <div class="entry-buttons">
+                        <button class="entry-btn" onclick="selectType('type1')">
+                            Type 1 Entry
+                        </button>
+                        <button class="entry-btn" onclick="selectType('type2')">
+                            Type 2 Entry
+                        </button>
+                    </div>
+                `
+            },
+            {
+                name: 'EMA Alignment',
+                description: 'Check EMA position',
+                render: () => {
+                    const condition = entryState.direction === 'long'
+                        ? (entryState.type === 'type1' ? 'EMA 3H > EMA 1D' : 'EMA 3H < EMA 1D')
+                        : (entryState.type === 'type1' ? 'EMA 3H < EMA 1D' : 'EMA 3H > EMA 1D');
+                    return `
+                        <div class="entry-condition-label">Verify: ${condition}</div>
+                        <button class="entry-condition-btn" onclick="confirmCondition('EMA Aligned')">
+                            Confirm EMA Alignment
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: '1H Zone',
+                description: 'Identify 1H zone',
+                render: () => {
+                    const zone = entryState.direction === 'long' ? 'Demand Zone' : 'Supply Zone';
+                    return `
+                        <div class="entry-condition-label">Confirm 1H ${zone} present</div>
+                        <button class="entry-condition-btn" onclick="confirmCondition('1H Zone Confirmed')">
+                            Confirm 1H Zone
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: '15m Zone',
+                description: 'Check 15m zone',
+                render: () => {
+                    const zone = entryState.direction === 'long' ? 'Demand' : 'Supply';
+                    const internal = entryState.type === 'type1' ? 'Internal ' : '';
+                    return `
+                        <div class="entry-condition-label">Verify 15m ${internal}${zone} Zone</div>
+                        <button class="entry-condition-btn" onclick="confirmCondition('15m Zone Confirmed')">
+                            Confirm 15m Zone
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: 'Price vs EMA 3H',
+                description: 'Check price position',
+                render: () => {
+                    const position = entryState.direction === 'long' ? 'below' : 'above';
+                    return `
+                        <div class="entry-condition-label">Confirm Price is ${position} EMA 3H</div>
+                        <button class="entry-condition-btn" onclick="confirmCondition('Price Position Confirmed')">
+                            Confirm Price Position
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: 'Liquidity Grab',
+                description: '15m liquidity grab',
+                render: () => {
+                    const direction = entryState.direction === 'long' ? 'low' : 'high';
+                    return `
+                        <div class="entry-condition-label">Wait for 15m Liquidity Grab from ${direction}</div>
+                        <button class="entry-condition-btn" onclick="confirmCondition('Liquidity Grab Confirmed')">
+                            Confirm Liquidity Grab
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: 'Final Confirmation',
+                description: 'Ready to execute',
+                render: () => {
+                    const direction = entryState.direction?.toUpperCase();
+                    const type = entryState.type === 'type1' ? 'Type 1' : 'Type 2';
+                    return `
+                        <div class="entry-condition-label">All conditions met for ${direction} ${type} entry</div>
+                        <button class="entry-condition-btn ready" onclick="finalizeEntry()">
+                            ✓ Ready to Enter Trade
+                        </button>
+                    `;
+                }
+            }
+        ];
+
+        function initEntrySystem() {
+            const saved = localStorage.getItem('entryState');
+            if (saved) {
+                entryState = JSON.parse(saved);
+            }
+            updateEntryDisplay();
+        }
+
+        function toggleEntryWidget() {
+            const widget = document.getElementById('entryWidget');
+            widget.classList.toggle('minimized');
+        }
+
+        function selectDirection(direction) {
+            entryState.direction = direction;
+            entryState.completedSteps.push(`Direction: ${direction.toUpperCase()}`);
+            nextStep();
+        }
+
+        function selectType(type) {
+            entryState.type = type;
+            const typeName = type === 'type1' ? 'Type 1' : 'Type 2';
+            entryState.completedSteps.push(`Entry Type: ${typeName}`);
+            nextStep();
+        }
+
+        function confirmCondition(conditionName) {
+            entryState.conditions.push(conditionName);
+            entryState.completedSteps.push(conditionName);
+            nextStep();
+        }
+
+        function nextStep() {
+            entryState.currentStep++;
+            saveEntryState();
+            updateEntryDisplay();
+        }
+
+        function finalizeEntry() {
+            const direction = entryState.direction?.toUpperCase();
+            const type = entryState.type === 'type1' ? 'Type 1' : 'Type 2';
+
+            showEntryNotification(`Entry Confirmed!
+
+Direction: ${direction}
+Type: ${type}
+Conditions Met: ${entryState.conditions.length}
+
+Good luck with your trade!`);
+
+            resetEntrySystem();
+        }
+
+        function showEntryNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 1.5rem 2rem;
+                border-radius: 12px;
+                z-index: 10001;
+                font-size: 0.95rem;
+                font-weight: 600;
+                box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+                white-space: pre-line;
+                text-align: center;
+                max-width: 400px;
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        function resetEntrySystem() {
+            entryState = {
+                currentStep: 0,
+                direction: null,
+                type: null,
+                conditions: [],
+                completedSteps: []
+            };
+            saveEntryState();
+            updateEntryDisplay();
+        }
+
+        function saveEntryState() {
+            localStorage.setItem('entryState', JSON.stringify(entryState));
+        }
+
+        function updateEntryDisplay() {
+            const totalSteps = entrySteps.length;
+            const currentStep = Math.min(entryState.currentStep, totalSteps - 1);
+            const progress = ((entryState.currentStep) / totalSteps) * 100;
+
+            // Update progress bar
+            document.getElementById('entryProgress').style.width = progress + '%';
+
+            // Update step info
+            document.getElementById('entryStepInfo').textContent =
+                `Step ${entryState.currentStep + 1} of ${totalSteps}`;
+
+            // Render current step content
+            const mainContent = document.getElementById('entryMainContent');
+            if (entryState.currentStep < totalSteps) {
+                mainContent.innerHTML = entrySteps[currentStep].render();
+            } else {
+                mainContent.innerHTML = '<div style="text-align: center; color: var(--accent-green); font-weight: 600;">Entry Complete!</div>';
+            }
+
+            // Update checklist
+            const checklist = document.getElementById('entryChecklist');
+            const checklistItems = document.getElementById('entryChecklistItems');
+
+            if (entryState.completedSteps.length > 0) {
+                checklist.style.display = 'block';
+                checklistItems.innerHTML = entryState.completedSteps.map(step => `
+                    <div class="entry-checklist-item completed">
+                        <span class="entry-checklist-icon">✓</span>
+                        <span>${step}</span>
+                    </div>
+                `).join('');
+            } else {
+                checklist.style.display = 'none';
+            }
+        }
+
+        // Initialize entry system on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initEntrySystem();
         });
     </script>
 </body>
