@@ -496,6 +496,98 @@
         }
         .plan-new-analysis-btn:active { transform: translateY(0); }
 
+        /* Risk Assessment Styles */
+        #risk-assessment-widget {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        #risk-assessment-widget h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .risk-factor {
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .risk-factor:last-of-type {
+            border-bottom: none;
+        }
+        .risk-factor-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .risk-factor-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .risk-btn {
+            flex: 1;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .risk-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+        .risk-btn.selected-yes {
+            background: linear-gradient(135deg, var(--accent-red) 0%, #991b1b 100%);
+            color: white;
+            border-color: var(--accent-red);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+        }
+        .risk-btn.selected-no {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #047857 100%);
+            color: white;
+            border-color: var(--accent-green);
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+        }
+        .risk-summary {
+            background: var(--bg-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .risk-summary-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        .risk-summary-line:last-child {
+            margin-bottom: 0;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .risk-value {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        .risk-deduction {
+            color: var(--accent-red);
+            font-weight: 700;
+        }
+
         /* Improvements & Tests Tracker Styles */
         #tests-tracker {
             background: var(--bg-secondary);
@@ -1033,6 +1125,45 @@
                             <div id="daily-plan-question"></div>
                             <div id="daily-plan-buttons"></div>
                             <div id="daily-plan-result" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Assessment Widget -->
+                    <div id="risk-assessment-widget">
+                        <h2>Risk Assessment:</h2>
+                        <div id="risk-assessment-content">
+                            <div class="risk-factor">
+                                <div class="risk-factor-label">M Zone hit, no CHoCH?</div>
+                                <div class="risk-factor-buttons">
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor1', 'yes')">Yes</button>
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor1', 'no')">No</button>
+                                </div>
+                            </div>
+                            <div class="risk-factor">
+                                <div class="risk-factor-label">Counter to EMA direction?</div>
+                                <div class="risk-factor-buttons">
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor2', 'yes')">Yes</button>
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor2', 'no')">No</button>
+                                </div>
+                            </div>
+                            <div class="risk-factor">
+                                <div class="risk-factor-label">Counter to 15m trend?</div>
+                                <div class="risk-factor-buttons">
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor3', 'yes')">Yes</button>
+                                    <button class="risk-btn" onclick="selectRiskFactor('factor3', 'no')">No</button>
+                                </div>
+                            </div>
+                            <div class="risk-summary" id="risk-summary">
+                                <div class="risk-summary-line">
+                                    <span>Base Risk:</span>
+                                    <span class="risk-value">1.00%</span>
+                                </div>
+                                <div id="risk-deductions"></div>
+                                <div class="risk-summary-line">
+                                    <span>Final Risk:</span>
+                                    <span class="risk-value" id="final-risk">1.00%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1838,6 +1969,7 @@
             initStage1();
             initStage2();
             initDailyPlan();
+            initRiskAssessment();
             initTestsTracker();
             console.log('Entry widgets initialized');
         });
@@ -2921,6 +3053,93 @@ Good luck with your trade!`);
 
         function saveDailyPlanState() {
             localStorage.setItem('dailyPlanState', JSON.stringify(dailyPlanState));
+        }
+
+        // Risk Assessment System
+        let riskAssessmentState = {
+            factor1: null, // M Zone hit, no CHoCH?
+            factor2: null, // Counter to EMA direction?
+            factor3: null  // Counter to 15m trend?
+        };
+
+        function initRiskAssessment() {
+            const saved = localStorage.getItem('riskAssessmentState');
+            if (saved) {
+                riskAssessmentState = JSON.parse(saved);
+            }
+            updateRiskDisplay();
+        }
+
+        function selectRiskFactor(factor, value) {
+            riskAssessmentState[factor] = value;
+            saveRiskAssessmentState();
+            updateRiskDisplay();
+        }
+
+        function updateRiskDisplay() {
+            const baseRisk = 1.00;
+            const minRisk = 0.25;
+            const deductionPerFactor = 0.25;
+
+            // Calculate deductions
+            let totalDeduction = 0;
+            const deductions = [];
+
+            if (riskAssessmentState.factor1 === 'yes') {
+                totalDeduction += deductionPerFactor;
+                deductions.push({ label: 'M Zone hit, no CHoCH', value: deductionPerFactor });
+            }
+            if (riskAssessmentState.factor2 === 'yes') {
+                totalDeduction += deductionPerFactor;
+                deductions.push({ label: 'Counter to EMA direction', value: deductionPerFactor });
+            }
+            if (riskAssessmentState.factor3 === 'yes') {
+                totalDeduction += deductionPerFactor;
+                deductions.push({ label: 'Counter to 15m trend', value: deductionPerFactor });
+            }
+
+            // Calculate final risk (minimum 0.25%)
+            const finalRisk = Math.max(baseRisk - totalDeduction, minRisk);
+
+            // Update button states
+            updateRiskButton('factor1', riskAssessmentState.factor1);
+            updateRiskButton('factor2', riskAssessmentState.factor2);
+            updateRiskButton('factor3', riskAssessmentState.factor3);
+
+            // Update deductions display
+            const deductionsDiv = document.getElementById('risk-deductions');
+            if (deductions.length > 0) {
+                deductionsDiv.innerHTML = deductions.map(d => `
+                    <div class="risk-summary-line">
+                        <span>${d.label}:</span>
+                        <span class="risk-deduction">-${d.value.toFixed(2)}%</span>
+                    </div>
+                `).join('');
+            } else {
+                deductionsDiv.innerHTML = '';
+            }
+
+            // Update final risk display
+            document.getElementById('final-risk').textContent = finalRisk.toFixed(2) + '%';
+        }
+
+        function updateRiskButton(factor, value) {
+            const factorDiv = document.querySelectorAll('.risk-factor')[
+                factor === 'factor1' ? 0 : factor === 'factor2' ? 1 : 2
+            ];
+            const buttons = factorDiv.querySelectorAll('.risk-btn');
+
+            buttons.forEach(btn => {
+                btn.classList.remove('selected-yes', 'selected-no');
+                const btnValue = btn.textContent.toLowerCase();
+                if (value === btnValue) {
+                    btn.classList.add(value === 'yes' ? 'selected-yes' : 'selected-no');
+                }
+            });
+        }
+
+        function saveRiskAssessmentState() {
+            localStorage.setItem('riskAssessmentState', JSON.stringify(riskAssessmentState));
         }
 
         // Improvements & Tests Tracker System
