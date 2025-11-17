@@ -524,6 +524,15 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
         }
+        .risk-factor-description {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0.8;
+        }
         .risk-factor-buttons {
             display: flex;
             gap: 0.5rem;
@@ -1131,7 +1140,8 @@
                                 </div>
                             </div>
                             <div class="risk-factor">
-                                <div class="risk-factor-label">Counter to EMA direction?</div>
+                                <div class="risk-factor-label">Counter to 1D EMA direction?</div>
+                                <div class="risk-factor-description">Lasts until EMA cross or price action reverts to original trend</div>
                                 <div class="risk-factor-buttons">
                                     <button class="risk-btn" onclick="selectRiskFactor('factor2', 'yes')">Yes</button>
                                     <button class="risk-btn" onclick="selectRiskFactor('factor2', 'no')">No</button>
@@ -3058,7 +3068,7 @@ Good luck with your trade!`);
         // Risk Assessment System
         let riskAssessmentState = {
             factor1: null, // M Zone hit, no CHoCH?
-            factor2: null, // Counter to EMA direction?
+            factor2: null, // Counter to 1D EMA direction?
             factor3: null  // Counter to 15m trend?
         };
 
@@ -3091,7 +3101,7 @@ Good luck with your trade!`);
             }
             if (riskAssessmentState.factor2 === 'yes') {
                 totalDeduction += deductionPerFactor;
-                deductions.push({ label: 'Counter to EMA direction', value: deductionPerFactor });
+                deductions.push({ label: 'Counter to 1D EMA direction', value: deductionPerFactor });
             }
             if (riskAssessmentState.factor3 === 'yes') {
                 totalDeduction += deductionPerFactor;
