@@ -1420,7 +1420,7 @@
             <div class="entry-progress">
                 <div class="entry-progress-fill" id="stage2Progress"></div>
             </div>
-            <div class="entry-step-info" id="stage2StepInfo">Step 1 of 8</div>
+            <div class="entry-step-info" id="stage2StepInfo">Step 1 of 9</div>
             <div id="stage2MainContent"></div>
             <div class="entry-checklist" id="stage2Checklist" style="display: none;">
                 <div class="entry-checklist-title">Completed Steps:</div>
@@ -1868,6 +1868,7 @@
         // Trading Entry System - Stage 2
         let stage2State = {
             currentStep: 0,
+            instrument: null, // 'USDJPY', 'BTCUSD', or 'EURUSD'
             direction: null, // 'long' or 'short'
             type: null, // 'type1' or 'type2'
             conditions: [],
@@ -1918,6 +1919,23 @@
         ];
 
         const stage2Steps = [
+            {
+                name: 'Instrument Selection',
+                description: 'What are you trading?',
+                render: () => `
+                    <div class="entry-buttons">
+                        <button class="entry-btn" onclick="selectInstrument('USDJPY')">
+                            USDJPY
+                        </button>
+                        <button class="entry-btn" onclick="selectInstrument('BTCUSD')">
+                            BTCUSD
+                        </button>
+                        <button class="entry-btn" onclick="selectInstrument('EURUSD')">
+                            EURUSD
+                        </button>
+                    </div>
+                `
+            },
             {
                 name: 'Direction Selection',
                 description: 'Select trade direction',
@@ -2213,6 +2231,14 @@
             widget.classList.toggle('minimized');
         }
 
+        function selectInstrument(instrument) {
+            stage2State.instrument = instrument;
+            stage2State.completedSteps.push(`Instrument: ${instrument}`);
+            stage2State.currentStep++;
+            saveStage2State();
+            updateStage2Display();
+        }
+
         function selectDirection(direction) {
             stage2State.direction = direction;
             stage2State.completedSteps.push(`Direction: ${direction.toUpperCase()}`);
@@ -2241,6 +2267,7 @@
         function resetStage2() {
             stage2State = {
                 currentStep: 0,
+                instrument: null,
                 direction: null,
                 type: null,
                 conditions: [],
@@ -2364,7 +2391,7 @@ Good luck with your trade!`);
             },
             {
                 question: '1H Zone type?',
-                options: ['Supply Zone', 'Demand Zone'],
+                options: ['Supply Zone', 'Demand Zone', 'No Supply/Demand Zone'],
                 key: 'zoneType'
             }
         ];
@@ -2438,13 +2465,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price below EMA with demand zone to go long, or wait for 1H CHoCH';
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear or 1H CHoCH to occur';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear or wait for downtrend';
+                return 'No trade - Wait for price below EMA then can go long on demand zones';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Supply
@@ -2474,13 +2501,13 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA with supply zone to go short, or wait for 1H CHoCH';
+                return 'No trade - Watch for price above EMA with supply zone to go short or 1H CHoCH to occur';
             }
 
             // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price to cross above EMA or wait for uptrend';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Supply
@@ -2492,7 +2519,7 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear or downtrend confirmation';
+                return 'No trade - Wait for price below EMA then can go long on demand zones';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Supply
@@ -2528,7 +2555,7 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price to cross above EMA or uptrend confirmation';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear';
             }
 
             // ===== SUPPLY M ZONE SCENARIOS =====
@@ -2536,13 +2563,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for 1H CHoCH at Supply M Zone to go short, or price below EMA with demand zone to go long';
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear or 1H CHoCH to occur (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Wait for price below EMA then can go long on demand zones';
+                return 'No trade - Wait for price below EMA then can go long on demand zones (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
@@ -2554,13 +2581,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear to go short';
+                return 'No trade - Watch for 1H supply zone to appear to go short (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for 1H demand zone to appear to go long';
+                return 'No trade - Watch for 1H demand zone to appear to go long (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
@@ -2572,25 +2599,25 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price above EMA or uptrend confirmation';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price below EMA with demand zone to go long with uptrend';
+                return 'No trade - Watch for price below EMA with demand zone to go long (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Wait for price below EMA then can go long on demand zones';
+                return 'No trade - Wait for price below EMA then can go long on demand zones (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
@@ -2602,13 +2629,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear to go short';
+                return 'No trade - Watch for 1H supply zone to appear to go short (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA at Supply M Zone or wait for downtrend';
+                return 'No trade - Watch for 1H demand zone to appear to go long (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
@@ -2620,13 +2647,13 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short (CHoCH expected at Supply M Zone)';
             }
 
             // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price above EMA or confirmation of downtrend continuation';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Supply M Zone)';
             }
 
             // ===== DEMAND M ZONE SCENARIOS =====
@@ -2634,13 +2661,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Wait for price below EMA at Demand M Zone to go long';
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear or 1H CHoCH to occur (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear or wait for downtrend';
+                return 'No trade - Wait for price below EMA then can go long on demand zones (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
@@ -2652,13 +2679,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear to go short';
+                return 'No trade - Watch for 1H supply zone to appear to go short (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for 1H demand zone to appear to go long';
+                return 'No trade - Watch for 1H demand zone to appear to go long (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
@@ -2670,25 +2697,25 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA with supply zone to go short, or wait for 1H CHoCH to go long';
+                return 'No trade - Watch for price above EMA with supply zone to go short or 1H CHoCH to occur (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'No' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price above EMA or uptrend confirmation';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price below EMA with demand zone to go long';
+                return 'No trade - Watch for price below EMA with demand zone to go long (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Wait for price below EMA then can go long on demand zones';
+                return 'No trade - Wait for price below EMA then can go long on demand zones (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
@@ -2700,13 +2727,13 @@ Good luck with your trade!`);
             // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for 1H supply zone to appear to go short';
+                return 'No trade - Watch for 1H supply zone to appear to go short (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for 1H demand zone to appear to go long';
+                return 'No trade - Watch for 1H demand zone to appear to go long (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
@@ -2718,13 +2745,165 @@ Good luck with your trade!`);
             // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
-                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short (CHoCH expected at Demand M Zone)';
             }
 
             // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
             if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
                 a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
-                return 'No trade - Watch for price above EMA or uptrend confirmation';
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // ===== NO SUPPLY/DEMAND ZONE SCENARIOS =====
+
+            // NO M ZONE SCENARIOS - No Zone
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear';
+            }
+
+            // SUPPLY M ZONE SCENARIOS - No Zone
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Supply M Zone)';
+            }
+
+            // DEMAND M ZONE SCENARIOS - No Zone
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price below EMA and 1H demand zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H supply zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for 1H demand zone to appear (CHoCH expected at Demand M Zone)';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=No Zone
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'No Supply/Demand Zone') {
+                return 'No trade - Wait for price above EMA and 1H supply zone to appear (CHoCH expected at Demand M Zone)';
             }
 
             // Default case if no match
