@@ -387,6 +387,269 @@
             box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
         }
         .watch-btn.stop:hover { box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3); }
+
+        /* Stage 1 Status Styles */
+        #stage1-status {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        #stage1-status h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        .stage1-status-box {
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        .stage1-status-box.waiting {
+            background: linear-gradient(135deg, var(--accent-red) 0%, #991b1b 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+        }
+        .stage1-status-box.complete {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #047857 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+        }
+
+        /* Daily Trading Plan Styles */
+        #daily-plan-widget {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        #daily-plan-widget h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        #daily-plan-question {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+        #daily-plan-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .plan-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+        }
+        .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .plan-btn:active { transform: translateY(0); }
+        #daily-plan-result {
+            background: var(--bg-primary);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--accent-green);
+        }
+        .plan-result-text {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .plan-new-analysis-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+            width: 100%;
+        }
+        .plan-new-analysis-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .plan-new-analysis-btn:active { transform: translateY(0); }
+
+        /* Improvements & Tests Tracker Styles */
+        #tests-tracker {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid var(--border-color);
+        }
+        #tests-tracker h2 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+        #tests-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .test-input {
+            padding: 0.6rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        .test-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        .test-notes-input {
+            padding: 0.6rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+        .test-notes-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        .test-add-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+        }
+        .test-add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .test-add-btn:active { transform: translateY(0); }
+        .tests-section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        #active-tests-list, #completed-tests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .test-item {
+            background: var(--bg-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-blue);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        .test-item:hover {
+            transform: translateX(3px);
+        }
+        .test-checkbox {
+            margin-top: 0.2rem;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        .test-content {
+            flex: 1;
+        }
+        .test-item-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .test-item-notes {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+        .test-item-date {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .test-toggle-btn {
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .test-toggle-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        #completed-tests-container {
+            margin-top: 1rem;
+        }
+        .completed-test-item {
+            background: var(--bg-primary);
+            padding: 0.75rem;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+        .completed-test-item .test-item-name {
+            color: var(--text-secondary);
+        }
+        .no-tests-message {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+            padding: 1rem 0;
+        }
         .prices-header h3 { color: var(--accent-green); }
         .prices-icon { fill: var(--accent-green); }
         .prices-content {
@@ -465,10 +728,9 @@
             outline-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Trading Entry Widget */
+        /* Trading Entry Widgets */
         .entry-widget {
             position: fixed;
-            bottom: 20px;
             right: 20px;
             width: 350px;
             background: var(--bg-primary);
@@ -478,6 +740,16 @@
             z-index: 10000;
             transition: all 0.3s ease;
             border: 1px solid var(--border-color);
+        }
+
+        .stage1-widget {
+            bottom: 20px;
+            z-index: 10000;
+        }
+
+        .stage2-widget {
+            bottom: 90px;
+            z-index: 10001;
         }
 
         .entry-widget.minimized {
@@ -741,8 +1013,26 @@
                     <div id="trading-watch">
                         <h2>Trading Watch:</h2>
                         <div class="watch-buttons">
-                            <button class="watch-btn" id="flo-btn" onclick="toggleFlo()">Flo Off Chart</button>
-                            <button class="watch-btn partner" id="harvey-btn" onclick="toggleHarvey()">Harvey Off Chart</button>
+                            <button class="watch-btn stop" id="flo-btn" onclick="toggleFlo()">Flo Off Chart</button>
+                            <button class="watch-btn stop" id="harvey-btn" onclick="toggleHarvey()">Harvey Off Chart</button>
+                        </div>
+                    </div>
+
+                    <!-- Stage 1 Status Widget -->
+                    <div id="stage1-status">
+                        <h2>Setup Status:</h2>
+                        <div id="stage1-status-display" class="stage1-status-box waiting">
+                            Waiting for Stage 1 Completion
+                        </div>
+                    </div>
+
+                    <!-- Daily Trading Plan Widget -->
+                    <div id="daily-plan-widget">
+                        <h2>Daily Trading Plan:</h2>
+                        <div id="daily-plan-content">
+                            <div id="daily-plan-question"></div>
+                            <div id="daily-plan-buttons"></div>
+                            <div id="daily-plan-result" style="display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -1074,28 +1364,69 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Improvements & Tests Tracker -->
+                    <div id="tests-tracker">
+                        <h2>Improvements & Tests:</h2>
+                        <div id="tests-form">
+                            <input type="text" id="test-name-input" placeholder="Test name..." class="test-input">
+                            <textarea id="test-notes-input" placeholder="Notes (optional)..." class="test-notes-input" rows="2"></textarea>
+                            <button class="test-add-btn" onclick="addTest()">Add Test</button>
+                        </div>
+                        <div id="active-tests-container">
+                            <div class="tests-section-title">Active Tests:</div>
+                            <div id="active-tests-list"></div>
+                        </div>
+                        <button class="test-toggle-btn" onclick="toggleCompletedTests()">
+                            <span id="toggle-completed-text">View Completed</span>
+                        </button>
+                        <div id="completed-tests-container" style="display: none;">
+                            <div class="tests-section-title">Completed Tests:</div>
+                            <div id="completed-tests-list"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Trading Entry System Widget -->
-    <div class="entry-widget" id="entryWidget">
-        <div class="entry-header" onclick="toggleEntryWidget()">
-            <span>Entry System</span>
-            <button class="minimize-btn" onclick="event.stopPropagation(); toggleEntryWidget()">−</button>
+    <!-- Stage 1: Setup Widget -->
+    <div class="entry-widget stage1-widget minimized" id="stage1Widget">
+        <div class="entry-header" onclick="toggleStage1Widget()">
+            <span>Stage 1: Setup</span>
+            <button class="minimize-btn" onclick="event.stopPropagation(); toggleStage1Widget()">−</button>
         </div>
         <div class="entry-content">
             <div class="entry-progress">
-                <div class="entry-progress-fill" id="entryProgress"></div>
+                <div class="entry-progress-fill" id="stage1Progress"></div>
             </div>
-            <div class="entry-step-info" id="entryStepInfo">Step 1 of 8</div>
-            <div id="entryMainContent"></div>
-            <div class="entry-checklist" id="entryChecklist" style="display: none;">
+            <div class="entry-step-info" id="stage1StepInfo">Step 1 of 4</div>
+            <div id="stage1MainContent"></div>
+            <div class="entry-checklist" id="stage1Checklist" style="display: none;">
                 <div class="entry-checklist-title">Completed Steps:</div>
-                <div id="entryChecklistItems"></div>
+                <div id="stage1ChecklistItems"></div>
             </div>
-            <button class="entry-reset-btn" onclick="resetEntrySystem()" style="margin-top: 15px;">Reset Entry System</button>
+            <button class="entry-reset-btn" onclick="resetStage1()" style="margin-top: 15px;">Reset Stage 1</button>
+        </div>
+    </div>
+
+    <!-- Stage 2: Entry Widget -->
+    <div class="entry-widget stage2-widget minimized" id="stage2Widget">
+        <div class="entry-header" onclick="toggleStage2Widget()">
+            <span>Stage 2: Entry</span>
+            <button class="minimize-btn" onclick="event.stopPropagation(); toggleStage2Widget()">−</button>
+        </div>
+        <div class="entry-content">
+            <div class="entry-progress">
+                <div class="entry-progress-fill" id="stage2Progress"></div>
+            </div>
+            <div class="entry-step-info" id="stage2StepInfo">Step 1 of 8</div>
+            <div id="stage2MainContent"></div>
+            <div class="entry-checklist" id="stage2Checklist" style="display: none;">
+                <div class="entry-checklist-title">Completed Steps:</div>
+                <div id="stage2ChecklistItems"></div>
+            </div>
+            <button class="entry-reset-btn" onclick="resetStage2()" style="margin-top: 15px;">Reset Stage 2</button>
         </div>
     </div>
 
@@ -1114,46 +1445,141 @@
             messagingSenderId: "938580450565",
             appId: "1:938580450565:web:e1d96f2ab16c43f53bab6c"
         };
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const watcherRef = db.ref('watchers');
-        
+        const setupRef = db.ref('setup/stage1Complete');
+
         function toggleFlo() {
+            console.log('Toggling Flo status...');
             watcherRef.child('Flo').once('value', (snapshot) => {
                 const currentStatus = snapshot.val() || false;
-                watcherRef.child('Flo').set(!currentStatus);
+                console.log('Current Flo status:', currentStatus, '-> Setting to:', !currentStatus);
+                watcherRef.child('Flo').set(!currentStatus)
+                    .then(() => {
+                        console.log('Flo status updated successfully');
+                    })
+                    .catch((error) => {
+                        console.error('Failed to update Flo status:', error);
+                    });
             });
         }
-        
+
         function toggleHarvey() {
+            console.log('Toggling Harvey status...');
             watcherRef.child('Harvey').once('value', (snapshot) => {
                 const currentStatus = snapshot.val() || false;
-                watcherRef.child('Harvey').set(!currentStatus);
+                console.log('Current Harvey status:', currentStatus, '-> Setting to:', !currentStatus);
+                watcherRef.child('Harvey').set(!currentStatus)
+                    .then(() => {
+                        console.log('Harvey status updated successfully');
+                    })
+                    .catch((error) => {
+                        console.error('Failed to update Harvey status:', error);
+                    });
             });
         }
-        
-        watcherRef.on('value', (snapshot) => {
-            const data = snapshot.val() || {};
-            const floOnline = data['Flo'] || false;
-            const harveyOnline = data['Harvey'] || false;
-            
-            const floBtn = document.getElementById('flo-btn');
-            const harveyBtn = document.getElementById('harvey-btn');
-            
-            if (floBtn) {
-                floBtn.textContent = floOnline ? "Flo On Chart" : "Flo Off Chart";
-                floBtn.style.background = floOnline ? 
-                    'linear-gradient(135deg, var(--accent-green) 0%, #047857 100%)' : 
-                    'linear-gradient(135deg, var(--accent-red) 0%, #991b1b 100%)';
-            }
-            
-            if (harveyBtn) {
-                harveyBtn.textContent = harveyOnline ? "Harvey On Chart" : "Harvey Off Chart";
-                harveyBtn.style.background = harveyOnline ? 
-                    'linear-gradient(135deg, var(--accent-green) 0%, #047857 100%)' : 
-                    'linear-gradient(135deg, var(--accent-red) 0%, #991b1b 100%)';
-            }
-        });
+
+        // Initialize Firebase listeners after DOM is loaded
+        function initFirebaseListeners() {
+            console.log('Initializing Firebase listeners...');
+
+            // Trading Watch Listener
+            console.log('Setting up watchers listener at path: /watchers');
+            watcherRef.on('value', (snapshot) => {
+                const data = snapshot.val() || {};
+                const floOnline = data['Flo'] || false;
+                const harveyOnline = data['Harvey'] || false;
+
+                console.log('Firebase Trading Watch Update:', {
+                    floOnline,
+                    harveyOnline,
+                    rawData: data,
+                    path: '/watchers'
+                });
+
+                const floBtn = document.getElementById('flo-btn');
+                const harveyBtn = document.getElementById('harvey-btn');
+
+                if (floBtn) {
+                    floBtn.textContent = floOnline ? "Flo On Chart" : "Flo Off Chart";
+                    console.log('Updating Flo button:', {
+                        text: floBtn.textContent,
+                        online: floOnline,
+                        classes: floBtn.className
+                    });
+
+                    if (floOnline) {
+                        floBtn.classList.remove('stop');
+                        floBtn.classList.add('partner');
+                    } else {
+                        floBtn.classList.remove('partner');
+                        floBtn.classList.add('stop');
+                    }
+
+                    console.log('Flo button classes after update:', floBtn.className);
+                } else {
+                    console.error('Flo button not found!');
+                }
+
+                if (harveyBtn) {
+                    harveyBtn.textContent = harveyOnline ? "Harvey On Chart" : "Harvey Off Chart";
+                    console.log('Updating Harvey button:', {
+                        text: harveyBtn.textContent,
+                        online: harveyOnline,
+                        classes: harveyBtn.className
+                    });
+
+                    if (harveyOnline) {
+                        harveyBtn.classList.remove('stop');
+                        harveyBtn.classList.add('partner');
+                    } else {
+                        harveyBtn.classList.remove('partner');
+                        harveyBtn.classList.add('stop');
+                    }
+
+                    console.log('Harvey button classes after update:', harveyBtn.className);
+                } else {
+                    console.error('Harvey button not found!');
+                }
+            }, (error) => {
+                console.error('Firebase watchers listener error:', error);
+            });
+
+            // Setup Status Firebase Listener
+            console.log('Setting up setup status listener at path: /setup/stage1Complete');
+            setupRef.on('value', (snapshot) => {
+                const isComplete = snapshot.val() || false;
+                const statusBox = document.getElementById('stage1-status-display');
+
+                console.log('Firebase Setup Status Update:', {
+                    isComplete,
+                    rawValue: snapshot.val(),
+                    path: 'setup/stage1Complete'
+                });
+
+                if (statusBox) {
+                    if (isComplete) {
+                        statusBox.textContent = 'Stage 1 Complete';
+                        statusBox.classList.remove('waiting');
+                        statusBox.classList.add('complete');
+                        console.log('Setup Status box updated to COMPLETE (green)', statusBox.className);
+                    } else {
+                        statusBox.textContent = 'Waiting for Stage 1 Completion';
+                        statusBox.classList.remove('complete');
+                        statusBox.classList.add('waiting');
+                        console.log('Setup Status box updated to WAITING (red)', statusBox.className);
+                    }
+                } else {
+                    console.error('Setup Status box not found!');
+                }
+            }, (error) => {
+                console.error('Firebase setup status listener error:', error);
+            });
+
+            console.log('Firebase listeners initialized successfully');
+        }
 
         // Theme management
         const THEME_KEY = 'trading-dashboard-theme';
@@ -1386,11 +1812,34 @@
             container.innerHTML = pricesHtml;
         }
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Initializing...');
+            console.log('Firebase config:', firebaseConfig.databaseURL);
+
             initializeTheme();
             loadNewsEvents();
             loadForexPrices();
             setInterval(loadNewsEvents, 14400000);
             setInterval(loadForexPrices, 3600000);
+
+            // Test Firebase connection
+            db.ref('.info/connected').on('value', (snapshot) => {
+                if (snapshot.val() === true) {
+                    console.log('✓ Firebase connected successfully!');
+                } else {
+                    console.error('✗ Firebase not connected!');
+                }
+            });
+
+            // Initialize Firebase listeners
+            initFirebaseListeners();
+            console.log('Firebase listeners initialized');
+
+            // Initialize entry widgets
+            initStage1();
+            initStage2();
+            initDailyPlan();
+            initTestsTracker();
+            console.log('Entry widgets initialized');
         });
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
             if (!localStorage.getItem(THEME_KEY)) {
@@ -1408,8 +1857,16 @@
             }
         });
 
-        // Trading Entry System
-        let entryState = {
+        // Trading Entry System - Stage 1
+        let stage1State = {
+            currentStep: 0,
+            conditions: [],
+            completedSteps: [],
+            isComplete: false
+        };
+
+        // Trading Entry System - Stage 2
+        let stage2State = {
             currentStep: 0,
             direction: null, // 'long' or 'short'
             type: null, // 'type1' or 'type2'
@@ -1417,7 +1874,50 @@
             completedSteps: []
         };
 
-        const entrySteps = [
+        const stage1Steps = [
+            {
+                name: 'Mark HTF Zones',
+                description: 'Mark Higher Timeframe Zones',
+                render: () => `
+                    <div class="entry-condition-label">Mark HTF (Higher Timeframe) Zones</div>
+                    <button class="entry-condition-btn" onclick="confirmStage1Condition('HTF Zones Marked')">
+                        Confirm HTF Zones Marked
+                    </button>
+                `
+            },
+            {
+                name: 'Mark M Zones',
+                description: 'Mark M Zones',
+                render: () => `
+                    <div class="entry-condition-label">Mark M Zones (1D, 12H, 3D)</div>
+                    <button class="entry-condition-btn" onclick="confirmStage1Condition('M Zones Marked')">
+                        Confirm M Zones Marked
+                    </button>
+                `
+            },
+            {
+                name: 'Mark 1H Zones',
+                description: 'Mark 1H Zones',
+                render: () => `
+                    <div class="entry-condition-label">Mark 1H Supply & Demand Zones</div>
+                    <button class="entry-condition-btn" onclick="confirmStage1Condition('1H Zones Marked')">
+                        Confirm 1H Zones Marked
+                    </button>
+                `
+            },
+            {
+                name: 'Set Zone Alerts',
+                description: 'Set Zone Alerts',
+                render: () => `
+                    <div class="entry-condition-label">Set Zone Alerts</div>
+                    <button class="entry-condition-btn" onclick="completeStage1()">
+                        Complete Stage 1 Setup
+                    </button>
+                `
+            }
+        ];
+
+        const stage2Steps = [
             {
                 name: 'Direction Selection',
                 description: 'Select trade direction',
@@ -1439,9 +1939,11 @@
                     <div class="entry-buttons">
                         <button class="entry-btn" onclick="selectType('type1')">
                             Type 1 Entry
+                            <div style="font-size: 0.75em; margin-top: 5px; opacity: 0.9; font-weight: 500;">Type 1: Trend Continuation</div>
                         </button>
                         <button class="entry-btn" onclick="selectType('type2')">
                             Type 2 Entry
+                            <div style="font-size: 0.75em; margin-top: 5px; opacity: 0.9; font-weight: 500;">Type 2: Counter Trend</div>
                         </button>
                     </div>
                 `
@@ -1450,12 +1952,12 @@
                 name: 'EMA Alignment',
                 description: 'Check EMA position',
                 render: () => {
-                    const condition = entryState.direction === 'long'
-                        ? (entryState.type === 'type1' ? 'EMA 3H > EMA 1D' : 'EMA 3H < EMA 1D')
-                        : (entryState.type === 'type1' ? 'EMA 3H < EMA 1D' : 'EMA 3H > EMA 1D');
+                    const condition = stage2State.direction === 'long'
+                        ? (stage2State.type === 'type1' ? 'EMA 3H > EMA 1D' : 'EMA 3H < EMA 1D')
+                        : (stage2State.type === 'type1' ? 'EMA 3H < EMA 1D' : 'EMA 3H > EMA 1D');
                     return `
                         <div class="entry-condition-label">Verify: ${condition}</div>
-                        <button class="entry-condition-btn" onclick="confirmCondition('EMA Aligned')">
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('EMA Aligned')">
                             Confirm EMA Alignment
                         </button>
                     `;
@@ -1465,10 +1967,10 @@
                 name: '1H Zone',
                 description: 'Identify 1H zone',
                 render: () => {
-                    const zone = entryState.direction === 'long' ? 'Demand Zone' : 'Supply Zone';
+                    const zone = stage2State.direction === 'long' ? 'Demand Zone' : 'Supply Zone';
                     return `
                         <div class="entry-condition-label">Confirm 1H ${zone} present</div>
-                        <button class="entry-condition-btn" onclick="confirmCondition('1H Zone Confirmed')">
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('1H Zone Confirmed')">
                             Confirm 1H Zone
                         </button>
                     `;
@@ -1478,11 +1980,11 @@
                 name: '15m Zone',
                 description: 'Check 15m zone',
                 render: () => {
-                    const zone = entryState.direction === 'long' ? 'Demand' : 'Supply';
-                    const internal = entryState.type === 'type1' ? 'Internal ' : '';
+                    const zone = stage2State.direction === 'long' ? 'Demand' : 'Supply';
+                    const internal = stage2State.type === 'type1' ? 'Internal ' : '';
                     return `
                         <div class="entry-condition-label">Verify 15m ${internal}${zone} Zone</div>
-                        <button class="entry-condition-btn" onclick="confirmCondition('15m Zone Confirmed')">
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('15m Zone Confirmed')">
                             Confirm 15m Zone
                         </button>
                     `;
@@ -1492,10 +1994,10 @@
                 name: 'Price vs EMA 3H',
                 description: 'Check price position',
                 render: () => {
-                    const position = entryState.direction === 'long' ? 'below' : 'above';
+                    const position = stage2State.direction === 'long' ? 'below' : 'above';
                     return `
                         <div class="entry-condition-label">Confirm Price is ${position} EMA 3H</div>
-                        <button class="entry-condition-btn" onclick="confirmCondition('Price Position Confirmed')">
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('Price Position Confirmed')">
                             Confirm Price Position
                         </button>
                     `;
@@ -1505,10 +2007,10 @@
                 name: 'Liquidity Grab',
                 description: '15m liquidity grab',
                 render: () => {
-                    const direction = entryState.direction === 'long' ? 'low' : 'high';
+                    const direction = stage2State.direction === 'long' ? 'low' : 'high';
                     return `
                         <div class="entry-condition-label">Wait for 15m Liquidity Grab from ${direction}</div>
-                        <button class="entry-condition-btn" onclick="confirmCondition('Liquidity Grab Confirmed')">
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('Liquidity Grab Confirmed')">
                             Confirm Liquidity Grab
                         </button>
                     `;
@@ -1518,69 +2020,295 @@
                 name: 'Final Confirmation',
                 description: 'Ready to execute',
                 render: () => {
-                    const direction = entryState.direction?.toUpperCase();
-                    const type = entryState.type === 'type1' ? 'Type 1' : 'Type 2';
+                    const direction = stage2State.direction?.toUpperCase();
+                    const type = stage2State.type === 'type1' ? 'Type 1' : 'Type 2';
                     return `
                         <div class="entry-condition-label">All conditions met for ${direction} ${type} entry</div>
+                        <button class="entry-condition-btn" onclick="confirmStage2Condition('Final Confirmation Complete')">
+                            Confirm Entry Setup
+                        </button>
+                    `;
+                }
+            },
+            {
+                name: '2m/5m CHoCH Confirmed',
+                description: 'CHoCH confirmation',
+                render: () => {
+                    return `
+                        <div class="entry-condition-label">Wait for 2m/5m CHoCH confirmation</div>
                         <button class="entry-condition-btn ready" onclick="finalizeEntry()">
-                            ✓ Ready to Enter Trade
+                            ✓ CHoCH Confirmed - Enter Trade
                         </button>
                     `;
                 }
             }
         ];
 
-        function initEntrySystem() {
-            const saved = localStorage.getItem('entryState');
+        // Stage 1 Functions
+        function initStage1() {
+            const saved = localStorage.getItem('stage1State');
             if (saved) {
-                entryState = JSON.parse(saved);
+                stage1State = JSON.parse(saved);
             }
-            updateEntryDisplay();
+            updateStage1Display();
         }
 
-        function toggleEntryWidget() {
-            const widget = document.getElementById('entryWidget');
+        function toggleStage1Widget() {
+            const stage1Widget = document.getElementById('stage1Widget');
+            const stage2Widget = document.getElementById('stage2Widget');
+            stage1Widget.classList.toggle('minimized');
+
+            // Adjust Stage 2 position based on Stage 1 state
+            if (stage1Widget.classList.contains('minimized')) {
+                stage2Widget.style.bottom = '90px';
+            } else {
+                stage2Widget.style.bottom = '410px';
+            }
+        }
+
+        function confirmStage1Condition(conditionName) {
+            stage1State.conditions.push(conditionName);
+            stage1State.completedSteps.push(conditionName);
+            stage1State.currentStep++;
+            saveStage1State();
+            updateStage1Display();
+        }
+
+        function completeStage1() {
+            console.log('Completing Stage 1...');
+            stage1State.conditions.push('Stage 1 Complete');
+            stage1State.completedSteps.push('Stage 1 Complete');
+            // Don't increment currentStep - we're already at the last step (step 4)
+            stage1State.isComplete = true;
+
+            // Update Firebase with stage 1 completion using correct path
+            console.log('Setting Firebase setup/stage1Complete to true...');
+            setupRef.set(true)
+                .then(() => {
+                    console.log('Firebase update successful! Path: setup/stage1Complete');
+                })
+                .catch((error) => {
+                    console.error('Firebase update failed:', error);
+                });
+
+            saveStage1State();
+            updateStage1Display();
+
+            showEntryNotification('Stage 1 Setup Complete!\n\nYou can now proceed with Stage 2 Entry steps.');
+        }
+
+        function resetStage1() {
+            console.log('Resetting Stage 1...');
+            stage1State = {
+                currentStep: 0,
+                conditions: [],
+                completedSteps: [],
+                isComplete: false
+            };
+
+            // Reset Firebase stage 1 status using correct path
+            console.log('Setting Firebase setup/stage1Complete to false...');
+            setupRef.set(false)
+                .then(() => {
+                    console.log('Firebase reset successful! Path: setup/stage1Complete');
+                })
+                .catch((error) => {
+                    console.error('Firebase reset failed:', error);
+                });
+
+            saveStage1State();
+            updateStage1Display();
+        }
+
+        function saveStage1State() {
+            localStorage.setItem('stage1State', JSON.stringify(stage1State));
+        }
+
+        function updateStage1Display() {
+            const totalSteps = stage1Steps.length;
+            const currentStep = Math.min(stage1State.currentStep, totalSteps - 1);
+            const progress = ((stage1State.currentStep) / totalSteps) * 100;
+
+            const progressBar = document.getElementById('stage1Progress');
+            const stepInfo = document.getElementById('stage1StepInfo');
+            const mainContent = document.getElementById('stage1MainContent');
+            const checklist = document.getElementById('stage1Checklist');
+            const checklistItems = document.getElementById('stage1ChecklistItems');
+
+            // If Stage 1 is complete, hide progress and main content, only show checklist
+            if (stage1State.isComplete) {
+                // Hide progress bar
+                if (progressBar && progressBar.parentElement) {
+                    progressBar.parentElement.style.display = 'none';
+                }
+                // Hide step info
+                if (stepInfo) {
+                    stepInfo.style.display = 'none';
+                }
+                // Hide main content (the step buttons)
+                if (mainContent) {
+                    mainContent.style.display = 'none';
+                }
+                // Show checklist with completed steps
+                if (checklist && checklistItems) {
+                    checklist.style.display = 'block';
+                    checklistItems.innerHTML = stage1State.completedSteps.map(step => `
+                        <div class="entry-checklist-item completed">
+                            <span class="entry-checklist-icon">✓</span>
+                            <span>${step}</span>
+                        </div>
+                    `).join('');
+                }
+                return; // Exit early - nothing else to update
+            }
+
+            // Normal display when not complete
+            // Show progress bar
+            if (progressBar) {
+                if (progressBar.parentElement) progressBar.parentElement.style.display = 'block';
+                progressBar.style.width = progress + '%';
+            }
+
+            // Show and update step info
+            if (stepInfo) {
+                stepInfo.style.display = 'block';
+                stepInfo.textContent = `Step ${stage1State.currentStep + 1} of ${totalSteps}`;
+            }
+
+            // Render current step content
+            if (mainContent) {
+                mainContent.style.display = 'block';
+                if (stage1State.currentStep < totalSteps) {
+                    mainContent.innerHTML = stage1Steps[currentStep].render();
+                } else {
+                    mainContent.innerHTML = '<div style="text-align: center; color: var(--accent-green); font-weight: 600;">Stage 1 Complete!</div>';
+                }
+            }
+
+            // Update checklist (show if there are completed steps)
+            if (stage1State.completedSteps.length > 0 && checklist && checklistItems) {
+                checklist.style.display = 'block';
+                checklistItems.innerHTML = stage1State.completedSteps.map(step => `
+                    <div class="entry-checklist-item completed">
+                        <span class="entry-checklist-icon">✓</span>
+                        <span>${step}</span>
+                    </div>
+                `).join('');
+            } else if (checklist) {
+                checklist.style.display = 'none';
+            }
+        }
+
+        // Stage 2 Functions
+        function initStage2() {
+            const saved = localStorage.getItem('stage2State');
+            if (saved) {
+                stage2State = JSON.parse(saved);
+            }
+            updateStage2Display();
+        }
+
+        function toggleStage2Widget() {
+            const widget = document.getElementById('stage2Widget');
             widget.classList.toggle('minimized');
         }
 
         function selectDirection(direction) {
-            entryState.direction = direction;
-            entryState.completedSteps.push(`Direction: ${direction.toUpperCase()}`);
-            nextStep();
+            stage2State.direction = direction;
+            stage2State.completedSteps.push(`Direction: ${direction.toUpperCase()}`);
+            stage2State.currentStep++;
+            saveStage2State();
+            updateStage2Display();
         }
 
         function selectType(type) {
-            entryState.type = type;
+            stage2State.type = type;
             const typeName = type === 'type1' ? 'Type 1' : 'Type 2';
-            entryState.completedSteps.push(`Entry Type: ${typeName}`);
-            nextStep();
+            stage2State.completedSteps.push(`Entry Type: ${typeName}`);
+            stage2State.currentStep++;
+            saveStage2State();
+            updateStage2Display();
         }
 
-        function confirmCondition(conditionName) {
-            entryState.conditions.push(conditionName);
-            entryState.completedSteps.push(conditionName);
-            nextStep();
+        function confirmStage2Condition(conditionName) {
+            stage2State.conditions.push(conditionName);
+            stage2State.completedSteps.push(conditionName);
+            stage2State.currentStep++;
+            saveStage2State();
+            updateStage2Display();
         }
 
-        function nextStep() {
-            entryState.currentStep++;
-            saveEntryState();
-            updateEntryDisplay();
+        function resetStage2() {
+            stage2State = {
+                currentStep: 0,
+                direction: null,
+                type: null,
+                conditions: [],
+                completedSteps: []
+            };
+            saveStage2State();
+            updateStage2Display();
+        }
+
+        function saveStage2State() {
+            localStorage.setItem('stage2State', JSON.stringify(stage2State));
+        }
+
+        function updateStage2Display() {
+            const totalSteps = stage2Steps.length;
+            const currentStep = Math.min(stage2State.currentStep, totalSteps - 1);
+            const progress = ((stage2State.currentStep) / totalSteps) * 100;
+
+            // Update progress bar
+            const progressBar = document.getElementById('stage2Progress');
+            if (progressBar) progressBar.style.width = progress + '%';
+
+            // Update step info
+            const stepInfo = document.getElementById('stage2StepInfo');
+            if (stepInfo) {
+                stepInfo.textContent = `Step ${stage2State.currentStep + 1} of ${totalSteps}`;
+            }
+
+            // Render current step content
+            const mainContent = document.getElementById('stage2MainContent');
+            if (mainContent) {
+                if (stage2State.currentStep < totalSteps) {
+                    mainContent.innerHTML = stage2Steps[currentStep].render();
+                } else {
+                    mainContent.innerHTML = '<div style="text-align: center; color: var(--accent-green); font-weight: 600;">Stage 2 Complete!</div>';
+                }
+            }
+
+            // Update checklist
+            const checklist = document.getElementById('stage2Checklist');
+            const checklistItems = document.getElementById('stage2ChecklistItems');
+
+            if (stage2State.completedSteps.length > 0 && checklist && checklistItems) {
+                checklist.style.display = 'block';
+                checklistItems.innerHTML = stage2State.completedSteps.map(step => `
+                    <div class="entry-checklist-item completed">
+                        <span class="entry-checklist-icon">✓</span>
+                        <span>${step}</span>
+                    </div>
+                `).join('');
+            } else if (checklist) {
+                checklist.style.display = 'none';
+            }
         }
 
         function finalizeEntry() {
-            const direction = entryState.direction?.toUpperCase();
-            const type = entryState.type === 'type1' ? 'Type 1' : 'Type 2';
+            const direction = stage2State.direction?.toUpperCase();
+            const type = stage2State.type === 'type1' ? 'Type 1' : 'Type 2';
 
             showEntryNotification(`Entry Confirmed!
 
 Direction: ${direction}
 Type: ${type}
-Conditions Met: ${entryState.conditions.length}
+Conditions Met: ${stage2State.conditions.length}
 
 Good luck with your trade!`);
 
-            resetEntrySystem();
+            resetStage2();
         }
 
         function showEntryNotification(message) {
@@ -1607,63 +2335,594 @@ Good luck with your trade!`);
             setTimeout(() => notification.remove(), 5000);
         }
 
-        function resetEntrySystem() {
-            entryState = {
-                currentStep: 0,
-                direction: null,
-                type: null,
-                conditions: [],
-                completedSteps: []
+        // Daily Trading Plan System
+        let dailyPlanState = {
+            currentQuestion: 0,
+            answers: {}
+        };
+
+        const dailyPlanQuestions = [
+            {
+                question: 'Price location relative to EMA?',
+                options: ['Above EMA', 'Below EMA'],
+                key: 'priceEma'
+            },
+            {
+                question: '1H Trend?',
+                options: ['Uptrend', 'Downtrend'],
+                key: 'trend'
+            },
+            {
+                question: 'M Zone present?',
+                options: ['No', 'Yes - Supply M Zone', 'Yes - Demand M Zone'],
+                key: 'mZone'
+            },
+            {
+                question: '1H CHoCH completed?',
+                options: ['Yes', 'No'],
+                key: 'choch'
+            },
+            {
+                question: '1H Zone type?',
+                options: ['Supply Zone', 'Demand Zone'],
+                key: 'zoneType'
+            }
+        ];
+
+        function initDailyPlan() {
+            const saved = localStorage.getItem('dailyPlanState');
+            if (saved) {
+                dailyPlanState = JSON.parse(saved);
+                if (dailyPlanState.currentQuestion >= dailyPlanQuestions.length) {
+                    showDailyPlanResult();
+                } else {
+                    updateDailyPlanDisplay();
+                }
+            } else {
+                updateDailyPlanDisplay();
+            }
+        }
+
+        function updateDailyPlanDisplay() {
+            const questionDiv = document.getElementById('daily-plan-question');
+            const buttonsDiv = document.getElementById('daily-plan-buttons');
+            const resultDiv = document.getElementById('daily-plan-result');
+
+            if (dailyPlanState.currentQuestion >= dailyPlanQuestions.length) {
+                showDailyPlanResult();
+                return;
+            }
+
+            resultDiv.style.display = 'none';
+
+            const currentQ = dailyPlanQuestions[dailyPlanState.currentQuestion];
+            questionDiv.textContent = currentQ.question;
+
+            buttonsDiv.innerHTML = currentQ.options.map(option =>
+                `<button class="plan-btn" onclick="answerDailyPlanQuestion('${option}')">${option}</button>`
+            ).join('');
+        }
+
+        function answerDailyPlanQuestion(answer) {
+            const currentQ = dailyPlanQuestions[dailyPlanState.currentQuestion];
+            dailyPlanState.answers[currentQ.key] = answer;
+
+            // Always move to next question (ask all 5 questions in order)
+            dailyPlanState.currentQuestion++;
+
+            saveDailyPlanState();
+            updateDailyPlanDisplay();
+        }
+
+        function showDailyPlanResult() {
+            const questionDiv = document.getElementById('daily-plan-question');
+            const buttonsDiv = document.getElementById('daily-plan-buttons');
+            const resultDiv = document.getElementById('daily-plan-result');
+
+            questionDiv.textContent = '';
+            buttonsDiv.innerHTML = '';
+            resultDiv.style.display = 'block';
+
+            const plan = calculateDailyPlan();
+            resultDiv.innerHTML = `
+                <div class="plan-result-text"><strong>Daily Trading Plan:</strong><br><br>${plan}</div>
+                <button class="plan-new-analysis-btn" onclick="resetDailyPlan()">New Analysis</button>
+            `;
+        }
+
+        function calculateDailyPlan() {
+            const a = dailyPlanState.answers;
+
+            // ===== NO M ZONE SCENARIOS =====
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price below EMA with demand zone to go long, or wait for 1H CHoCH';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear or wait for downtrend';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H demand zone to appear to go long';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA with supply zone to go short, or wait for 1H CHoCH';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price to cross above EMA or wait for uptrend';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price below EMA with demand zone to go long';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear or downtrend confirmation';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H demand zone to appear to go long';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=No, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA with supply zone to go short';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=No, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'No' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price to cross above EMA or uptrend confirmation';
+            }
+
+            // ===== SUPPLY M ZONE SCENARIOS =====
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H CHoCH at Supply M Zone to go short, or price below EMA with demand zone to go long';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Wait for price below EMA then can go long on demand zones';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H demand zone to appear to go long';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price above EMA or uptrend confirmation';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price below EMA with demand zone to go long with uptrend';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Wait for price below EMA then can go long on demand zones';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA at Supply M Zone or wait for downtrend';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Supply M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Supply M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price above EMA or confirmation of downtrend continuation';
+            }
+
+            // ===== DEMAND M ZONE SCENARIOS =====
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Wait for price below EMA at Demand M Zone to go long';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear or wait for downtrend';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H demand zone to appear to go long';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA with supply zone to go short, or wait for 1H CHoCH to go long';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=No, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'No' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price above EMA or uptrend confirmation';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price below EMA with demand zone to go long';
+            }
+
+            // Price=Above EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Wait for price below EMA then can go long on demand zones';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'Short on 1H supply zones until 1H demand zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Above EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Above EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for 1H supply zone to appear to go short';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for 1H demand zone to appear to go long';
+            }
+
+            // Price=Below EMA, Trend=Uptrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Uptrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'Long on 1H demand zones until 1H supply zone hit or 1H CHoCH occurs';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Supply
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Supply Zone') {
+                return 'No trade - Watch for price above EMA at 1H supply zone to go short';
+            }
+
+            // Price=Below EMA, Trend=Downtrend, M Zone=Demand M Zone, CHoCH=Yes, Zone=Demand
+            if (a.priceEma === 'Below EMA' && a.trend === 'Downtrend' && a.mZone === 'Yes - Demand M Zone' &&
+                a.choch === 'Yes' && a.zoneType === 'Demand Zone') {
+                return 'No trade - Watch for price above EMA or uptrend confirmation';
+            }
+
+            // Default case if no match
+            return 'No matching plan found for this combination. Please verify your inputs.';
+        }
+
+        function resetDailyPlan() {
+            dailyPlanState = {
+                currentQuestion: 0,
+                answers: {}
             };
-            saveEntryState();
-            updateEntryDisplay();
+            saveDailyPlanState();
+            updateDailyPlanDisplay();
         }
 
-        function saveEntryState() {
-            localStorage.setItem('entryState', JSON.stringify(entryState));
+        function saveDailyPlanState() {
+            localStorage.setItem('dailyPlanState', JSON.stringify(dailyPlanState));
         }
 
-        function updateEntryDisplay() {
-            const totalSteps = entrySteps.length;
-            const currentStep = Math.min(entryState.currentStep, totalSteps - 1);
-            const progress = ((entryState.currentStep) / totalSteps) * 100;
+        // Improvements & Tests Tracker System
+        const testsRef = db.ref('tests/user');
+        const activeTestsRef = db.ref('tests/user/active');
+        const completedTestsRef = db.ref('tests/user/completed');
+        let completedTestsVisible = false;
 
-            // Update progress bar
-            document.getElementById('entryProgress').style.width = progress + '%';
+        function initTestsTracker() {
+            console.log('Initializing Tests Tracker...');
 
-            // Update step info
-            document.getElementById('entryStepInfo').textContent =
-                `Step ${entryState.currentStep + 1} of ${totalSteps}`;
+            // Listen to active tests
+            activeTestsRef.on('value', (snapshot) => {
+                const tests = snapshot.val() || {};
+                displayActiveTests(tests);
+            });
 
-            // Render current step content
-            const mainContent = document.getElementById('entryMainContent');
-            if (entryState.currentStep < totalSteps) {
-                mainContent.innerHTML = entrySteps[currentStep].render();
-            } else {
-                mainContent.innerHTML = '<div style="text-align: center; color: var(--accent-green); font-weight: 600;">Entry Complete!</div>';
+            // Listen to completed tests
+            completedTestsRef.on('value', (snapshot) => {
+                const tests = snapshot.val() || {};
+                displayCompletedTests(tests);
+            });
+        }
+
+        function addTest() {
+            const nameInput = document.getElementById('test-name-input');
+            const notesInput = document.getElementById('test-notes-input');
+
+            const name = nameInput.value.trim();
+            const notes = notesInput.value.trim();
+
+            if (!name) {
+                alert('Please enter a test name');
+                return;
             }
 
-            // Update checklist
-            const checklist = document.getElementById('entryChecklist');
-            const checklistItems = document.getElementById('entryChecklistItems');
+            const testId = Date.now().toString();
+            const testData = {
+                name: name,
+                notes: notes,
+                dateAdded: new Date().toISOString(),
+                dateCompleted: null
+            };
 
-            if (entryState.completedSteps.length > 0) {
-                checklist.style.display = 'block';
-                checklistItems.innerHTML = entryState.completedSteps.map(step => `
-                    <div class="entry-checklist-item completed">
-                        <span class="entry-checklist-icon">✓</span>
-                        <span>${step}</span>
+            activeTestsRef.child(testId).set(testData)
+                .then(() => {
+                    console.log('Test added successfully');
+                    nameInput.value = '';
+                    notesInput.value = '';
+                })
+                .catch((error) => {
+                    console.error('Failed to add test:', error);
+                    alert('Failed to add test. Please try again.');
+                });
+        }
+
+        function displayActiveTests(tests) {
+            const container = document.getElementById('active-tests-list');
+            const testIds = Object.keys(tests);
+
+            if (testIds.length === 0) {
+                container.innerHTML = '<div class="no-tests-message">No active tests</div>';
+                return;
+            }
+
+            const testsHtml = testIds.map(testId => {
+                const test = tests[testId];
+                const dateAdded = new Date(test.dateAdded).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                return `
+                    <div class="test-item">
+                        <input type="checkbox" class="test-checkbox" onchange="completeTest('${testId}')">
+                        <div class="test-content">
+                            <div class="test-item-name">${escapeHtml(test.name)}</div>
+                            ${test.notes ? `<div class="test-item-notes">${escapeHtml(test.notes)}</div>` : ''}
+                            <div class="test-item-date">Added: ${dateAdded}</div>
+                        </div>
                     </div>
-                `).join('');
+                `;
+            }).join('');
+
+            container.innerHTML = testsHtml;
+        }
+
+        function displayCompletedTests(tests) {
+            const container = document.getElementById('completed-tests-list');
+            const testIds = Object.keys(tests);
+
+            if (testIds.length === 0) {
+                container.innerHTML = '<div class="no-tests-message">No completed tests</div>';
+                return;
+            }
+
+            // Sort by completion date (most recent first)
+            const sortedIds = testIds.sort((a, b) => {
+                const dateA = new Date(tests[a].dateCompleted);
+                const dateB = new Date(tests[b].dateCompleted);
+                return dateB - dateA;
+            });
+
+            const testsHtml = sortedIds.map(testId => {
+                const test = tests[testId];
+                const dateCompleted = new Date(test.dateCompleted).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                return `
+                    <div class="completed-test-item">
+                        <div class="test-content">
+                            <div class="test-item-name">✓ ${escapeHtml(test.name)}</div>
+                            ${test.notes ? `<div class="test-item-notes">${escapeHtml(test.notes)}</div>` : ''}
+                            <div class="test-item-date">Completed: ${dateCompleted}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = testsHtml;
+        }
+
+        function completeTest(testId) {
+            console.log('Completing test:', testId);
+
+            // Get the test data from active
+            activeTestsRef.child(testId).once('value', (snapshot) => {
+                const testData = snapshot.val();
+                if (!testData) {
+                    console.error('Test not found');
+                    return;
+                }
+
+                // Add completion date
+                testData.dateCompleted = new Date().toISOString();
+
+                // Move to completed
+                completedTestsRef.child(testId).set(testData)
+                    .then(() => {
+                        // Remove from active
+                        return activeTestsRef.child(testId).remove();
+                    })
+                    .then(() => {
+                        console.log('Test completed successfully');
+                    })
+                    .catch((error) => {
+                        console.error('Failed to complete test:', error);
+                    });
+            });
+        }
+
+        function toggleCompletedTests() {
+            const container = document.getElementById('completed-tests-container');
+            const toggleText = document.getElementById('toggle-completed-text');
+
+            completedTestsVisible = !completedTestsVisible;
+
+            if (completedTestsVisible) {
+                container.style.display = 'block';
+                toggleText.textContent = 'Hide Completed';
             } else {
-                checklist.style.display = 'none';
+                container.style.display = 'none';
+                toggleText.textContent = 'View Completed';
             }
         }
 
-        // Initialize entry system on load
-        document.addEventListener('DOMContentLoaded', function() {
-            initEntrySystem();
-        });
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
     </script>
 </body>
 </html>
