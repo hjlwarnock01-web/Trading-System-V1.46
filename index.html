@@ -596,6 +596,10 @@
             color: var(--accent-red);
             font-weight: 700;
         }
+        .risk-addition {
+            color: var(--accent-orange);
+            font-weight: 700;
+        }
 
         /* Improvements & Tests Tracker Styles */
         #tests-tracker {
@@ -3089,40 +3093,41 @@ Good luck with your trade!`);
         function updateRiskDisplay() {
             const baseRisk = 1.00;
             const minRisk = 0.25;
-            const deductionPerFactor = 0.25;
+            const maxRisk = 1.25;
+            const adjustmentPerFactor = 0.25;
 
-            // Calculate deductions
-            let totalDeduction = 0;
-            const deductions = [];
+            // Calculate adjustments (deductions and additions)
+            let totalAdjustment = 0;
+            const adjustments = [];
 
             if (riskAssessmentState.factor1 === 'yes') {
-                totalDeduction += deductionPerFactor;
-                deductions.push({ label: 'M Zone hit, no CHoCH', value: deductionPerFactor });
+                totalAdjustment -= adjustmentPerFactor;
+                adjustments.push({ label: 'M Zone hit, no CHoCH', value: -adjustmentPerFactor });
             }
             if (riskAssessmentState.factor2 === 'yes') {
-                totalDeduction += deductionPerFactor;
-                deductions.push({ label: 'Counter to 1D EMA direction', value: deductionPerFactor });
+                totalAdjustment -= adjustmentPerFactor;
+                adjustments.push({ label: 'Counter to 1D EMA direction', value: -adjustmentPerFactor });
             }
             if (riskAssessmentState.factor3 === 'yes') {
-                totalDeduction += deductionPerFactor;
-                deductions.push({ label: 'Counter to 15m trend', value: deductionPerFactor });
+                totalAdjustment += adjustmentPerFactor;
+                adjustments.push({ label: 'Counter to 15m trend', value: adjustmentPerFactor });
             }
 
-            // Calculate final risk (minimum 0.25%)
-            const finalRisk = Math.max(baseRisk - totalDeduction, minRisk);
+            // Calculate final risk (minimum 0.25%, maximum 1.25%)
+            const finalRisk = Math.max(Math.min(baseRisk + totalAdjustment, maxRisk), minRisk);
 
             // Update button states
             updateRiskButton('factor1', riskAssessmentState.factor1);
             updateRiskButton('factor2', riskAssessmentState.factor2);
             updateRiskButton('factor3', riskAssessmentState.factor3);
 
-            // Update deductions display
+            // Update adjustments display
             const deductionsDiv = document.getElementById('risk-deductions');
-            if (deductions.length > 0) {
-                deductionsDiv.innerHTML = deductions.map(d => `
+            if (adjustments.length > 0) {
+                deductionsDiv.innerHTML = adjustments.map(d => `
                     <div class="risk-summary-line">
                         <span>${d.label}:</span>
-                        <span class="risk-deduction">-${d.value.toFixed(2)}%</span>
+                        <span class="risk-${d.value < 0 ? 'deduction' : 'addition'}">${d.value > 0 ? '+' : ''}${d.value.toFixed(2)}%</span>
                     </div>
                 `).join('');
             } else {
