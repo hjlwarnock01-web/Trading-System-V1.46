@@ -995,6 +995,30 @@
             font-size: 0.9em;
         }
 
+        .entry-checklist-items {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .entry-checklist-items::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .entry-checklist-items::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        .entry-checklist-items::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .entry-checklist-items::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
         .entry-checklist-item {
             display: flex;
             align-items: center;
@@ -1549,7 +1573,7 @@
             <div id="stage1MainContent"></div>
             <div class="entry-checklist" id="stage1Checklist" style="display: none;">
                 <div class="entry-checklist-title">Completed Steps:</div>
-                <div id="stage1ChecklistItems"></div>
+                <div class="entry-checklist-items" id="stage1ChecklistItems"></div>
             </div>
             <button class="entry-reset-btn" onclick="resetStage1()" style="margin-top: 15px;">Reset Stage 1</button>
         </div>
@@ -1569,7 +1593,7 @@
             <div id="stage2MainContent"></div>
             <div class="entry-checklist" id="stage2Checklist" style="display: none;">
                 <div class="entry-checklist-title">Completed Steps:</div>
-                <div id="stage2ChecklistItems"></div>
+                <div class="entry-checklist-items" id="stage2ChecklistItems"></div>
             </div>
             <button class="entry-reset-btn" onclick="resetStage2()" style="margin-top: 15px;">Reset Stage 2</button>
         </div>
