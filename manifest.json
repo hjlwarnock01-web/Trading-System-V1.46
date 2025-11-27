@@ -1,0 +1,41 @@
+{
+  "name": "Harvey Trading System",
+  "short_name": "Harvey Trading",
+  "description": "Professional trading system with task management and notifications",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💹</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Stage 1 Setup",
+      "short_name": "Stage 1",
+      "description": "Quick access to Stage 1 Setup",
+      "url": "/index.html#stage1"
+    },
+    {
+      "name": "Stage 2 Entry",
+      "short_name": "Stage 2",
+      "description": "Quick access to Stage 2 Entry",
+      "url": "/index.html#stage2"
+    },
+    {
+      "name": "Daily Tasks",
+      "short_name": "Tasks",
+      "description": "View daily and weekly tasks",
+      "url": "/index.html#tasks"
+    }
+  ],
+  "prefer_related_applications": false
+}

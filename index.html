@@ -6,6 +6,15 @@
     <title>Trading System Rules - Professional Documentation</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💹</text></svg>">
     <meta name="description" content="Professional trading system rules and risk management framework">
+
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Harvey Trading">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💹</text></svg>">
+    <meta name="theme-color" content="#2563eb">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -601,6 +610,159 @@
             font-weight: 700;
         }
 
+        /* Tasks & Reminders Widget Styles */
+        #tasks-reminders-widget {
+            background: var(--bg-secondary);
+            padding: 0;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+        }
+        .tasks-header {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            user-select: none;
+        }
+        .tasks-header:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+        }
+        .tasks-toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 0;
+            line-height: 1;
+        }
+        .tasks-toggle-btn.collapsed {
+            transform: rotate(-90deg);
+        }
+        .tasks-content {
+            padding: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+            transition: max-height 0.3s ease;
+        }
+        .tasks-content.collapsed {
+            max-height: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .tasks-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .tasks-content::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+        .tasks-content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        .tasks-content::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        .task-section {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .task-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .task-section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 0.4rem 0;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        .task-item:hover {
+            color: var(--text-primary);
+        }
+        .task-checkbox {
+            margin-right: 0.5rem;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent-blue);
+        }
+        .task-item span {
+            flex: 1;
+        }
+        .wake-status {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        .wake-countdown {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--accent-blue);
+        }
+        .wake-reset-btn {
+            width: 100%;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .wake-reset-btn:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        .notification-test-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+        }
+        .notification-test-btn:hover {
+            background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
         /* Improvements & Tests Tracker Styles */
         #tests-tracker {
             background: var(--bg-secondary);
@@ -1192,6 +1354,97 @@
                                     <span>Final Risk:</span>
                                     <span class="risk-value" id="final-risk">1.00%</span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tasks & Reminders Widget -->
+                    <div id="tasks-reminders-widget">
+                        <div class="tasks-header" onclick="toggleTasksWidget()">
+                            <span>Tasks & Reminders</span>
+                            <button class="tasks-toggle-btn">▼</button>
+                        </div>
+                        <div class="tasks-content" id="tasksContent">
+                            <!-- Weekly Tasks -->
+                            <div class="task-section">
+                                <div class="task-section-title">Weekly (Sunday):</div>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-1">
+                                    <span>Mark M Zones</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-2">
+                                    <span>Mark HTF Zones</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-3">
+                                    <span>Update zone alerts</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-4">
+                                    <span>Check/update indicators</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-5">
+                                    <span>Review past week trades</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-sunday-6">
+                                    <span>Clean up old zones</span>
+                                </label>
+                            </div>
+
+                            <!-- Weekly Wednesday Tasks -->
+                            <div class="task-section">
+                                <div class="task-section-title">Weekly (Wednesday):</div>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="weekly-wednesday-1">
+                                    <span>Check M Zone validity</span>
+                                </label>
+                            </div>
+
+                            <!-- Daily Tasks (3x per day) -->
+                            <div class="task-section">
+                                <div class="task-section-title">Daily (3x per day):</div>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="daily-3x-1">
+                                    <span>Complete Stage 1 Setup</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="daily-3x-2">
+                                    <span>Update 15m zones</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="daily-3x-3">
+                                    <span>Update Daily Trading Plan</span>
+                                </label>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="daily-3x-4">
+                                    <span>Mark Stage 1 Complete</span>
+                                </label>
+                            </div>
+
+                            <!-- Daily Tasks (Once) -->
+                            <div class="task-section">
+                                <div class="task-section-title">Daily (Once):</div>
+                                <label class="task-item">
+                                    <input type="checkbox" class="task-checkbox" data-task="daily-once-1">
+                                    <span>Check news events</span>
+                                </label>
+                            </div>
+
+                            <!-- Wake Alarm Status -->
+                            <div class="task-section">
+                                <div class="task-section-title">Wake Alarm:</div>
+                                <div id="wakeStatus" class="wake-status">Waiting for trigger...</div>
+                                <div id="wakeCountdown" class="wake-countdown" style="display: none;"></div>
+                                <button class="wake-reset-btn" onclick="resetWakeAlarm()">Reset Today's Trigger</button>
+                            </div>
+
+                            <!-- Notification Settings -->
+                            <div class="task-section">
+                                <div class="task-section-title">Notification Settings:</div>
+                                <button class="notification-test-btn" onclick="sendTestNotification()">Send Test Notification</button>
                             </div>
                         </div>
                     </div>
@@ -2009,7 +2262,31 @@
             initDailyPlan();
             initRiskAssessment();
             initTestsTracker();
+            initTasksReminders();
             console.log('Entry widgets initialized');
+
+            // Register Service Worker for PWA
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+
+                        // Handle messages from service worker
+                        navigator.serviceWorker.addEventListener('message', (event) => {
+                            if (event.data.type === 'CHECK_WAKE_TRIGGER') {
+                                const today = event.data.today;
+                                const alreadyTriggered = tasksState.wakeAlarm.triggeredToday &&
+                                    tasksState.wakeAlarm.triggerTime?.startsWith(today);
+                                event.ports[0]?.postMessage({ alreadyTriggered });
+                            } else if (event.data.type === 'TRIGGER_WAKE_ALARM') {
+                                handleWakeTrigger();
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            }
         });
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
             if (!localStorage.getItem(THEME_KEY)) {
@@ -3180,6 +3457,340 @@ Good luck with your trade!`);
         function saveRiskAssessmentState() {
             localStorage.setItem('riskAssessmentState', JSON.stringify(riskAssessmentState));
         }
+
+        // Tasks & Reminders System
+        const TELEGRAM_BOT_TOKEN = '8526702374:AAFPdx6Cufhs4ebgf9jkWzVVtgAPmUdTReI';
+        const TELEGRAM_CHAT_ID = '5279215525';
+        const UTC_OFFSET = 7; // UTC+7 for local time
+
+        let tasksState = {
+            tasks: {},
+            lastReset: {
+                daily: null,
+                weeklySunday: null,
+                weeklyWednesday: null
+            },
+            wakeAlarm: {
+                triggeredToday: false,
+                triggerTime: null,
+                countdownEnd: null
+            }
+        };
+
+        function initTasksReminders() {
+            // Load state from localStorage
+            const saved = localStorage.getItem('tasksReminderState');
+            if (saved) {
+                tasksState = JSON.parse(saved);
+            }
+
+            // Check for resets
+            checkAndResetTasks();
+
+            // Restore checkbox states
+            document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+                const taskId = checkbox.dataset.task;
+                checkbox.checked = tasksState.tasks[taskId] || false;
+                checkbox.addEventListener('change', handleTaskChange);
+            });
+
+            // Update wake alarm display
+            updateWakeAlarmDisplay();
+
+            // Start notification scheduler
+            scheduleNotifications();
+
+            // Check for wake countdown
+            if (tasksState.wakeAlarm.countdownEnd) {
+                startWakeCountdown();
+            }
+
+            console.log('Tasks & Reminders initialized');
+        }
+
+        function toggleTasksWidget() {
+            const content = document.getElementById('tasksContent');
+            const toggleBtn = document.querySelector('.tasks-toggle-btn');
+
+            content.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('collapsed');
+        }
+
+        function handleTaskChange(event) {
+            const taskId = event.target.dataset.task;
+            tasksState.tasks[taskId] = event.target.checked;
+            saveTasksState();
+        }
+
+        function checkAndResetTasks() {
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            const dayOfWeek = now.getDay(); // 0 = Sunday, 3 = Wednesday
+
+            // Reset daily tasks at midnight
+            if (tasksState.lastReset.daily !== today) {
+                resetDailyTasks();
+                tasksState.lastReset.daily = today;
+                saveTasksState();
+            }
+
+            // Reset Sunday weekly tasks
+            if (dayOfWeek === 0 && tasksState.lastReset.weeklySunday !== today) {
+                resetWeeklySundayTasks();
+                tasksState.lastReset.weeklySunday = today;
+                saveTasksState();
+            }
+
+            // Reset Wednesday weekly tasks
+            if (dayOfWeek === 3 && tasksState.lastReset.weeklyWednesday !== today) {
+                resetWednesdayTasks();
+                tasksState.lastReset.weeklyWednesday = today;
+                saveTasksState();
+            }
+
+            // Reset wake alarm daily
+            if (tasksState.wakeAlarm.triggeredToday &&
+                tasksState.wakeAlarm.triggerTime &&
+                !tasksState.wakeAlarm.triggerTime.startsWith(today)) {
+                tasksState.wakeAlarm.triggeredToday = false;
+                tasksState.wakeAlarm.triggerTime = null;
+                tasksState.wakeAlarm.countdownEnd = null;
+                saveTasksState();
+            }
+        }
+
+        function resetDailyTasks() {
+            ['daily-3x-1', 'daily-3x-2', 'daily-3x-3', 'daily-3x-4', 'daily-once-1'].forEach(taskId => {
+                tasksState.tasks[taskId] = false;
+                const checkbox = document.querySelector(`[data-task="${taskId}"]`);
+                if (checkbox) checkbox.checked = false;
+            });
+        }
+
+        function resetWeeklySundayTasks() {
+            ['weekly-sunday-1', 'weekly-sunday-2', 'weekly-sunday-3',
+             'weekly-sunday-4', 'weekly-sunday-5', 'weekly-sunday-6'].forEach(taskId => {
+                tasksState.tasks[taskId] = false;
+                const checkbox = document.querySelector(`[data-task="${taskId}"]`);
+                if (checkbox) checkbox.checked = false;
+            });
+        }
+
+        function resetWednesdayTasks() {
+            tasksState.tasks['weekly-wednesday-1'] = false;
+            const checkbox = document.querySelector('[data-task="weekly-wednesday-1"]');
+            if (checkbox) checkbox.checked = false;
+        }
+
+        function saveTasksState() {
+            localStorage.setItem('tasksReminderState', JSON.stringify(tasksState));
+        }
+
+        // Wake Alarm System
+        async function handleWakeTrigger() {
+            const now = new Date();
+            const localTime = new Date(now.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
+            const hour = localTime.getUTCHours();
+            const today = localTime.toISOString().split('T')[0];
+
+            // Check if time is between 3am and 12pm (local time UTC+7)
+            if (hour < 3 || hour >= 12) {
+                console.log('Wake trigger ignored - outside allowed time window (3am-12pm)');
+                return { success: false, message: 'Outside allowed time window' };
+            }
+
+            // Check if already triggered today
+            if (tasksState.wakeAlarm.triggeredToday &&
+                tasksState.wakeAlarm.triggerTime?.startsWith(today)) {
+                console.log('Wake trigger ignored - already triggered today');
+                return { success: false, message: 'Already triggered today' };
+            }
+
+            // Set trigger
+            tasksState.wakeAlarm.triggeredToday = true;
+            tasksState.wakeAlarm.triggerTime = now.toISOString();
+            tasksState.wakeAlarm.countdownEnd = new Date(now.getTime() + (60 * 60 * 1000)).toISOString(); // 1 hour from now
+            saveTasksState();
+
+            // Start countdown
+            startWakeCountdown();
+
+            // Send notification after 1 hour
+            setTimeout(() => {
+                sendTelegramNotification('Time for Stage 1 Setup + News Check');
+            }, 60 * 60 * 1000);
+
+            updateWakeAlarmDisplay();
+
+            return { success: true, message: 'Wake alarm triggered successfully' };
+        }
+
+        function startWakeCountdown() {
+            const countdownDiv = document.getElementById('wakeCountdown');
+
+            function updateCountdown() {
+                if (!tasksState.wakeAlarm.countdownEnd) {
+                    countdownDiv.style.display = 'none';
+                    return;
+                }
+
+                const now = new Date();
+                const end = new Date(tasksState.wakeAlarm.countdownEnd);
+                const remaining = end - now;
+
+                if (remaining <= 0) {
+                    countdownDiv.textContent = 'Countdown Complete!';
+                    setTimeout(() => {
+                        countdownDiv.style.display = 'none';
+                        tasksState.wakeAlarm.countdownEnd = null;
+                        saveTasksState();
+                    }, 5000);
+                    return;
+                }
+
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                countdownDiv.textContent = `Time until Stage 1 reminder: ${minutes}m ${seconds}s`;
+                countdownDiv.style.display = 'block';
+
+                setTimeout(updateCountdown, 1000);
+            }
+
+            updateCountdown();
+        }
+
+        function updateWakeAlarmDisplay() {
+            const statusDiv = document.getElementById('wakeStatus');
+
+            if (tasksState.wakeAlarm.triggeredToday && tasksState.wakeAlarm.triggerTime) {
+                const triggerTime = new Date(tasksState.wakeAlarm.triggerTime);
+                statusDiv.textContent = `Triggered today at ${triggerTime.toLocaleTimeString()}`;
+                statusDiv.style.color = 'var(--accent-green)';
+            } else {
+                statusDiv.textContent = 'Waiting for trigger...';
+                statusDiv.style.color = 'var(--text-secondary)';
+            }
+        }
+
+        function resetWakeAlarm() {
+            tasksState.wakeAlarm.triggeredToday = false;
+            tasksState.wakeAlarm.triggerTime = null;
+            tasksState.wakeAlarm.countdownEnd = null;
+            saveTasksState();
+            updateWakeAlarmDisplay();
+            document.getElementById('wakeCountdown').style.display = 'none';
+            console.log('Wake alarm reset');
+        }
+
+        // Telegram Notification System
+        async function sendTelegramNotification(message) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    console.log('Telegram notification sent:', message);
+                    return { success: true };
+                } else {
+                    console.error('Telegram API error:', data);
+                    return { success: false, error: data.description };
+                }
+            } catch (error) {
+                console.error('Failed to send Telegram notification:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function sendTestNotification() {
+            const button = event.target;
+            button.disabled = true;
+            button.textContent = 'Sending...';
+
+            const result = await sendTelegramNotification('Test notification from Harvey Trading System');
+
+            if (result.success) {
+                button.textContent = 'Sent!';
+                button.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+            } else {
+                button.textContent = 'Failed!';
+                button.style.background = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
+            }
+
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = 'Send Test Notification';
+                button.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+            }, 3000);
+        }
+
+        // Notification Scheduler
+        function scheduleNotifications() {
+            // Check every minute for scheduled notifications
+            setInterval(() => {
+                const now = new Date();
+                const localTime = new Date(now.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
+                const hour = localTime.getUTCHours();
+                const minute = localTime.getUTCMinutes();
+                const dayOfWeek = localTime.getUTCDay();
+                const notificationKey = `notification-${localTime.toISOString().split('T')[0]}-${hour}`;
+
+                // Check if notification already sent today at this hour
+                const sent = localStorage.getItem(notificationKey);
+                if (sent) return;
+
+                // 1pm notification (13:00)
+                if (hour === 13 && minute === 0) {
+                    sendTelegramNotification('Time for Stage 1 Setup');
+                    localStorage.setItem(notificationKey, 'true');
+                }
+
+                // 7pm notification (19:00)
+                if (hour === 19 && minute === 0) {
+                    sendTelegramNotification('Time for Stage 1 Setup');
+                    localStorage.setItem(notificationKey, 'true');
+                }
+
+                // Sunday morning notification (9:00)
+                if (dayOfWeek === 0 && hour === 9 && minute === 0) {
+                    sendTelegramNotification('Weekly prep tasks ready\n\nTime to:\n- Mark M Zones\n- Mark HTF Zones\n- Update zone alerts\n- Check/update indicators\n- Review past week trades\n- Clean up old zones');
+                    localStorage.setItem(notificationKey, 'true');
+                }
+
+                // Wednesday notification (9:00)
+                if (dayOfWeek === 3 && hour === 9 && minute === 0) {
+                    sendTelegramNotification('Check M Zone validity');
+                    localStorage.setItem(notificationKey, 'true');
+                }
+            }, 60000); // Check every minute
+
+            // Clean up old notification flags (keep only today's)
+            const today = new Date().toISOString().split('T')[0];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key?.startsWith('notification-') && !key.includes(today)) {
+                    localStorage.removeItem(key);
+                }
+            }
+        }
+
+        // Webhook endpoint listener (for iOS Shortcuts)
+        // Note: This won't work in a static HTML file. You'll need a backend server
+        // or use this as a PWA with service worker to handle requests
+        // For now, we'll create a manual trigger function
+        window.triggerWakeAlarm = handleWakeTrigger;
 
         // Improvements & Tests Tracker System
         const testsRef = db.ref('tests/user');
