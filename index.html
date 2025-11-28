@@ -1938,6 +1938,9 @@
             <div style="background: var(--bg-secondary); padding: 0.5rem; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.85rem;">
                 <div><strong>Current Time:</strong> <span id="current-time-display">--:--:--</span></div>
                 <div><strong>Next Task:</strong> <span id="next-task-display">Calculating...</span></div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                    <strong>Timezone:</strong> <span id="current-timezone">Detecting...</span>
+                </div>
             </div>
 
             <!-- Debug Toggle Button -->
@@ -2449,11 +2452,10 @@
                 // Wait for tasksState to be initialized
                 setTimeout(() => {
                     const now = new Date();
-                    const localTime = new Date(now.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
-                    const hour = localTime.getUTCHours();
-                    const today = localTime.toISOString().split('T')[0];
+                    const hour = now.getHours(); // Device local time, auto-detected
+                    const today = now.toISOString().split('T')[0];
 
-                    // Check time window (3am - 12pm local time)
+                    // Check time window (3am - 12pm device local time)
                     if (hour < 3 || hour >= 12) {
                         console.log('Wake trigger ignored - outside time window (3am-12pm). Current hour:', hour);
                         alert('Wake alarm can only be triggered between 3am and 12pm');
@@ -4011,10 +4013,13 @@ Good luck with your trade!`);
         // ==================== TIME DISPLAY ====================
         function updateTimeDisplay() {
             const now = new Date();
-            const localTime = new Date(now.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
 
-            // Update current time display
-            document.getElementById('current-time-display').textContent = localTime.toLocaleTimeString();
+            // Update current time display - auto-detects timezone
+            document.getElementById('current-time-display').textContent = now.toLocaleTimeString('en-US', { hour12: false });
+
+            // Update timezone display
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            document.getElementById('current-timezone').textContent = timezone;
 
             // Calculate next task time
             const nextDisplay = document.getElementById('next-task-display');
@@ -4029,8 +4034,8 @@ Good luck with your trade!`);
             // If wake alarm triggered, show next task time
             const nextTime = getNextTaskTime();
             if (nextTime) {
-                const nextLocal = new Date(nextTime.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
-                nextDisplay.textContent = nextLocal.toLocaleTimeString();
+                // Use device timezone automatically
+                nextDisplay.textContent = new Date(nextTime).toLocaleTimeString('en-US', { hour12: false });
                 nextDisplay.style.color = 'var(--accent-green)';
             } else if (tasksState.showAllTasksMode) {
                 nextDisplay.textContent = 'Showing all tasks';
@@ -4199,12 +4204,13 @@ Good luck with your trade!`);
                     // Wake alarm triggered, show next task time or completion message
                     const nextTime = getNextTaskTime();
                     if (nextTime) {
-                        const localTime = new Date(nextTime.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
+                        // Use device timezone automatically
+                        const timeString = new Date(nextTime).toLocaleTimeString('en-US', { hour12: false });
                         displayArea.innerHTML = `
                             <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
                                 <div>No tasks due right now</div>
                                 <div style="margin-top: 0.5rem; color: var(--accent-blue); font-weight: 600;">
-                                    Next up at ${localTime.toLocaleTimeString()}
+                                    Next up at ${timeString}
                                 </div>
                             </div>
                         `;
@@ -4465,13 +4471,12 @@ Good luck with your trade!`);
         // Wake Alarm System
         async function handleWakeTrigger() {
             const now = new Date();
-            const localTime = new Date(now.getTime() + (UTC_OFFSET * 60 * 60 * 1000));
-            const hour = localTime.getUTCHours();
-            const today = localTime.toISOString().split('T')[0];
+            const hour = now.getHours(); // Device local time, auto-detected
+            const today = now.toISOString().split('T')[0];
 
-            // Check if time is between 3am and 12pm (local time UTC+7)
+            // Check if time is between 3am and 12pm (device local time)
             if (hour < 3 || hour >= 12) {
-                console.log('Wake trigger ignored - outside allowed time window (3am-12pm)');
+                console.log('Wake trigger ignored - outside allowed time window (3am-12pm). Current hour:', hour);
                 return { success: false, message: 'Outside allowed time window' };
             }
 
