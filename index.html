@@ -1934,6 +1934,12 @@
             <button class="minimize-btn" onclick="event.stopPropagation(); toggleTasksWidget()">−</button>
         </div>
         <div class="tasks-content" id="tasksContent">
+            <!-- Current Time Display - Always Visible -->
+            <div style="background: var(--bg-secondary); padding: 0.5rem; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.85rem;">
+                <div><strong>Current Time:</strong> <span id="current-time-display">--:--:--</span></div>
+                <div><strong>Next Task:</strong> <span id="next-task-display">Calculating...</span></div>
+            </div>
+
             <!-- Debug Toggle Button -->
             <button onclick="toggleTasksDebug()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.75rem; background: var(--bg-secondary); color: var(--text-secondary); border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; justify-content: space-between;">
                 <span>Debug</span>
@@ -1951,12 +1957,6 @@
                     <div style="margin-top: 0.5rem; font-size: 0.7rem; color: var(--text-secondary);">
                         Use this URL in your iOS Shortcut to trigger the wake alarm (3am-12pm only)
                     </div>
-                </div>
-
-                <!-- Current Time Display -->
-                <div style="background: var(--bg-secondary); padding: 0.5rem; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.85rem;">
-                    <div><strong>Current Time:</strong> <span id="current-time-display">--:--:--</span></div>
-                    <div><strong>Next Task:</strong> <span id="next-task-display">Calculating...</span></div>
                 </div>
 
                 <!-- Debug Controls -->
