@@ -1117,6 +1117,167 @@
             width: 280px;
         }
 
+        /* News Event Blocker (in sidebar) */
+        .news-event-item {
+            background: var(--bg-secondary);
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .news-event-item.blocked {
+            border-left-color: var(--accent-red);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .news-event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-event-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .news-event-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .news-event-currency {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .currency-USD { background: rgba(37, 99, 235, 0.2); color: var(--accent-blue); }
+        .currency-EUR { background: rgba(5, 150, 105, 0.2); color: var(--accent-green); }
+        .currency-JPY { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+        .currency-GBP { background: rgba(139, 92, 246, 0.2); color: #8b5cf6; }
+
+        .news-block-reason {
+            font-size: 0.75rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+
+        .news-settings-btn {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .news-settings-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .news-blocking-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            z-index: 99999;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
+            display: none;
+        }
+
+        .news-blocking-banner.active {
+            display: block;
+        }
+
+        .news-banner-text {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-banner-alternatives {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .news-countdown {
+            font-size: 0.8rem;
+            opacity: 0.85;
+            margin-top: 0.25rem;
+        }
+
+        .news-settings-panel {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .news-input-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .news-input-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .news-input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+
+        .news-update-btn {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #047857 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .news-update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .news-last-update {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
         .balance-widget .entry-content {
             padding: 1rem;
         }
@@ -1446,21 +1607,97 @@
             </div>
 
             <div class="content-grid">
-                <!-- News Sidebar with Watch Status -->
+                <!-- Left Sidebar -->
                 <div class="news-sidebar">
-                    <div class="sidebar-container">
+                    <!-- News Event Blocker (replaces Market Events Alert) -->
+                    <div class="sidebar-container" style="margin-bottom: 1.5rem;">
                         <div class="sidebar-header">
                             <svg class="sidebar-icon news-icon" viewBox="0 0 24 24" role="img" aria-hidden="true">
                                 <path d="M12 2L2 7v10c0 5.55 3.84 9.739 9 11 5.16-1.261 9-5.45 9-11V7l-10-5z"/>
                                 <path d="M9 12l2 2 4-4"/>
                             </svg>
-                            <h3>Market Events Alert</h3>
+                            <h3>News Event Blocker</h3>
                         </div>
-                        
-                        <div id="news-content" role="region" aria-label="Market events">
-                            <div class="loading">
-                                <span class="loading-spinner"></span>
-                                Loading economic events...
+
+                        <div id="news-blocker-sidebar" role="region" aria-label="News event blocking">
+                            <button class="news-settings-btn" onclick="toggleNewsSettings()" style="width: 100%; margin-bottom: 0.75rem;">⚙️ Settings</button>
+
+                            <!-- Settings Panel (Hidden by default) -->
+                            <div id="newsSettingsPanel" style="display: none; margin-bottom: 0.75rem;">
+                                <div class="news-settings-panel">
+                                    <!-- API Status -->
+                                    <div style="background: var(--bg-primary); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.75rem; border: 1px solid var(--border-color);">
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.85rem;">API Status</div>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem;">
+                                            <div>
+                                                <div style="color: var(--text-secondary);">Status:</div>
+                                                <div id="newsApiStatus" style="font-weight: 600;">❓ Unknown</div>
+                                            </div>
+                                            <div>
+                                                <div style="color: var(--text-secondary);">Events:</div>
+                                                <div id="newsEventsCount" style="font-weight: 600;">0</div>
+                                            </div>
+                                            <div>
+                                                <div style="color: var(--text-secondary);">Last Fetch:</div>
+                                                <div id="newsLastSuccessfulFetch" style="font-weight: 600;">Never</div>
+                                            </div>
+                                            <div>
+                                                <div style="color: var(--text-secondary);">Next Fetch:</div>
+                                                <div id="newsNextFetch" style="font-weight: 600;">Manual</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">FCS API Key (Free: 500 calls/month)</label>
+                                        <input type="text" class="news-input" id="newsApiKey" value="62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">Pre-Event Disparity (%) - Forecast vs Previous</label>
+                                        <input type="number" class="news-input" id="newsPreEventThreshold" value="50" step="1" min="0">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">Post-Event Disparity (%) - Actual vs Forecast</label>
+                                        <input type="number" class="news-input" id="newsPostEventThreshold" value="50" step="1" min="0">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">Fed/ECB Before (min)</label>
+                                        <input type="number" class="news-input" id="newsFedEcbBefore" value="60" min="0">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">Fed/ECB After (min)</label>
+                                        <input type="number" class="news-input" id="newsFedEcbAfter" value="120" min="0">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">QoQ/YoY Before (min)</label>
+                                        <input type="number" class="news-input" id="newsQoqYoyBefore" value="15" min="0">
+                                    </div>
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">QoQ/YoY After (min)</label>
+                                        <input type="number" class="news-input" id="newsQoqYoyAfter" value="15" min="0">
+                                    </div>
+
+                                    <!-- Test Mode Button -->
+                                    <button id="newsTestModeBtn" class="news-settings-btn" onclick="toggleTestMode()" style="margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%);">
+                                        🧪 Enable Test Mode
+                                    </button>
+
+                                    <button class="news-update-btn" onclick="updateNewsCalendarNow()">🔄 Update Calendar Now</button>
+                                    <div class="news-last-update" id="newsLastUpdate">Never updated</div>
+                                </div>
+                            </div>
+
+                            <!-- Events List -->
+                            <div style="background: var(--bg-secondary); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.75rem;">
+                                <div style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-primary);">
+                                    📅 Upcoming Events
+                                </div>
+                                <div style="border-top: 2px solid var(--border-color); margin-bottom: 0.5rem;"></div>
+                                <div id="newsEventsList" style="max-height: 400px; overflow-y: auto;">
+                                    <div style="text-align: center; color: var(--text-secondary); padding: 1rem;">
+                                        Loading news events...
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2031,6 +2268,13 @@
         </div>
     </div>
 
+    <!-- News Blocking Banner -->
+    <div class="news-blocking-banner" id="newsBlockingBanner">
+        <div class="news-banner-text" id="newsBannerText"></div>
+        <div class="news-banner-alternatives" id="newsBannerAlternatives"></div>
+        <div class="news-countdown" id="newsCountdown"></div>
+    </div>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -2288,68 +2532,6 @@
             document.body.appendChild(notification);
             setTimeout(() => notification.remove(), 3000);
         }
-        async function loadNewsEvents() {
-            try {
-                const events = await generateStaticEvents();
-                displayNewsEvents(events);
-            } catch (error) {
-                const container = document.getElementById('news-content');
-                if (container) {
-                    container.innerHTML = `<div class="error-state">Unable to load market events</div>`;
-                }
-            }
-        }
-        function generateStaticEvents() {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    const today = new Date();
-                    const events = [
-                        { date: today.toISOString().split('T')[0], title: 'Federal Reserve Interest Rate Decision', time: '14:00', impact: 'High' },
-                        { date: today.toISOString().split('T')[0], title: 'Fed Chair Powell Press Conference', time: '14:30', impact: 'High' },
-                        { date: new Date(today.getTime() + 86400000).toISOString().split('T')[0], title: 'US CPI (Consumer Price Index)', time: '08:30', impact: 'High' },
-                        { date: new Date(today.getTime() + 172800000).toISOString().split('T')[0], title: 'ECB Monetary Policy Meeting', time: '12:15', impact: 'High' },
-                        { date: new Date(today.getTime() + 259200000).toISOString().split('T')[0], title: 'US Non-Farm Payrolls', time: '08:30', impact: 'High' },
-                        { date: new Date(today.getTime() + 432000000).toISOString().split('T')[0], title: 'US GDP Quarterly Data', time: '08:30', impact: 'Medium' }
-                    ];
-                    const thirtyDaysFromNow = new Date(today.getTime() + 2592000000);
-                    const filteredEvents = events.filter(e => {
-                        const eventDate = new Date(e.date);
-                        return eventDate >= today && eventDate <= thirtyDaysFromNow;
-                    }).sort((a, b) => new Date(a.date) - new Date(b.date));
-                    resolve(filteredEvents);
-                }, 500);
-            });
-        }
-        function displayNewsEvents(events) {
-            const container = document.getElementById('news-content');
-            if (events.length === 0) {
-                container.innerHTML = '<div class="no-events">No major events scheduled for the next 30 days</div>';
-                return;
-            }
-            const eventsHtml = events.map(event => {
-                const eventDate = new Date(event.date);
-                const today = new Date();
-                const tomorrow = new Date(today);
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                let dateDisplay;
-                if (eventDate.toDateString() === today.toDateString()) {
-                    dateDisplay = 'Today';
-                } else if (eventDate.toDateString() === tomorrow.toDateString()) {
-                    dateDisplay = 'Tomorrow';
-                } else {
-                    dateDisplay = eventDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-                }
-                const impactClass = event.impact.toLowerCase() === 'high' ? 'high-impact' : 'medium-impact';
-                return `
-                    <div class="news-item ${impactClass}" role="article">
-                        <div class="news-date">${dateDisplay} at ${event.time} UTC</div>
-                        <div class="news-title">${event.title}</div>
-                        <div class="news-impact">Impact: ${event.impact}</div>
-                    </div>
-                `;
-            }).join('');
-            container.innerHTML = eventsHtml;
-        }
         async function loadForexPrices() {
             const pricesContainer = document.getElementById('prices-content');
             if (!pricesContainer) return;
@@ -2417,9 +2599,7 @@
             console.log('Firebase config:', firebaseConfig.databaseURL);
 
             initializeTheme();
-            loadNewsEvents();
             loadForexPrices();
-            setInterval(loadNewsEvents, 14400000);
             setInterval(loadForexPrices, 3600000);
 
             // Test Firebase connection
@@ -2588,19 +2768,35 @@
             {
                 name: 'Instrument Selection',
                 description: 'What are you trading?',
-                render: () => `
+                render: () => {
+                    // Check which instruments are blocked
+                    const usdjpyBlocked = isInstrumentBlocked('USDJPY');
+                    const btcusdBlocked = isInstrumentBlocked('BTCUSD');
+                    const eurusdBlocked = isInstrumentBlocked('EURUSD');
+
+                    return `
                     <div class="entry-buttons">
-                        <button class="entry-btn" onclick="selectInstrument('USDJPY')">
-                            USDJPY
+                        <button class="entry-btn" id="instrument-USDJPY"
+                            onclick="selectInstrument('USDJPY')"
+                            style="${usdjpyBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            title="${usdjpyBlocked.blocked ? `Blocked - ${usdjpyBlocked.eventName}` : 'Select USDJPY'}">
+                            ${usdjpyBlocked.blocked ? '🔴 ' : ''}USDJPY
                         </button>
-                        <button class="entry-btn" onclick="selectInstrument('BTCUSD')">
-                            BTCUSD
+                        <button class="entry-btn" id="instrument-BTCUSD"
+                            onclick="selectInstrument('BTCUSD')"
+                            style="${btcusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            title="${btcusdBlocked.blocked ? `Blocked - ${btcusdBlocked.eventName}` : 'Select BTCUSD'}">
+                            ${btcusdBlocked.blocked ? '🔴 ' : ''}BTCUSD
                         </button>
-                        <button class="entry-btn" onclick="selectInstrument('EURUSD')">
-                            EURUSD
+                        <button class="entry-btn" id="instrument-EURUSD"
+                            onclick="selectInstrument('EURUSD')"
+                            style="${eurusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            title="${eurusdBlocked.blocked ? `Blocked - ${eurusdBlocked.eventName}` : 'Select EURUSD'}">
+                            ${eurusdBlocked.blocked ? '🔴 ' : ''}EURUSD
                         </button>
                     </div>
-                `
+                `;
+                }
             },
             {
                 name: 'Direction Selection',
@@ -2909,6 +3105,1440 @@
             const widget = document.getElementById('balanceWidget');
             widget.classList.toggle('minimized');
         }
+
+        // ==================== NEWS BLOCKING SYSTEM ====================
+
+        // News Blocking Configuration
+        let newsBlockingConfig = {
+            apiKey: '62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW',  // FCS API key (Free: 500 calls/month)
+            apiProvider: 'FCS',  // FCS or FOREXFACTORY
+            preEventThreshold: 50,  // Forecast vs Previous disparity threshold (%)
+            postEventThreshold: 50, // Actual vs Forecast disparity threshold (%)
+            fedEcbBefore: 60,
+            fedEcbAfter: 120,
+            qoqYoyBefore: 15,
+            qoqYoyAfter: 15,
+            disparityBefore: 15,
+            disparityAfter: 15,
+            testMode: false,
+            apiStatus: 'unknown',
+            lastSuccessfulFetch: null,
+            eventsCount: 0,
+            nextScheduledFetch: null
+        };
+
+        // Load config from localStorage
+        function loadNewsConfig() {
+            const saved = localStorage.getItem('newsBlockingConfig');
+            if (saved) {
+                const savedConfig = JSON.parse(saved);
+
+                // MIGRATION: Clear old API keys (Alpha Vantage, Finnhub)
+                if (savedConfig.apiKey === '2ITV5J6KDMOE4BYW' ||
+                    savedConfig.apiKey === 'PASTE_FINNHUB_API_KEY_HERE' ||
+                    savedConfig.apiKey === 'd4mr3f1r01qsn6g7uhhgd4mr3f1r01qsn6g7uhi0') {
+                    console.log('🔄 Migrating from old API provider to FCS API');
+                    console.log('Please get free FCS API key at: https://fcsapi.com/dashboard');
+                    savedConfig.apiKey = 'GET_FREE_KEY_AT_FCSAPI.COM';
+                }
+
+                // Merge with defaults (keep new Finnhub key if not in saved config)
+                newsBlockingConfig = {
+                    ...newsBlockingConfig,
+                    ...savedConfig,
+                    apiKey: savedConfig.apiKey || newsBlockingConfig.apiKey
+                };
+
+                console.log('✅ Loaded config with API key:', newsBlockingConfig.apiKey.substring(0, 8) + '...');
+
+                // Update inputs
+                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
+                document.getElementById('newsPreEventThreshold').value = newsBlockingConfig.preEventThreshold || 50;
+                document.getElementById('newsPostEventThreshold').value = newsBlockingConfig.postEventThreshold || 50;
+                document.getElementById('newsFedEcbBefore').value = newsBlockingConfig.fedEcbBefore;
+                document.getElementById('newsFedEcbAfter').value = newsBlockingConfig.fedEcbAfter;
+                document.getElementById('newsQoqYoyBefore').value = newsBlockingConfig.qoqYoyBefore;
+                document.getElementById('newsQoqYoyAfter').value = newsBlockingConfig.qoqYoyAfter;
+
+                // Save migrated config
+                localStorage.setItem('newsBlockingConfig', JSON.stringify(newsBlockingConfig));
+            } else {
+                console.log('✅ Using default config with Finnhub API key');
+                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
+            }
+        }
+
+        // Save config to localStorage
+        function saveNewsConfig() {
+            newsBlockingConfig.apiKey = document.getElementById('newsApiKey').value;
+            newsBlockingConfig.preEventThreshold = parseFloat(document.getElementById('newsPreEventThreshold').value);
+            newsBlockingConfig.postEventThreshold = parseFloat(document.getElementById('newsPostEventThreshold').value);
+            newsBlockingConfig.fedEcbBefore = parseInt(document.getElementById('newsFedEcbBefore').value);
+            newsBlockingConfig.fedEcbAfter = parseInt(document.getElementById('newsFedEcbAfter').value);
+            newsBlockingConfig.qoqYoyBefore = parseInt(document.getElementById('newsQoqYoyBefore').value);
+            newsBlockingConfig.qoqYoyAfter = parseInt(document.getElementById('newsQoqYoyAfter').value);
+            localStorage.setItem('newsBlockingConfig', JSON.stringify(newsBlockingConfig));
+        }
+
+        // Currency mapping for pairs
+        const CURRENCY_MAPPING = {
+            'USDJPY': ['USD', 'JPY'],
+            'EURUSD': ['EUR', 'USD'],
+            'BTCUSD': ['USD'] // BTC affected by major USD events
+        };
+
+        // Get currencies for selected instrument
+        function getInstrumentCurrencies(instrument) {
+            return CURRENCY_MAPPING[instrument] || [];
+        }
+
+        // Check if event affects selected instrument
+        function eventAffectsInstrument(eventCurrency, instrument) {
+            const instrumentCurrencies = getInstrumentCurrencies(instrument);
+            return instrumentCurrencies.includes(eventCurrency);
+        }
+
+        // Blocking Detection Logic
+        function isFedEcbEvent(eventName) {
+            const name = eventName.toLowerCase();
+            return name.includes('fed') || name.includes('fomc') || name.includes('powell') ||
+                   name.includes('federal reserve') || name.includes('federal funds') ||
+                   name.includes('ecb') || name.includes('lagarde') ||
+                   name.includes('european central bank') ||
+                   (name.includes('interest rate decision') && (name.includes('usd') || name.includes('eur')));
+        }
+
+        function isBojEvent(eventName) {
+            const name = eventName.toLowerCase();
+            return name.includes('boj') || name.includes('bank of japan') || name.includes('kuroda') ||
+                   (name.includes('interest rate decision') && name.includes('jpy'));
+        }
+
+        function isQoqYoyEvent(eventName) {
+            const name = eventName.toLowerCase();
+
+            // Check for QoQ or YoY indicators
+            const hasQoqYoy = name.includes('qoq') || name.includes('q/q') ||
+                             name.includes('quarter-on-quarter') || name.includes('quarterly') ||
+                             name.includes('yoy') || name.includes('y/y') ||
+                             name.includes('year-on-year') || name.includes('year-over-year') ||
+                             name.includes('q-o-q') || name.includes('y-o-y');
+
+            // EXCLUDE MoM (Month-on-Month) events - these should NOT be blocked
+            const hasMom = name.includes('mom') || name.includes('m/m') ||
+                          name.includes('month-on-month') || name.includes('monthly') ||
+                          name.includes('m-o-m');
+
+            // Only block if it's QoQ/YoY AND NOT MoM
+            return hasQoqYoy && !hasMom;
+        }
+
+        // Check disparity using upper/lower bound method
+        function checkDisparity(oldValue, newValue, thresholdPercent) {
+            if (!oldValue || !newValue || oldValue === 0) {
+                return { blocked: false, disparity: 0 };
+            }
+
+            const multiplier = thresholdPercent / 100;
+            const upperBound = oldValue * (1 + multiplier);
+            const lowerBound = oldValue * (1 - multiplier);
+
+            if (newValue >= upperBound || newValue <= lowerBound) {
+                const percentChange = Math.abs((newValue - oldValue) / oldValue * 100);
+                return { blocked: true, disparity: percentChange.toFixed(1) };
+            }
+
+            return { blocked: false, disparity: 0 };
+        }
+
+        function detectEventBlocking(event) {
+            let isBlocked = false;
+            let reason = '';
+            let bufferBefore = 0;
+            let bufferAfter = 0;
+
+            // Check Fed/ECB events
+            if (isFedEcbEvent(event.name)) {
+                isBlocked = true;
+                reason = 'Fed/ECB Event';
+                bufferBefore = newsBlockingConfig.fedEcbBefore;
+                bufferAfter = newsBlockingConfig.fedEcbAfter;
+            }
+            // Check BOJ events
+            else if (isBojEvent(event.name)) {
+                isBlocked = true;
+                reason = 'BOJ Event';
+                bufferBefore = newsBlockingConfig.fedEcbBefore;
+                bufferAfter = newsBlockingConfig.fedEcbAfter;
+            }
+            // Check QoQ/YoY events
+            else if (isQoqYoyEvent(event.name)) {
+                isBlocked = true;
+                reason = 'QoQ/YoY Event';
+                bufferBefore = newsBlockingConfig.qoqYoyBefore;
+                bufferAfter = newsBlockingConfig.qoqYoyAfter;
+            }
+            // Check pre-event disparity (Forecast vs Previous)
+            else if (event.previous && event.forecast) {
+                const preDisparity = checkDisparity(event.previous, event.forecast, newsBlockingConfig.preEventThreshold);
+                if (preDisparity.blocked) {
+                    isBlocked = true;
+                    reason = `Pre-Event Disparity (${preDisparity.disparity}%)`;
+                    bufferBefore = newsBlockingConfig.disparityBefore;
+                    bufferAfter = newsBlockingConfig.disparityAfter;
+                }
+            }
+
+            // Check post-event disparity (Actual vs Forecast) - only if actual value exists
+            if (!isBlocked && event.forecast && event.actual !== null && event.actual !== undefined) {
+                const postDisparity = checkDisparity(event.forecast, event.actual, newsBlockingConfig.postEventThreshold);
+                if (postDisparity.blocked) {
+                    isBlocked = true;
+                    reason = `Post-Event Disparity (${postDisparity.disparity}%)`;
+                    bufferBefore = newsBlockingConfig.disparityBefore;
+                    bufferAfter = newsBlockingConfig.disparityAfter;
+                }
+            }
+
+            return {
+                isBlocked,
+                reason,
+                bufferBefore,
+                bufferAfter
+            };
+        }
+
+        // Calculate affected pairs
+        function getAffectedPairs(eventCurrency) {
+            const affected = [];
+            for (const [pair, currencies] of Object.entries(CURRENCY_MAPPING)) {
+                if (currencies.includes(eventCurrency)) {
+                    affected.push(pair);
+                }
+            }
+            return affected;
+        }
+
+        // Get manual/recurring major events (fallback when API fails)
+        function getManualEvents() {
+            console.log('📅 Loading manual recurring major events...');
+            const now = new Date();
+            const events = [];
+
+            // FOMC Meetings 2025 Schedule (8 meetings per year)
+            const fomcDates = [
+                new Date('2025-01-29'),
+                new Date('2025-03-19'),
+                new Date('2025-05-07'),
+                new Date('2025-06-18'),
+                new Date('2025-07-30'),
+                new Date('2025-09-17'),
+                new Date('2025-11-05'),
+                new Date('2025-12-17')
+            ];
+
+            fomcDates.forEach(date => {
+                date.setHours(14, 0, 0); // 2:00 PM EST
+                if (date > now) {
+                    events.push({
+                        time: date.getTime(),
+                        currency: 'USD',
+                        name: 'FOMC Meeting Decision',
+                        importance: 'high',
+                        actual: null,
+                        forecast: null,
+                        previous: null
+                    });
+                }
+            });
+
+            // NFP - First Friday of every month at 8:30 AM EST
+            for (let month = 0; month < 12; month++) {
+                const firstDay = new Date(now.getFullYear(), month, 1);
+                const firstFriday = new Date(firstDay);
+                const day = firstDay.getDay();
+                const daysToAdd = day === 0 ? 5 : day === 6 ? 6 : (5 - day + 7) % 7;
+                firstFriday.setDate(1 + daysToAdd);
+                firstFriday.setHours(8, 30, 0);
+
+                if (firstFriday > now) {
+                    events.push({
+                        time: firstFriday.getTime(),
+                        currency: 'USD',
+                        name: 'Non-Farm Payrolls (NFP)',
+                        importance: 'high',
+                        actual: null,
+                        forecast: null,
+                        previous: null
+                    });
+                }
+            }
+
+            // ECB Meetings (8 per year)
+            const ecbDates = [
+                new Date('2025-01-30'),
+                new Date('2025-03-13'),
+                new Date('2025-04-17'),
+                new Date('2025-06-05'),
+                new Date('2025-07-24'),
+                new Date('2025-09-11'),
+                new Date('2025-10-30'),
+                new Date('2025-12-18')
+            ];
+
+            ecbDates.forEach(date => {
+                date.setHours(13, 45, 0); // 1:45 PM CET
+                if (date > now) {
+                    events.push({
+                        time: date.getTime(),
+                        currency: 'EUR',
+                        name: 'ECB Interest Rate Decision',
+                        importance: 'high',
+                        actual: null,
+                        forecast: null,
+                        previous: null
+                    });
+                }
+            });
+
+            console.log(`✅ Loaded ${events.length} manual events`);
+            return events;
+        }
+
+        // Fetch economic calendar from FCS API
+        async function fetchFinnhubCalendar() {
+            console.log('\n' + '='.repeat(80));
+            console.log('🔄 FCS API - FETCHING ECONOMIC CALENDAR');
+            console.log('='.repeat(80));
+
+            // Save config first (updates newsBlockingConfig from UI)
+            saveNewsConfig();
+
+            const apiKey = newsBlockingConfig.apiKey;
+            console.log('API Provider:', newsBlockingConfig.apiProvider);
+            console.log('API Key (first 10 chars):', apiKey ? apiKey.substring(0, 10) + '...' : 'MISSING');
+            console.log('Full API Key:', apiKey);
+            console.log('Timestamp:', new Date().toISOString());
+
+            if (!apiKey || apiKey === 'GET_FREE_KEY_AT_FCSAPI.COM' || apiKey === 'PASTE_FINNHUB_API_KEY_HERE') {
+                console.error('❌ MISSING API KEY - Get free key at: https://fcsapi.com/dashboard');
+                alert('Please get your FREE FCS API key:\n\n1. Go to: https://fcsapi.com/dashboard\n2. Sign up (free)\n3. Copy API key\n4. Paste in Settings\n\nFree tier: 500 calls/month');
+                return getDefaultDemoEvents();
+            }
+
+            try {
+                // Calculate date range for full month
+                const now = new Date();
+                const monthFromNow = new Date(now.getTime() + (31 * 24 * 60 * 60 * 1000));
+
+                const fromDate = now.toISOString().split('T')[0];
+                const toDate = monthFromNow.toISOString().split('T')[0];
+
+                console.log('\n📅 Date Range:');
+                console.log('  From:', fromDate);
+                console.log('  To:', toDate);
+
+                // FCS API endpoint: economy_cal
+                const calendarUrl = `https://fcsapi.com/api-v3/forex/economy_cal?from=${fromDate}&to=${toDate}&access_key=${apiKey}`;
+                console.log('\n📡 Making FCS API Request:');
+                console.log('  Full URL:', calendarUrl);
+
+                console.log('\n⏳ Fetching...');
+                const response = await fetch(calendarUrl);
+
+                console.log('\n📥 Response Received:');
+                console.log('  Status:', response.status, response.statusText);
+                console.log('  OK:', response.ok);
+                console.log('  Headers:', Object.fromEntries(response.headers.entries()));
+
+                if (!response.ok) {
+                    console.error('❌ HTTP Error:', response.status, response.statusText);
+
+                    // Handle specific error codes
+                    if (response.status === 401) {
+                        console.error('❌ 401 UNAUTHORIZED: API key is invalid or missing');
+                        alert('Finnhub API Error: Invalid API key. Please check your API key in Settings.');
+                    } else if (response.status === 403) {
+                        console.error('❌ 403 FORBIDDEN: Economic calendar endpoint requires PAID Finnhub subscription');
+                        console.error('Your API key is valid, but the free tier does not include economic calendar access');
+                        console.error('Solutions:');
+                        console.error('  1. Upgrade Finnhub plan at: https://finnhub.io/pricing');
+                        console.error('  2. Use a different API with free economic calendar (Trading Economics, FCS API)');
+                        alert('Finnhub Economic Calendar requires a PAID subscription.\n\nYour free tier API key cannot access this endpoint.\n\nOptions:\n1. Upgrade at finnhub.io/pricing\n2. Ask Claude to switch to a free alternative API');
+                    } else if (response.status === 429) {
+                        console.error('❌ 429 RATE LIMIT: Too many requests');
+                        alert('Finnhub API Error: Rate limit exceeded. Please wait and try again.');
+                    }
+
+                    throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+                }
+
+                console.log('\n🔍 Parsing JSON...');
+                const data = await response.json();
+
+                console.log('\n📊 Response Data:');
+                console.log('  Type:', typeof data);
+                console.log('  Keys:', Object.keys(data));
+                console.log('  Full Response:', JSON.stringify(data, null, 2));
+
+                // Check for FCS API errors
+                if (data.status === false || data.error) {
+                    console.error('\n❌ FCS API Error:', data.msg || data.error);
+                    newsBlockingConfig.apiStatus = 'failed';
+                    updateStatusDisplay();
+                    throw new Error('FCS API Error: ' + (data.msg || data.error));
+                }
+
+                // Parse FCS economic calendar (response.response array)
+                if (data.response && Array.isArray(data.response)) {
+                    console.log('\n✓ FCS response field found');
+                    console.log('  Array length:', data.response.length);
+                    console.log('  Sample event (first):', data.response[0]);
+
+                    if (data.response.length > 0) {
+                        console.log('\n🔄 Parsing FCS events...');
+                        const events = parseFCSCalendar(data.response);
+
+                        console.log('\n📈 Parse Results:');
+                        console.log('  Total from API:', data.response.length);
+                        console.log('  After filtering:', events.length);
+                        console.log('  First 3 events:', events.slice(0, 3));
+
+                        if (events.length > 0) {
+                            console.log(`\n✅ SUCCESS: Got ${events.length} events from FCS API`);
+                            saveEventsToCache(events, 'FCS_API');
+                            return events;
+                        } else {
+                            console.log('\n⚠️ No high-impact events found after filtering');
+                            console.log('All events were filtered out (not high impact or outside date range)');
+                        }
+                    } else {
+                        console.log('\n⚠️ FCS response array is empty');
+                    }
+                } else {
+                    console.log('\n⚠️ No response field in FCS API response');
+                    console.log('Available fields:', Object.keys(data));
+                }
+
+            } catch (error) {
+                console.log('\n' + '='.repeat(80));
+                console.log('❌ FCS API FAILED');
+                console.log('='.repeat(80));
+                console.error('Error Type:', error.name);
+                console.error('Error Message:', error.message);
+                console.error('Full Error:', error);
+                console.error('Stack Trace:', error.stack);
+
+                newsBlockingConfig.apiStatus = 'failed';
+                updateStatusDisplay();
+            }
+
+            // API failed - return default demo events
+            console.log('\n' + '='.repeat(80));
+            console.log('⚠️ FALLING BACK TO DEFAULT EVENTS');
+            console.log('='.repeat(80));
+            console.log('Reason: FCS API failed or returned no events');
+            console.log('Possible causes:');
+            console.log('  1. Invalid API key - Get free key at https://fcsapi.com/dashboard');
+            console.log('  2. Rate limit exceeded (500 calls/month on free tier)');
+            console.log('  3. No events in date range');
+            console.log('  4. Network/CORS error');
+
+            const defaultEvents = getDefaultDemoEvents();
+            console.log('\n📋 Using', defaultEvents.length, 'default demo events');
+            saveEventsToCache(defaultEvents, 'DEFAULT_DEMO');
+            return defaultEvents;
+        }
+
+        // Helper to save events to cache and update status
+        function saveEventsToCache(events, source) {
+            const newsData = {
+                lastFetch: Date.now(),
+                events: events,
+                source: source
+            };
+            localStorage.setItem('newsBlockingData', JSON.stringify(newsData));
+
+            newsBlockingConfig.apiStatus = 'connected';
+            newsBlockingConfig.lastSuccessfulFetch = Date.now();
+            newsBlockingConfig.eventsCount = events.length;
+            updateStatusDisplay();
+        }
+
+        // Parse FCS API economic calendar response
+        function parseFCSCalendar(fcsEvents) {
+            console.log('\n📊 PARSING FCS API ECONOMIC CALENDAR');
+            console.log('Total events from API:', fcsEvents.length);
+
+            const events = [];
+            const now = Date.now();
+            const monthFromNow = now + (31 * 24 * 60 * 60 * 1000);
+
+            let processedCount = 0;
+            let highImpactCount = 0;
+            let inTimeRangeCount = 0;
+
+            fcsEvents.forEach((item, index) => {
+                processedCount++;
+
+                // FCS format: { title, country, date, importance, forecast, previous, actual }
+                // Date format: "2024-12-02 14:30:00" or "2024-12-02"
+                const eventTime = new Date(item.date).getTime();
+
+                // Only future events in next month
+                if (eventTime < now || eventTime > monthFromNow) {
+                    if (processedCount <= 5) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Outside time range`);
+                    }
+                    return;
+                }
+                inTimeRangeCount++;
+
+                // Filter for high impact events (importance: 0=Low, 1=Medium, 2=High)
+                // We want importance "1" (medium) and "2" (high)
+                const importance = String(item.importance || item.impact);
+                if (importance !== '1' && importance !== '2') {
+                    if (processedCount <= 10) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Importance: ${importance} (filtered out)`);
+                    }
+                    return;
+                }
+                highImpactCount++;
+
+                // Map country code to currency
+                const currencyMap = {
+                    'US': 'USD',
+                    'USA': 'USD',
+                    'EU': 'EUR',
+                    'EUR': 'EUR',
+                    'JP': 'JPY',
+                    'JPN': 'JPY',
+                    'GB': 'GBP',
+                    'GBR': 'GBP',
+                    'UK': 'GBP',
+                    'CH': 'CHF',
+                    'CHE': 'CHF',
+                    'CA': 'CAD',
+                    'CAN': 'CAD',
+                    'AU': 'AUD',
+                    'AUS': 'AUD',
+                    'NZ': 'NZD',
+                    'NZL': 'NZD'
+                };
+                const currency = currencyMap[item.country] || item.country;
+
+                // Parse numeric values
+                const parseValue = (val) => {
+                    if (val === null || val === undefined || val === '' || val === '-') return null;
+                    // Remove % and other characters
+                    const cleaned = String(val).replace(/[%,]/g, '');
+                    const parsed = parseFloat(cleaned);
+                    return isNaN(parsed) ? null : parsed;
+                };
+
+                const event = {
+                    time: eventTime,
+                    currency: currency,
+                    name: item.title || item.event || item.name,
+                    importance: 'high',
+                    actual: parseValue(item.actual),
+                    forecast: parseValue(item.forecast),
+                    previous: parseValue(item.previous)
+                };
+
+                // Detect blocking using our existing logic
+                const blocking = detectEventBlocking(event);
+                event.isBlocked = blocking.isBlocked;
+                event.blockReason = blocking.reason;
+                event.bufferBefore = blocking.bufferBefore;
+                event.bufferAfter = blocking.bufferAfter;
+                event.affectedPairs = getAffectedPairs(event.currency);
+
+                // Calculate blackout window
+                event.blackoutStart = event.time - (blocking.bufferBefore * 60 * 1000);
+                event.blackoutEnd = event.time + (blocking.bufferAfter * 60 * 1000);
+
+                events.push(event);
+
+                if (events.length <= 5) {
+                    console.log(`✓ Event ${events.length}:`, event.name, '@', new Date(event.time).toLocaleString(),
+                        `[${event.currency}]`, `Blocked: ${event.isBlocked}`);
+                }
+            });
+
+            console.log('\n📊 FCS API PARSING SUMMARY:');
+            console.log('Events processed:', processedCount);
+            console.log('Events in time range:', inTimeRangeCount);
+            console.log('High impact events:', highImpactCount);
+            console.log('Final events:', events.length);
+            console.log('✅ Parsed events:', events);
+
+            return events;
+        }
+
+        // Get test/sample events for testing blocking logic
+        function getTestEvents() {
+            console.log('🧪 TEST MODE: Generating sample events...');
+            const now = Date.now();
+            const events = [];
+
+            // FOMC event happening in 30 minutes (should block USD pairs)
+            events.push({
+                time: now + (30 * 60 * 1000),
+                currency: 'USD',
+                name: 'TEST: FOMC Meeting Decision',
+                importance: 'high',
+                actual: null,
+                forecast: 5.25,
+                previous: 5.0,
+                isTest: true
+            });
+
+            // ECB event in 2 hours (should block EUR pairs)
+            events.push({
+                time: now + (2 * 60 * 60 * 1000),
+                currency: 'EUR',
+                name: 'TEST: ECB Interest Rate Decision',
+                importance: 'high',
+                actual: null,
+                forecast: 4.0,
+                previous: 3.75,
+                isTest: true
+            });
+
+            // QoQ event in 45 minutes (should block)
+            events.push({
+                time: now + (45 * 60 * 1000),
+                currency: 'USD',
+                name: 'TEST: GDP QoQ Report',
+                importance: 'high',
+                actual: null,
+                forecast: 2.5,
+                previous: 2.1,
+                isTest: true
+            });
+
+            // High disparity event in 1 hour (should block)
+            events.push({
+                time: now + (60 * 60 * 1000),
+                currency: 'JPY',
+                name: 'TEST: Core CPI YoY',
+                importance: 'high',
+                actual: null,
+                forecast: 3.5,
+                previous: 1.2, // Disparity > 1.0%
+                isTest: true
+            });
+
+            // Normal MoM event (should NOT block)
+            events.push({
+                time: now + (90 * 60 * 1000),
+                currency: 'EUR',
+                name: 'TEST: Retail Sales MoM',
+                importance: 'medium',
+                actual: null,
+                forecast: 0.5,
+                previous: 0.3,
+                isTest: true
+            });
+
+            // Process through blocking detection
+            events.forEach(event => {
+                const blocking = detectEventBlocking(event);
+                event.isBlocked = blocking.isBlocked;
+                event.blockReason = blocking.reason;
+                event.bufferBefore = blocking.bufferBefore;
+                event.bufferAfter = blocking.bufferAfter;
+                event.affectedPairs = getAffectedPairs(event.currency);
+                event.blackoutStart = event.time - (blocking.bufferBefore * 60 * 1000);
+                event.blackoutEnd = event.time + (blocking.bufferAfter * 60 * 1000);
+            });
+
+            console.log('🧪 Generated test events:', events);
+            console.log('Current blocking:', events.filter(e => {
+                const now = Date.now();
+                return e.isBlocked && now >= e.blackoutStart && now <= e.blackoutEnd;
+            }));
+
+            return events;
+        }
+
+        // Update status display in settings panel
+        function updateStatusDisplay() {
+            const statusElem = document.getElementById('newsApiStatus');
+            const fetchElem = document.getElementById('newsLastSuccessfulFetch');
+            const countElem = document.getElementById('newsEventsCount');
+            const nextFetchElem = document.getElementById('newsNextFetch');
+
+            if (statusElem) {
+                let statusText = '';
+                let statusColor = '';
+
+                switch(newsBlockingConfig.apiStatus) {
+                    case 'connected':
+                        statusText = '✅ Connected';
+                        statusColor = 'var(--accent-green)';
+                        break;
+                    case 'rate_limited':
+                        statusText = '⚠️ Rate Limited';
+                        statusColor = 'var(--accent-yellow)';
+                        break;
+                    case 'failed_using_manual':
+                        statusText = '⚠️ Using Manual Events';
+                        statusColor = 'var(--accent-yellow)';
+                        break;
+                    default:
+                        statusText = '❓ Unknown';
+                        statusColor = 'var(--text-secondary)';
+                }
+
+                statusElem.textContent = statusText;
+                statusElem.style.color = statusColor;
+            }
+
+            if (fetchElem && newsBlockingConfig.lastSuccessfulFetch) {
+                const date = new Date(newsBlockingConfig.lastSuccessfulFetch);
+                fetchElem.textContent = date.toLocaleString();
+            } else if (fetchElem) {
+                fetchElem.textContent = 'Never';
+            }
+
+            if (countElem) {
+                countElem.textContent = newsBlockingConfig.eventsCount || '0';
+            }
+
+            if (nextFetchElem) {
+                if (newsBlockingConfig.apiStatus === 'rate_limited') {
+                    nextFetchElem.textContent = 'Wait 1 minute';
+                } else {
+                    nextFetchElem.textContent = 'Manual or auto-update';
+                }
+            }
+        }
+
+        // Toggle test mode
+        function toggleTestMode() {
+            newsBlockingConfig.testMode = !newsBlockingConfig.testMode;
+            console.log('🧪 Test Mode:', newsBlockingConfig.testMode ? 'ENABLED' : 'DISABLED');
+
+            const btn = document.getElementById('newsTestModeBtn');
+            if (btn) {
+                btn.textContent = newsBlockingConfig.testMode ? '✓ Test Mode ON' : 'Enable Test Mode';
+                btn.style.background = newsBlockingConfig.testMode ?
+                    'linear-gradient(135deg, var(--accent-green) 0%, #047857 100%)' :
+                    'linear-gradient(135deg, var(--accent-blue) 0%, #1e40af 100%)';
+            }
+
+            // Reload events
+            if (newsBlockingConfig.testMode) {
+                const testEvents = getTestEvents();
+                renderNewsEvents(testEvents);
+                updateBlockingBanner();
+            } else {
+                loadNewsEvents().then(events => {
+                    renderNewsEvents(events);
+                    updateBlockingBanner();
+                });
+            }
+        }
+
+        // Get default demo events for display when no real events exist
+        function getDefaultDemoEvents() {
+            console.log('📋 Loading default demo events...');
+            const now = Date.now();
+            const events = [];
+
+            // FOMC Rate Decision - Today in 3 hours
+            events.push({
+                time: now + (3 * 60 * 60 * 1000) + (24 * 60 * 1000), // 3h 24m from now
+                currency: 'USD',
+                name: 'FOMC Rate Decision',
+                importance: 'high',
+                actual: null,
+                forecast: null,
+                previous: null,
+                isTest: false
+            });
+
+            // ECB Press Conference - Tomorrow
+            events.push({
+                time: now + (32 * 60 * 60 * 1000) + (45 * 60 * 1000), // ~1 day 8h 45m from now
+                currency: 'EUR',
+                name: 'ECB Press Conference',
+                importance: 'high',
+                actual: null,
+                forecast: null,
+                previous: null,
+                isTest: false
+            });
+
+            // NFP Report - Friday
+            const daysUntilFriday = (5 - new Date().getDay() + 7) % 7;
+            const fridayTime = now + (daysUntilFriday * 24 * 60 * 60 * 1000);
+            const friday8_30AM = new Date(fridayTime);
+            friday8_30AM.setHours(8, 30, 0, 0);
+
+            events.push({
+                time: friday8_30AM.getTime(),
+                currency: 'USD',
+                name: 'NFP Report',
+                importance: 'high',
+                actual: null,
+                forecast: null,
+                previous: null,
+                isTest: false
+            });
+
+            // Process through blocking detection
+            events.forEach(event => {
+                const blocking = detectEventBlocking(event);
+                event.isBlocked = blocking.isBlocked;
+                event.blockReason = blocking.reason;
+                event.bufferBefore = blocking.bufferBefore;
+                event.bufferAfter = blocking.bufferAfter;
+                event.affectedPairs = getAffectedPairs(event.currency);
+                event.blackoutStart = event.time - (blocking.bufferBefore * 60 * 1000);
+                event.blackoutEnd = event.time + (blocking.bufferAfter * 60 * 1000);
+            });
+
+            console.log('📋 Default demo events created:', events);
+            return events;
+        }
+
+        // Load news from localStorage or fetch if needed
+        async function loadNewsEvents() {
+            // If test mode is enabled, return test events
+            if (newsBlockingConfig.testMode) {
+                console.log('🧪 TEST MODE: Returning test events');
+                return getTestEvents();
+            }
+
+            const cached = localStorage.getItem('newsBlockingData');
+
+            if (cached) {
+                const data = JSON.parse(cached);
+                const cacheAge = Date.now() - data.lastFetch;
+                const weekInMs = 7 * 24 * 60 * 60 * 1000;
+
+                // If cache is less than 7 days old, use it
+                if (cacheAge < weekInMs) {
+                    console.log('📦 Using cached news data');
+                    console.log('Cache age:', Math.floor(cacheAge / (1000 * 60 * 60)), 'hours');
+                    console.log('Source:', data.source || 'unknown');
+                    console.log('Events in cache:', data.events.length);
+                    console.log('Events array:', data.events);
+                    updateLastUpdateDisplay(data.lastFetch);
+                    newsBlockingConfig.eventsCount = data.events.length;
+                    updateStatusDisplay();
+
+                    // If cache has events, return them, otherwise return default demo events
+                    if (data.events && data.events.length > 0) {
+                        return data.events;
+                    } else {
+                        console.log('⚠️ Cache exists but has no events, using default demo events');
+                        return getDefaultDemoEvents();
+                    }
+                }
+            }
+
+            // Otherwise try to fetch new data
+            console.log('🔄 Fetching new news data...');
+            try {
+                const events = await fetchFinnhubCalendar();
+                updateLastUpdateDisplay(Date.now());
+
+                // If API returns events, use them, otherwise use default demo events
+                if (events && events.length > 0) {
+                    console.log('✅ API returned events:', events.length);
+                    return events;
+                } else {
+                    console.log('⚠️ API returned no events, using default demo events');
+                    return getDefaultDemoEvents();
+                }
+            } catch (error) {
+                console.error('❌ Failed to fetch from API, using default demo events:', error);
+                return getDefaultDemoEvents();
+            }
+        }
+
+        // Update last update timestamp display
+        function updateLastUpdateDisplay(timestamp) {
+            const elem = document.getElementById('newsLastUpdate');
+            if (elem) {
+                const date = new Date(timestamp);
+                elem.textContent = `Last updated: ${date.toLocaleString()}`;
+            }
+        }
+
+        // Render news events in widget
+        function renderNewsEvents(events) {
+            try {
+                const container = document.getElementById('newsEventsList');
+                if (!container) {
+                    console.error('❌ Container not found');
+                    return;
+                }
+
+                if (!events || events.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 1rem; font-size: 0.85rem;">No upcoming events</div>';
+                    return;
+                }
+
+                // Safely get selected instrument
+                const selectedInstrument = (typeof stage2State !== 'undefined' && stage2State) ? stage2State.instrument : null;
+                const now = Date.now();
+
+                console.log(`📅 Displaying ${events.length} events` + (selectedInstrument ? ` for ${selectedInstrument}` : ''));
+
+            // Filter events - show ALL if no instrument selected
+            let filteredEvents = events;
+            if (selectedInstrument && selectedInstrument.trim && selectedInstrument.trim() !== '') {
+                filteredEvents = events.filter(event =>
+                    eventAffectsInstrument(event.currency, selectedInstrument)
+                );
+            }
+
+            // Sort by time
+            filteredEvents.sort((a, b) => a.time - b.time);
+
+            let html = '';
+            filteredEvents.slice(0, 10).forEach((event, index) => {
+                const eventDate = new Date(event.time);
+                const isToday = eventDate.toDateString() === new Date().toDateString();
+                const isTomorrow = eventDate.toDateString() === new Date(Date.now() + 86400000).toDateString();
+
+                // Format date display
+                let dayDisplay;
+                if (isToday) {
+                    dayDisplay = 'Today';
+                } else if (isTomorrow) {
+                    dayDisplay = 'Tomorrow';
+                } else {
+                    dayDisplay = eventDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+                }
+
+                const timeStr = eventDate.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                // Check if event is currently blocking or upcoming
+                const isCurrentlyBlocking = event.isBlocked && now >= event.blackoutStart && now <= event.blackoutEnd;
+                const isUpcoming = event.time > now;
+
+                // Calculate countdown
+                let countdownStr = '';
+                if (isUpcoming && event.isBlocked) {
+                    const timeUntilStart = event.blackoutStart - now;
+                    const hoursUntil = Math.floor(timeUntilStart / (1000 * 60 * 60));
+                    const minutesUntil = Math.floor((timeUntilStart % (1000 * 60 * 60)) / (1000 * 60));
+
+                    if (timeUntilStart > 0) {
+                        countdownStr = `Starts in: ${hoursUntil}h ${minutesUntil}m`;
+                    } else if (isCurrentlyBlocking) {
+                        const timeUntilEnd = event.blackoutEnd - now;
+                        const hoursLeft = Math.floor(timeUntilEnd / (1000 * 60 * 60));
+                        const minutesLeft = Math.floor((timeUntilEnd % (1000 * 60 * 60)) / (1000 * 60));
+                        countdownStr = `Ends in: ${hoursLeft}h ${minutesLeft}m`;
+                    }
+                }
+
+                // Calculate blackout time range
+                let blackoutTimeStr = '';
+                if (event.isBlocked && event.blackoutStart && event.blackoutEnd) {
+                    const blackoutStartDate = new Date(event.blackoutStart);
+                    const blackoutEndDate = new Date(event.blackoutEnd);
+                    const startStr = blackoutStartDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    const endStr = blackoutEndDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    blackoutTimeStr = `Blackout: ${startStr} - ${endStr}`;
+                }
+
+                // Status icon
+                const statusIcon = isCurrentlyBlocking ? '🔴' : (event.isBlocked ? '🟡' : '🟢');
+                const statusText = isCurrentlyBlocking ? 'ACTIVE' : (event.isBlocked ? 'UPCOMING' : '');
+
+                // Generate unique event ID for deletion
+                const eventId = `${event.time}_${event.name.replace(/\s/g, '_')}`;
+
+                html += `
+                    <div style="background: ${isCurrentlyBlocking ? 'rgba(220, 38, 38, 0.1)' : 'var(--bg-primary)'};
+                                padding: 0.75rem;
+                                margin-bottom: 0.75rem;
+                                border-radius: 6px;
+                                border-left: 4px solid ${isCurrentlyBlocking ? 'var(--accent-red)' : (event.isBlocked ? 'var(--accent-yellow)' : 'var(--accent-green)')};">
+
+                        <div style="display: flex; align-items: start; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <div style="font-size: 1.2rem;">${statusIcon}</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 0.85rem; color: var(--text-primary);">
+                                    ${event.name}${event.isTest ? ' (TEST)' : ''}
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                                    ${dayDisplay} ${timeStr} (${event.currency})
+                                </div>
+                            </div>
+                        </div>
+
+                        ${event.affectedPairs && event.affectedPairs.length > 0 ? `
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+                                <strong>Affects:</strong> ${event.affectedPairs.join(', ')}
+                            </div>
+                        ` : ''}
+
+                        ${event.previous !== null && event.previous !== undefined ? `
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+                                <strong>Previous:</strong> ${event.previous}
+                                ${event.forecast !== null && event.forecast !== undefined ? ` | <strong>Forecast:</strong> ${event.forecast}` : ''}
+                                ${event.actual !== null && event.actual !== undefined ? ` | <strong>Actual:</strong> ${event.actual}` : ''}
+                            </div>
+                        ` : ''}
+
+                        ${blackoutTimeStr ? `
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+                                ${blackoutTimeStr}
+                            </div>
+                        ` : ''}
+
+                        ${countdownStr ? `
+                            <div style="font-size: 0.75rem; color: var(--accent-blue); font-weight: 600; margin-top: 0.25rem;">
+                                ⏱️ ${countdownStr}
+                            </div>
+                        ` : ''}
+
+                        ${event.isBlocked && event.blockReason ? `
+                            <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+                                Reason: ${event.blockReason}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+
+            if (filteredEvents.length === 0) {
+                html = `<div style="text-align: center; color: var(--text-secondary); padding: 1rem; font-size: 0.85rem;">
+                    ${selectedInstrument ? `No events affecting ${selectedInstrument}` : 'No upcoming events'}
+                </div>`;
+            }
+
+            container.innerHTML = html;
+            updateCurrentStatusDisplay();
+
+            // Refresh Stage 2 instrument buttons to show blocking status
+            if (typeof updateStage2Display === 'function') {
+                updateStage2Display();
+            }
+
+            } catch (error) {
+                console.error('❌ Render error:', error.message);
+
+                const container = document.getElementById('newsEventsList');
+                if (container) {
+                    container.innerHTML = `<div style="color: red; padding: 1rem; font-size: 0.85rem;">
+                        Error: ${error.message}
+                    </div>`;
+                }
+            }
+        }
+
+        // Update current status display at top of widget
+        function updateCurrentStatusDisplay() {
+            const statusElem = document.getElementById('newsCurrentStatus');
+            if (!statusElem) {
+                // Status box removed, just return
+                return;
+            }
+
+            const blackout = checkBlackoutStatus();
+            const selectedInstrument = (typeof stage2State !== 'undefined' && stage2State) ? stage2State.instrument : null;
+
+            if (blackout) {
+                const minutes = Math.floor(blackout.timeRemaining / (60 * 1000));
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+
+                statusElem.style.background = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
+                statusElem.style.color = 'white';
+                statusElem.innerHTML = `
+                    <div style="font-size: 0.95rem; margin-bottom: 0.25rem;">🔴 BLOCKED</div>
+                    <div style="font-size: 0.75rem; opacity: 0.9;">${blackout.event.name}</div>
+                    <div style="font-size: 0.7rem; opacity: 0.85; margin-top: 0.25rem;">
+                        ${selectedInstrument} blocked for ${hours}h ${mins}m
+                    </div>
+                `;
+            } else {
+                statusElem.style.background = 'linear-gradient(135deg, #059669 0%, #047857 100%)';
+                statusElem.style.color = 'white';
+                statusElem.innerHTML = `
+                    <div style="font-size: 0.95rem;">✅ Trading Active</div>
+                    ${selectedInstrument ? `<div style="font-size: 0.75rem; opacity: 0.9; margin-top: 0.25rem;">${selectedInstrument} clear</div>` : ''}
+                `;
+            }
+        }
+
+        // Fetch from API button handler
+        async function fetchFromAPI() {
+            console.log('📡 Manual API fetch triggered');
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '🔄 Fetching...';
+
+            try {
+                const events = await fetchFinnhubCalendar();
+                renderNewsEvents(events);
+                updateBlockingBanner();
+                btn.textContent = '✓ Fetched!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 2000);
+            } catch (error) {
+                console.error('Failed to fetch from API:', error);
+                btn.textContent = '✗ Failed';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Check if instrument is blocked (for Stage 2 button styling)
+        function isInstrumentBlocked(instrument) {
+            const cached = localStorage.getItem('newsBlockingData');
+            if (!cached) return { blocked: false, eventName: '' };
+
+            const data = JSON.parse(cached);
+            const now = Date.now();
+
+            for (const event of data.events) {
+                if (!event.isBlocked) continue;
+                if (!eventAffectsInstrument(event.currency, instrument)) continue;
+
+                // Check if currently in blackout window
+                if (now >= event.blackoutStart && now <= event.blackoutEnd) {
+                    return {
+                        blocked: true,
+                        eventName: event.name,
+                        event: event
+                    };
+                }
+            }
+
+            return { blocked: false, eventName: '' };
+        }
+
+        // Check if currently in blackout period
+        function checkBlackoutStatus() {
+            const cached = localStorage.getItem('newsBlockingData');
+            if (!cached) return null;
+
+            const data = JSON.parse(cached);
+            const selectedInstrument = (typeof stage2State !== 'undefined' && stage2State) ? stage2State.instrument : null;
+            if (!selectedInstrument) return null;
+
+            const now = Date.now();
+
+            for (const event of data.events) {
+                if (!event.isBlocked) continue;
+                if (!eventAffectsInstrument(event.currency, selectedInstrument)) continue;
+
+                if (now >= event.blackoutStart && now <= event.blackoutEnd) {
+                    // Calculate alternative pairs
+                    const allPairs = Object.keys(CURRENCY_MAPPING);
+                    const alternatives = allPairs.filter(pair =>
+                        pair !== selectedInstrument &&
+                        !eventAffectsInstrument(event.currency, pair)
+                    );
+
+                    return {
+                        event,
+                        alternatives,
+                        timeRemaining: event.blackoutEnd - now
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        // Update blocking banner
+        function updateBlockingBanner() {
+            const blackout = checkBlackoutStatus();
+            const banner = document.getElementById('newsBlockingBanner');
+            const bannerText = document.getElementById('newsBannerText');
+            const bannerAlternatives = document.getElementById('newsBannerAlternatives');
+            const countdown = document.getElementById('newsCountdown');
+
+            if (blackout) {
+                const minutes = Math.floor(blackout.timeRemaining / (60 * 1000));
+                const hours = Math.floor(minutes / 60);
+                const mins = minutes % 60;
+
+                const selectedInstrument = (typeof stage2State !== 'undefined' && stage2State) ? stage2State.instrument : 'Selected pair';
+
+                banner.classList.add('active');
+                bannerText.textContent = `🔴 ${blackout.event.name} blocking ${selectedInstrument}`;
+
+                if (blackout.alternatives.length > 0) {
+                    bannerAlternatives.textContent = `Trade ${blackout.alternatives.join(' or ')} instead`;
+                } else {
+                    bannerAlternatives.textContent = 'No alternative pairs available';
+                }
+
+                countdown.textContent = `${selectedInstrument} resumes in ${hours}h ${mins}m`;
+            } else {
+                banner.classList.remove('active');
+            }
+        }
+
+        // Update calendar now (manual refresh)
+        async function updateNewsCalendarNow() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '🔄 Updating...';
+
+            try {
+                const events = await fetchFinnhubCalendar();
+                renderNewsEvents(events);
+                updateBlockingBanner();
+                btn.textContent = '✓ Updated!';
+                setTimeout(() => {
+                    btn.textContent = '🔄 Update Calendar Now';
+                    btn.disabled = false;
+                }, 2000);
+            } catch (error) {
+                console.error('Failed to update calendar:', error);
+                btn.textContent = '✗ Failed';
+                setTimeout(() => {
+                    btn.textContent = '🔄 Update Calendar Now';
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Toggle settings panel
+        function toggleNewsSettings() {
+            const panel = document.getElementById('newsSettingsPanel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Open Add Event Dialog
+        function openAddEventDialog() {
+            const eventName = prompt('Enter event name (e.g., "FOMC Rate Decision"):');
+            if (!eventName || eventName.trim() === '') return;
+
+            const eventCurrency = prompt('Enter currency (USD, EUR, JPY, GBP, etc.):');
+            if (!eventCurrency || eventCurrency.trim() === '') return;
+
+            const eventDateStr = prompt('Enter date and time (e.g., "2025-12-01 14:00"):');
+            if (!eventDateStr || eventDateStr.trim() === '') return;
+
+            const eventTime = new Date(eventDateStr).getTime();
+            if (isNaN(eventTime)) {
+                alert('Invalid date format. Please use format: YYYY-MM-DD HH:MM');
+                return;
+            }
+
+            // Create new event
+            const newEvent = {
+                time: eventTime,
+                currency: eventCurrency.toUpperCase(),
+                name: eventName.trim(),
+                importance: 'high',
+                actual: null,
+                forecast: null,
+                previous: null,
+                isTest: false,
+                isManual: true
+            };
+
+            // Process blocking detection
+            const blocking = detectEventBlocking(newEvent);
+            newEvent.isBlocked = blocking.isBlocked;
+            newEvent.blockReason = blocking.reason;
+            newEvent.bufferBefore = blocking.bufferBefore;
+            newEvent.bufferAfter = blocking.bufferAfter;
+            newEvent.affectedPairs = getAffectedPairs(newEvent.currency);
+            newEvent.blackoutStart = newEvent.time - (blocking.bufferBefore * 60 * 1000);
+            newEvent.blackoutEnd = newEvent.time + (blocking.bufferAfter * 60 * 1000);
+
+            // Get current cached events
+            const cached = localStorage.getItem('newsBlockingData');
+            let allEvents = [];
+
+            if (cached) {
+                const data = JSON.parse(cached);
+                allEvents = data.events || [];
+            }
+
+            // Add new event
+            allEvents.push(newEvent);
+
+            // Save back to cache
+            const newsData = {
+                lastFetch: Date.now(),
+                events: allEvents,
+                source: 'MANUAL'
+            };
+            localStorage.setItem('newsBlockingData', JSON.stringify(newsData));
+
+            console.log('✅ Event added:', newEvent);
+
+            // Re-render events
+            renderNewsEvents(allEvents);
+            updateBlockingBanner();
+            updateCurrentStatusDisplay();
+        }
+
+        // Delete Event
+        function deleteEvent(eventId) {
+            if (!confirm('Are you sure you want to delete this event?')) {
+                return;
+            }
+
+            console.log('🗑️ Deleting event:', eventId);
+
+            // Get current cached events
+            const cached = localStorage.getItem('newsBlockingData');
+            if (!cached) {
+                console.error('No cached events found');
+                return;
+            }
+
+            const data = JSON.parse(cached);
+            const events = data.events || [];
+
+            // Filter out the event to delete
+            const filteredEvents = events.filter(event => {
+                const thisEventId = `${event.time}_${event.name.replace(/\s/g, '_')}`;
+                return thisEventId !== eventId;
+            });
+
+            console.log(`Removed ${events.length - filteredEvents.length} event(s)`);
+
+            // Save back to cache
+            const newsData = {
+                lastFetch: data.lastFetch || Date.now(),
+                events: filteredEvents,
+                source: data.source || 'MANUAL'
+            };
+            localStorage.setItem('newsBlockingData', JSON.stringify(newsData));
+
+            // Re-render events
+            renderNewsEvents(filteredEvents);
+            updateBlockingBanner();
+            updateCurrentStatusDisplay();
+        }
+
+        // Initialize news blocking system
+        async function initNewsBlocking() {
+            try {
+                console.log('🚀 Initializing News Event Blocker...');
+
+                loadNewsConfig();
+
+                // Load events - try cache/API first, fallback to demo events
+                let events = await loadNewsEvents();
+
+                // If no events, force default demo events
+                if (!events || events.length === 0) {
+                    console.log('⚠️ No events, using defaults');
+                    events = getDefaultDemoEvents();
+                    saveEventsToCache(events, 'DEFAULT_DEMO');
+                }
+
+                console.log(`✅ Loaded ${events.length} events`);
+                renderNewsEvents(events);
+                updateBlockingBanner();
+                updateCurrentStatusDisplay();
+
+            } catch (error) {
+                console.error('❌ Init error:', error.message);
+            }
+
+            // Update displays every minute
+            setInterval(() => {
+                updateBlockingBanner();
+                updateCurrentStatusDisplay();
+                // Re-render events to update countdowns
+                const cached = localStorage.getItem('newsBlockingData');
+                if (cached) {
+                    const data = JSON.parse(cached);
+                    if (data.events && data.events.length > 0) {
+                        renderNewsEvents(data.events);
+                    }
+                }
+            }, 60000);
+
+            // Check for post-event updates (5 minutes after each major event)
+            setInterval(checkPostEventUpdates, 5 * 60 * 1000);
+        }
+
+        // Check if we should auto-fetch after major events
+        function checkPostEventUpdates() {
+            const cached = localStorage.getItem('newsBlockingData');
+            if (!cached) return;
+
+            const data = JSON.parse(cached);
+            const now = Date.now();
+            const fiveMinutes = 5 * 60 * 1000;
+
+            for (const event of data.events) {
+                if (!event.isBlocked) continue;
+
+                // If event just passed (within last 5 minutes) and we haven't fetched actual results
+                if (now > event.time && now < event.time + fiveMinutes && !event.actual) {
+                    console.log('Major event just passed, fetching actual results...');
+                    fetchFinnhubCalendar().then(events => {
+                        renderNewsEvents(events);
+                        updateBlockingBanner();
+                    });
+                    break; // Only fetch once per check
+                }
+            }
+        }
+
+        // Send Telegram alert for blocked event affecting selected pair
+        async function sendNewsBlockingAlert(event, instrument) {
+            const message = `🔴 <b>Trading Blocked</b>\n\n` +
+                           `<b>Event:</b> ${event.name}\n` +
+                           `<b>Pair:</b> ${instrument}\n` +
+                           `<b>Reason:</b> ${event.blockReason}\n` +
+                           `<b>Duration:</b> ${event.bufferBefore + event.bufferAfter} minutes\n\n` +
+                           `Switch to alternative pairs or wait for blackout to end.`;
+
+            await sendTelegramNotification(message);
+        }
+
+        // Hook into Stage 2 instrument selection
+        const originalSelectInstrument = window.selectInstrument;
+        window.selectInstrument = function(instrument) {
+            // Call original function
+            if (originalSelectInstrument) {
+                originalSelectInstrument(instrument);
+            }
+
+            // Update news widget
+            setTimeout(async () => {
+                const events = await loadNewsEvents();
+                renderNewsEvents(events);
+                updateBlockingBanner();
+
+                // Check if currently in blackout and send alert
+                const blackout = checkBlackoutStatus();
+                if (blackout) {
+                    sendNewsBlockingAlert(blackout.event, instrument);
+                }
+            }, 100);
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(initNewsBlocking, 1000);
+        });
+
+        // ==================== END NEWS BLOCKING SYSTEM ====================
 
         // Lot Size Calculator - State and Price Tracking
         let currentPrice = null;
