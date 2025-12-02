@@ -2089,6 +2089,16 @@
                         </div>
                     </div>
 
+                    <!-- Daily Trading Plan Widget -->
+                    <div id="daily-plan-widget">
+                        <h2>Daily Trading Plan:</h2>
+                        <div id="daily-plan-content">
+                            <div id="daily-plan-question"></div>
+                            <div id="daily-plan-buttons"></div>
+                            <div id="daily-plan-result" style="display: none;"></div>
+                        </div>
+                    </div>
+
                     <!-- Improvements & Tests Tracker -->
                     <div id="tests-tracker">
                         <h2>Improvements & Tests:</h2>
@@ -2107,16 +2117,6 @@
                         <div id="completed-tests-container" style="display: none;">
                             <div class="tests-section-title">Completed Tests:</div>
                             <div id="completed-tests-list"></div>
-                        </div>
-                    </div>
-
-                    <!-- Daily Trading Plan Widget -->
-                    <div id="daily-plan-widget">
-                        <h2>Daily Trading Plan:</h2>
-                        <div id="daily-plan-content">
-                            <div id="daily-plan-question"></div>
-                            <div id="daily-plan-buttons"></div>
-                            <div id="daily-plan-result" style="display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -2165,7 +2165,7 @@
     </div>
 
     <!-- Tasks & Reminders Widget -->
-    <div id="tasks-reminders-widget">
+    <div id="tasks-reminders-widget" class="minimized">
         <div class="tasks-header" onclick="toggleTasksWidget()">
             <span>Tasks & Reminders</span>
             <button class="minimize-btn" onclick="event.stopPropagation(); toggleTasksWidget()">−</button>
@@ -2774,23 +2774,28 @@
                     const btcusdBlocked = isInstrumentBlocked('BTCUSD');
                     const eurusdBlocked = isInstrumentBlocked('EURUSD');
 
+                    console.log('=== Stage 2 Step 1: Instrument Selection Blocking Status ===');
+                    console.log('USDJPY:', usdjpyBlocked.blocked ? `BLOCKED by ${usdjpyBlocked.eventName}` : 'Available');
+                    console.log('BTCUSD:', btcusdBlocked.blocked ? `BLOCKED by ${btcusdBlocked.eventName}` : 'Available');
+                    console.log('EURUSD:', eurusdBlocked.blocked ? `BLOCKED by ${eurusdBlocked.eventName}` : 'Available');
+
                     return `
                     <div class="entry-buttons">
                         <button class="entry-btn" id="instrument-USDJPY"
                             onclick="selectInstrument('USDJPY')"
-                            style="${usdjpyBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            style="${usdjpyBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.5;' : ''}"
                             title="${usdjpyBlocked.blocked ? `Blocked - ${usdjpyBlocked.eventName}` : 'Select USDJPY'}">
                             ${usdjpyBlocked.blocked ? '🔴 ' : ''}USDJPY
                         </button>
                         <button class="entry-btn" id="instrument-BTCUSD"
                             onclick="selectInstrument('BTCUSD')"
-                            style="${btcusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            style="${btcusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.5;' : ''}"
                             title="${btcusdBlocked.blocked ? `Blocked - ${btcusdBlocked.eventName}` : 'Select BTCUSD'}">
                             ${btcusdBlocked.blocked ? '🔴 ' : ''}BTCUSD
                         </button>
                         <button class="entry-btn" id="instrument-EURUSD"
                             onclick="selectInstrument('EURUSD')"
-                            style="${eurusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.6;' : ''}"
+                            style="${eurusdBlocked.blocked ? 'filter: blur(3px); pointer-events: none; border: 2px solid red; opacity: 0.5;' : ''}"
                             title="${eurusdBlocked.blocked ? `Blocked - ${eurusdBlocked.eventName}` : 'Select EURUSD'}">
                             ${eurusdBlocked.blocked ? '🔴 ' : ''}EURUSD
                         </button>
@@ -4206,10 +4211,14 @@
         // Check if instrument is blocked (for Stage 2 button styling)
         function isInstrumentBlocked(instrument) {
             const cached = localStorage.getItem('newsBlockingData');
-            if (!cached) return { blocked: false, eventName: '' };
+            if (!cached) {
+                console.log(`[Stage 2 Blocking] No news data cached - ${instrument} not blocked`);
+                return { blocked: false, eventName: '' };
+            }
 
             const data = JSON.parse(cached);
             const now = Date.now();
+            console.log(`[Stage 2 Blocking] Checking ${instrument} at ${new Date(now).toLocaleTimeString()}`);
 
             for (const event of data.events) {
                 if (!event.isBlocked) continue;
@@ -4217,6 +4226,8 @@
 
                 // Check if currently in blackout window
                 if (now >= event.blackoutStart && now <= event.blackoutEnd) {
+                    console.log(`[Stage 2 Blocking] ✗ ${instrument} BLOCKED by "${event.name}" (${event.currency})`);
+                    console.log(`  Blackout: ${new Date(event.blackoutStart).toLocaleTimeString()} - ${new Date(event.blackoutEnd).toLocaleTimeString()}`);
                     return {
                         blocked: true,
                         eventName: event.name,
@@ -4225,6 +4236,7 @@
                 }
             }
 
+            console.log(`[Stage 2 Blocking] ✓ ${instrument} available (no active blackout)`);
             return { blocked: false, eventName: '' };
         }
 
@@ -5458,9 +5470,9 @@ Good luck with your trade!`);
                 totalAdjustment -= adjustmentPerFactor;
                 adjustments.push({ label: 'Counter to 1D EMA direction', value: -adjustmentPerFactor });
             }
-            if (riskAssessmentState.factor3 === 'yes') {
+            if (riskAssessmentState.factor3 === 'no') {
                 totalAdjustment += adjustmentPerFactor;
-                adjustments.push({ label: 'Counter to 15m trend', value: adjustmentPerFactor });
+                adjustments.push({ label: 'Trading WITH 15m trend (counter=No)', value: adjustmentPerFactor });
             }
 
             // Calculate final risk (minimum 0.25%, maximum 1.25%)
