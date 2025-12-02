@@ -5,7 +5,13 @@
       "Bash(start chrome:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "WebFetch(domain:www.alphavantage.co)",
+      "WebFetch(domain:api.twelvedata.com)",
+      "WebFetch(domain:www.econdb.com)",
+      "WebFetch(domain:finnhub.io)",
+      "WebSearch",
+      "WebFetch(domain:fcsapi.com)"
     ],
     "deny": [],
     "ask": []

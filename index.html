@@ -1583,9 +1583,255 @@
         @media print {
             .entry-widget { display: none; }
         }
+
+        /* ==================== MOBILE-ONLY RESPONSIVE MENU ==================== */
+        @media (max-width: 768px) {
+            /* Mobile Header with Hamburger */
+            .mobile-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 60px;
+                background: var(--bg-secondary);
+                border-bottom: 2px solid var(--border-color);
+                padding: 0 1rem;
+                z-index: 1000;
+            }
+
+            .hamburger-btn {
+                background: none;
+                border: none;
+                font-size: 28px;
+                color: var(--text-primary);
+                cursor: pointer;
+                padding: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mobile-header-title {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            /* Slide-out Menu */
+            .mobile-menu {
+                display: block;
+                position: fixed;
+                top: 60px;
+                left: -280px;
+                width: 280px;
+                height: calc(100vh - 60px);
+                background: var(--bg-secondary);
+                border-right: 2px solid var(--border-color);
+                transition: left 0.3s ease;
+                z-index: 999;
+                overflow-y: auto;
+            }
+
+            .mobile-menu.open {
+                left: 0;
+            }
+
+            .mobile-menu-overlay {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 998;
+            }
+
+            .mobile-menu-overlay.open {
+                display: block;
+            }
+
+            .mobile-menu-items {
+                padding: 1rem 0;
+            }
+
+            .mobile-menu-item {
+                display: flex;
+                align-items: center;
+                padding: 1rem 1.5rem;
+                color: var(--text-primary);
+                text-decoration: none;
+                font-size: 1rem;
+                font-weight: 500;
+                border-left: 4px solid transparent;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+
+            .mobile-menu-item:hover {
+                background: var(--bg-primary);
+            }
+
+            .mobile-menu-item.active {
+                background: var(--bg-primary);
+                border-left-color: var(--accent-blue);
+                color: var(--accent-blue);
+            }
+
+            .mobile-menu-icon {
+                margin-right: 1rem;
+                font-size: 1.2rem;
+            }
+
+            /* Mobile Page System */
+            body {
+                padding-top: 60px;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            .page-wrapper {
+                padding: 0;
+            }
+
+            .header {
+                display: none; /* Hide desktop header */
+            }
+
+            .content-grid {
+                display: block;
+                grid-template-columns: unset;
+                gap: 0;
+                padding: 0;
+            }
+
+            /* Hide all content by default on mobile */
+            .news-sidebar > *,
+            .main-content,
+            .prices-sidebar > *,
+            .entry-widget,
+            #tasks-reminders-widget {
+                display: none !important;
+            }
+
+            /* Show widgets based on active mobile page */
+            /* HOME PAGE: News Event Blocker + Account Balance */
+            body[data-mobile-page="home"] .news-sidebar {
+                display: block;
+            }
+            body[data-mobile-page="home"] .news-sidebar .sidebar-container {
+                display: block !important;
+            }
+            body[data-mobile-page="home"] #balanceWidget {
+                display: block !important;
+            }
+
+            /* SETUP & TOOLS PAGE: Lot Size Calculator, Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
+            body[data-mobile-page="setup"] .prices-sidebar {
+                display: block;
+            }
+            body[data-mobile-page="setup"] #lotsizeWidget,
+            body[data-mobile-page="setup"] .prices-sidebar .sidebar-container,
+            body[data-mobile-page="setup"] #tests-tracker,
+            body[data-mobile-page="setup"] #stage1Widget,
+            body[data-mobile-page="setup"] #tasks-reminders-widget {
+                display: block !important;
+            }
+
+            /* TRADING DASHBOARD PAGE: Daily Trading Plan, Setup Status, Risk Assessment, Stage 2, Trading Watch */
+            body[data-mobile-page="trading"] .news-sidebar,
+            body[data-mobile-page="trading"] .prices-sidebar {
+                display: block;
+            }
+            body[data-mobile-page="trading"] #daily-plan-widget,
+            body[data-mobile-page="trading"] #stage1-status,
+            body[data-mobile-page="trading"] #risk-assessment-widget,
+            body[data-mobile-page="trading"] #stage2Widget,
+            body[data-mobile-page="trading"] #trading-watch {
+                display: block !important;
+            }
+
+            /* Full width mobile widgets */
+            .news-sidebar,
+            .prices-sidebar {
+                width: 100%;
+                max-width: 100%;
+                padding: 1rem;
+            }
+
+            .entry-widget {
+                position: static;
+                width: 100%;
+                max-width: 100%;
+                margin: 1rem;
+            }
+
+            #tasks-reminders-widget {
+                position: static;
+                width: 100%;
+                max-width: 100%;
+                margin: 1rem;
+            }
+
+            .sidebar-container {
+                margin-bottom: 1rem;
+            }
+
+            /* Touch-friendly buttons */
+            button,
+            .entry-btn,
+            .risk-btn {
+                min-height: 44px;
+                padding: 0.75rem 1rem;
+            }
+        }
+
+        /* Desktop-only: Hide mobile menu */
+        @media (min-width: 769px) {
+            .mobile-header,
+            .mobile-menu,
+            .mobile-menu-overlay {
+                display: none !important;
+            }
+        }
     </style>
 </head>
-<body>
+<body data-mobile-page="home">
+    <!-- Mobile-Only Header with Hamburger Menu -->
+    <div class="mobile-header">
+        <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+            ☰
+        </button>
+        <div class="mobile-header-title" id="mobilePageTitle">Home</div>
+        <div style="width: 48px;"></div> <!-- Spacer for centering -->
+    </div>
+
+    <!-- Mobile-Only Slide-out Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-items">
+            <div class="mobile-menu-item active" onclick="switchMobilePage('home')" data-page="home">
+                <span class="mobile-menu-icon">🏠</span>
+                <span>Home</span>
+            </div>
+            <div class="mobile-menu-item" onclick="switchMobilePage('setup')" data-page="setup">
+                <span class="mobile-menu-icon">🔧</span>
+                <span>Setup & Tools</span>
+            </div>
+            <div class="mobile-menu-item" onclick="switchMobilePage('trading')" data-page="trading">
+                <span class="mobile-menu-icon">📊</span>
+                <span>Trading Dashboard</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+
     <div class="container">
         <div class="page-wrapper">
             <div class="header">
@@ -2280,6 +2526,48 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <script>
+        // ==================== MOBILE MENU SYSTEM ====================
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            menu.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        function switchMobilePage(pageName) {
+            // Update body data attribute to show/hide widgets
+            document.body.setAttribute('data-mobile-page', pageName);
+
+            // Update menu item active state
+            const menuItems = document.querySelectorAll('.mobile-menu-item');
+            menuItems.forEach(item => {
+                if (item.getAttribute('data-page') === pageName) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Update mobile header title
+            const titles = {
+                'home': 'Home',
+                'setup': 'Setup & Tools',
+                'trading': 'Trading Dashboard'
+            };
+            document.getElementById('mobilePageTitle').textContent = titles[pageName] || 'Home';
+
+            // Close menu after selection
+            toggleMobileMenu();
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            console.log(`[Mobile] Switched to page: ${pageName}`);
+        }
+
+        // ==================== END MOBILE MENU SYSTEM ====================
+
         // Firebase Configuration and Watch Status
         const firebaseConfig = {
             apiKey: "AIzaSyAMtdz8CERlXl8WSktbRmnE6Yxy4o2QI5Q",
@@ -3582,6 +3870,7 @@
             let processedCount = 0;
             let highImpactCount = 0;
             let inTimeRangeCount = 0;
+            let currencyFilteredCount = 0;
 
             fcsEvents.forEach((item, index) => {
                 processedCount++;
@@ -3632,6 +3921,16 @@
                 };
                 const currency = currencyMap[item.country] || item.country;
 
+                // FILTER: Only show USD, EUR, JPY events (for USDJPY, EURUSD, BTCUSD pairs)
+                const allowedCurrencies = ['USD', 'EUR', 'JPY'];
+                if (!allowedCurrencies.includes(currency)) {
+                    currencyFilteredCount++;
+                    if (processedCount <= 10) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Currency: ${currency} (filtered out - only showing USD/EUR/JPY)`);
+                    }
+                    return;
+                }
+
                 // Parse numeric values
                 const parseValue = (val) => {
                     if (val === null || val === undefined || val === '' || val === '-') return null;
@@ -3675,7 +3974,8 @@
             console.log('Events processed:', processedCount);
             console.log('Events in time range:', inTimeRangeCount);
             console.log('High impact events:', highImpactCount);
-            console.log('Final events:', events.length);
+            console.log('Filtered by currency (non-USD/EUR/JPY):', currencyFilteredCount);
+            console.log('Final events (USD/EUR/JPY only):', events.length);
             console.log('✅ Parsed events:', events);
 
             return events;
