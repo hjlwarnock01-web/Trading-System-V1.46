@@ -1117,18 +1117,6 @@
             width: 280px;
         }
 
-        .entry-rules-widget {
-            position: static;
-            width: 100%;
-            max-width: 100%;
-            margin: 1rem;
-            z-index: 10005;
-        }
-
-        .entry-rules-widget .entry-content {
-            padding: 1rem;
-        }
-
         /* News Event Blocker (in sidebar) */
         .news-event-item {
             background: var(--bg-secondary);
@@ -1733,17 +1721,16 @@
             }
 
             /* Show widgets based on active mobile page */
-            /* HOME PAGE: News Event Blocker, Account Balance, Entry Rules (Points 1-6), Trading Watch, Setup Status, and 6 Dropdown Sections */
+
+            /* ===== PAGE 1 - HOME ===== */
+            /* News Event Blocker, Account Balance, 6 Dropdown Sections */
             body[data-mobile-page="home"] .news-sidebar {
                 display: block;
             }
             body[data-mobile-page="home"] .news-sidebar .sidebar-container {
                 display: block !important;
             }
-            body[data-mobile-page="home"] #balanceWidget,
-            body[data-mobile-page="home"] #entryRulesWidget,
-            body[data-mobile-page="home"] #trading-watch,
-            body[data-mobile-page="home"] #stage1-status {
+            body[data-mobile-page="home"] #balanceWidget {
                 display: block !important;
             }
             /* Show 6 dropdown sections ONLY on homepage */
@@ -1751,38 +1738,30 @@
                 display: block !important;
             }
 
-            /* TOOLS & ANALYSIS PAGE: Live Prices, Improvements & Tests, Risk Assessment */
-            body[data-mobile-page="tools"] .prices-sidebar {
+            /* ===== PAGE 2 - SETUP & TOOLS ===== */
+            /* Lot Size Calculator, Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
+            body[data-mobile-page="setup"] .prices-sidebar {
                 display: block;
             }
-            body[data-mobile-page="tools"] .prices-sidebar .sidebar-container,
-            body[data-mobile-page="tools"] #tests-tracker,
-            body[data-mobile-page="tools"] #risk-assessment-widget {
+            body[data-mobile-page="setup"] .prices-sidebar .sidebar-container,
+            body[data-mobile-page="setup"] #lotsizeWidget,
+            body[data-mobile-page="setup"] #tests-tracker,
+            body[data-mobile-page="setup"] #stage1Widget,
+            body[data-mobile-page="setup"] #tasks-reminders-widget {
                 display: block !important;
             }
 
-            /* TRADING PLAN PAGE: Daily Trading Plan */
-            body[data-mobile-page="plan"] #daily-plan-widget {
+            /* ===== PAGE 3 - TRADING DASHBOARD ===== */
+            /* Daily Trading Plan, Setup Status, Risk Assessment, Stage 2, Trading Watch */
+            body[data-mobile-page="trading"] #daily-plan-widget,
+            body[data-mobile-page="trading"] #stage1-status,
+            body[data-mobile-page="trading"] #risk-assessment-widget,
+            body[data-mobile-page="trading"] #stage2Widget,
+            body[data-mobile-page="trading"] #trading-watch {
                 display: block !important;
             }
 
-            /* Keep floating widgets always visible on mobile (not in menu, positioned as floating) */
-            body[data-mobile-page="home"] #stage1Widget,
-            body[data-mobile-page="home"] #stage2Widget,
-            body[data-mobile-page="home"] #lotsizeWidget,
-            body[data-mobile-page="home"] #tasks-reminders-widget,
-            body[data-mobile-page="tools"] #stage1Widget,
-            body[data-mobile-page="tools"] #stage2Widget,
-            body[data-mobile-page="tools"] #lotsizeWidget,
-            body[data-mobile-page="tools"] #tasks-reminders-widget,
-            body[data-mobile-page="plan"] #stage1Widget,
-            body[data-mobile-page="plan"] #stage2Widget,
-            body[data-mobile-page="plan"] #lotsizeWidget,
-            body[data-mobile-page="plan"] #tasks-reminders-widget {
-                display: block !important;
-            }
-
-            /* Full width mobile widgets */
+            /* Full width mobile widgets - ALL widgets are static, not floating */
             .news-sidebar,
             .prices-sidebar {
                 width: 100%;
@@ -1790,61 +1769,16 @@
                 padding: 1rem;
             }
 
-            /* Most entry widgets are static on mobile except floating ones */
-            .entry-widget {
-                position: static;
-                width: 100%;
-                max-width: 100%;
-                margin: 1rem;
-            }
-
-            /* Keep specific floating widgets fixed on mobile */
-            #stage1Widget,
-            #stage2Widget,
-            #lotsizeWidget {
-                position: fixed !important;
-                width: 280px !important;
-                max-width: 280px !important;
-                margin: 0 !important;
-            }
-
-            /* Position floating widgets for mobile */
-            #stage1Widget {
-                bottom: 10px !important;
-                left: 10px !important;
-                right: auto !important;
-            }
-
-            #stage2Widget {
-                bottom: 10px !important;
-                right: 10px !important;
-                left: auto !important;
-            }
-
-            #lotsizeWidget {
-                bottom: 80px !important;
-                left: 10px !important;
-                right: auto !important;
-            }
-
+            /* All entry widgets are static on mobile (NO floating widgets) */
+            .entry-widget,
             #tasks-reminders-widget {
-                position: fixed !important;
-                bottom: 150px !important;
-                left: 10px !important;
+                position: static !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 1rem !important;
+                left: auto !important;
                 right: auto !important;
-                width: 280px !important;
-                max-width: 280px !important;
-                margin: 0 !important;
-            }
-
-            /* Minimize button size for floating widgets on mobile */
-            #stage1Widget .minimize-btn,
-            #stage2Widget .minimize-btn,
-            #lotsizeWidget .minimize-btn,
-            #tasks-reminders-widget .minimize-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 1.2rem;
+                bottom: auto !important;
             }
 
             .sidebar-container {
@@ -1887,13 +1821,13 @@
                 <span class="mobile-menu-icon">🏠</span>
                 <span>Home</span>
             </div>
-            <div class="mobile-menu-item" onclick="switchMobilePage('tools')" data-page="tools">
-                <span class="mobile-menu-icon">📊</span>
-                <span>Tools & Analysis</span>
+            <div class="mobile-menu-item" onclick="switchMobilePage('setup')" data-page="setup">
+                <span class="mobile-menu-icon">🔧</span>
+                <span>Setup & Tools</span>
             </div>
-            <div class="mobile-menu-item" onclick="switchMobilePage('plan')" data-page="plan">
-                <span class="mobile-menu-icon">📈</span>
-                <span>Trading Plan</span>
+            <div class="mobile-menu-item" onclick="switchMobilePage('trading')" data-page="trading">
+                <span class="mobile-menu-icon">📊</span>
+                <span>Trading Dashboard</span>
             </div>
         </div>
     </div>
@@ -2583,184 +2517,6 @@
         </div>
     </div>
 
-    <!-- Entry Rules Widget (Points 1-6) -->
-    <div class="entry-widget entry-rules-widget minimized" id="entryRulesWidget">
-        <div class="entry-header" onclick="toggleEntryRulesWidget()">
-            <span>Points 1-6: Entry Rules</span>
-            <button class="minimize-btn" onclick="event.stopPropagation(); toggleEntryRulesWidget()">−</button>
-        </div>
-        <div class="entry-content" style="max-height: 400px; overflow-y: auto;">
-            <!-- Section 1: Entry Rules -->
-            <div style="margin-bottom: 1rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    1. Entry Rules
-                </div>
-                <div style="font-size: 0.8rem;">
-                    <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong style="color: var(--success-color);">Long Entry 1</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">(Type 1)</span>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                            <li>EMA 3H > EMA 1D</li>
-                            <li>1H Demand Zone</li>
-                            <li>15m Internal Demand Zone</li>
-                            <li>Price < EMA 3H</li>
-                            <li>15m Liquidity Grab from low</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong style="color: var(--error-color);">Short Entry 1</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">(Type 1)</span>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                            <li>EMA 3H < EMA 1D</li>
-                            <li>1H Supply Zone</li>
-                            <li>15m Internal Supply Zone</li>
-                            <li>Price > EMA 3H</li>
-                            <li>15m Liquidity Grab from high</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong style="color: var(--success-color);">Long Entry 2</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">(Type 2)</span>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                            <li>EMA 3H < EMA 1D</li>
-                            <li>M Zone hit</li>
-                            <li>Price < EMA 3H</li>
-                            <li>1H Demand Zone or CHoCH Zone</li>
-                            <li>15m Demand Zone</li>
-                            <li>15m Liquidity Grab from low</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 0.75rem; padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong style="color: var(--error-color);">Short Entry 2</strong> <span style="color: var(--text-muted); font-size: 0.75rem;">(Type 2)</span>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                            <li>EMA 3H > EMA 1D</li>
-                            <li>M Zone hit</li>
-                            <li>Price > EMA 3H</li>
-                            <li>1H Supply Zone or CHoCH Zone</li>
-                            <li>15m Supply Zone</li>
-                            <li>15m Liquidity Grab from high</li>
-                        </ul>
-                    </div>
-                    <div style="padding: 0.5rem; background: var(--accent-purple); border-radius: 4px; margin-top: 0.5rem;">
-                        <strong>Confirmation Methods:</strong>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
-                            <li>Red 15m Candle</li>
-                            <li>2m CHoCH Pattern</li>
-                            <li>2m First Pullback after CHoCH</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 2: Additional Rules -->
-            <div style="margin-bottom: 1rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    2. Additional Rules
-                </div>
-                <div style="font-size: 0.8rem;">
-                    <div style="margin-bottom: 0.5rem;">
-                        <strong>Zone Validity & Usage:</strong>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0; font-size: 0.75rem;">
-                            <li>M Zone valid until 2 taps or broken</li>
-                            <li>M Zone Hit = switch from Type 1 → Type 1 or Type 2</li>
-                            <li>Late Entry allowed if price in original 15m Zone</li>
-                            <li>No Late Entry if 1H Zone hit between</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 0.5rem;">
-                        <strong>Liquidity Grab Rules:</strong>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0; font-size: 0.75rem;">
-                            <li>Can be from high, low, or stagnation</li>
-                            <li>Grabbed high within 6 pips of entry high</li>
-                            <li>15m Liquidity Grab required for all entries</li>
-                        </ul>
-                    </div>
-                    <div style="margin-bottom: 0.5rem;">
-                        <strong>Stop Loss & Exit Rules:</strong>
-                        <ul style="margin: 0.25rem 0 0 1rem; padding: 0; font-size: 0.75rem;">
-                            <li>Initial SL: Shorts → 15m highs, Longs → 15m lows</li>
-                            <li>If 1H Zone hit with open position → SL to 2m trend</li>
-                            <li>Exit at breakeven if next candle reverses</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 3: Risk Management -->
-            <div style="margin-bottom: 1rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    3. Risk Management
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem;">
-                    <div style="padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <div style="color: var(--text-muted);">Risk per trade</div>
-                        <div style="font-weight: 600;">1%</div>
-                    </div>
-                    <div style="padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <div style="color: var(--text-muted);">Max daily loss</div>
-                        <div style="font-weight: 600;">3%</div>
-                    </div>
-                    <div style="padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <div style="color: var(--text-muted);">Max drawdown</div>
-                        <div style="font-weight: 600;">10%</div>
-                    </div>
-                    <div style="padding: 0.5rem; background: var(--bg-primary); border-radius: 4px;">
-                        <div style="color: var(--text-muted);">Max open trades</div>
-                        <div style="font-weight: 600;">1</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 4: Workflow -->
-            <div style="margin-bottom: 1rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    4. Usage Guidelines (Workflow)
-                </div>
-                <div style="font-size: 0.75rem;">
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">1. Mark M Zones (1D, 12H, 3D)</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">2. Check market structure</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">3. Mark 1H Supply & Demand Zones</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">4. Check EMA alignment (3H vs 1D)</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">5. Wait for 1H Zone to be hit</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px; margin-bottom: 0.3rem;">6. Wait for 15m Liquidity Grab</div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px;">7. Enter trade with confirmation</div>
-                </div>
-            </div>
-
-            <!-- Section 5: Performance -->
-            <div style="margin-bottom: 1rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    5. Performance & Expectations
-                </div>
-                <div style="padding: 0.5rem; background: var(--accent-purple); border-radius: 4px;">
-                    <ul style="margin: 0; padding: 0 0 0 1rem; font-size: 0.75rem;">
-                        <li>System may miss trades — expected</li>
-                        <li>Some days will have no valid trades</li>
-                        <li>Drawdowns are normal; follow risk rules</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Section 6: Glossary -->
-            <div style="margin-bottom: 0.5rem;">
-                <div style="font-weight: 600; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                    6. Quick Glossary
-                </div>
-                <div style="font-size: 0.7rem; display: grid; grid-template-columns: 1fr; gap: 0.3rem;">
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong>M Zones:</strong> Higher timeframe (1D, 12H, 3D) zones
-                    </div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong>LQG:</strong> Liquidity Grab - sweeps stops before reversing
-                    </div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong>CHoCH:</strong> Change of Character - market structure shift
-                    </div>
-                    <div style="padding: 0.4rem; background: var(--bg-primary); border-radius: 4px;">
-                        <strong>Supply/Demand:</strong> Areas of expected selling/buying
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- News Blocking Banner -->
     <div class="news-blocking-banner" id="newsBlockingBanner">
         <div class="news-banner-text" id="newsBannerText"></div>
@@ -2799,8 +2555,8 @@
             // Update mobile header title
             const titles = {
                 'home': 'Home',
-                'tools': 'Tools & Analysis',
-                'plan': 'Trading Plan'
+                'setup': 'Setup & Tools',
+                'trading': 'Trading Dashboard'
             };
             document.getElementById('mobilePageTitle').textContent = titles[pageName] || 'Home';
 
@@ -3643,11 +3399,6 @@
 
         function toggleBalanceWidget() {
             const widget = document.getElementById('balanceWidget');
-            widget.classList.toggle('minimized');
-        }
-
-        function toggleEntryRulesWidget() {
-            const widget = document.getElementById('entryRulesWidget');
             widget.classList.toggle('minimized');
         }
 
