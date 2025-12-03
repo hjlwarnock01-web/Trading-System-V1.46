@@ -220,7 +220,10 @@
         }
 
         .settings-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .settings-section:last-child {
@@ -231,16 +234,45 @@
             font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            user-select: none;
+        }
+
+        .settings-section-header:hover {
+            background: var(--bg-tertiary);
         }
 
         .settings-section-icon {
             font-size: 1.2rem;
+        }
+
+        .settings-section-arrow {
+            margin-left: auto;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-section-arrow.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .settings-section-body {
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .settings-section-body.collapsed {
+            max-height: 0;
+            padding: 0 1.5rem;
         }
 
         .settings-field {
@@ -2246,11 +2278,13 @@
         <div class="settings-content">
             <!-- News Event Blocker Settings -->
             <div class="settings-section">
-                <div class="settings-section-header">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
                     <span class="settings-section-icon">📰</span>
                     <span>News Event Blocker</span>
+                    <span class="settings-section-arrow">▼</span>
                 </div>
 
+                <div class="settings-section-body">
                 <div class="settings-field">
                     <label class="settings-label">API Key</label>
                     <input type="text" class="settings-input" id="setting-news-api-key" placeholder="Enter FCS API Key">
@@ -2285,15 +2319,18 @@
                     <label class="settings-label">QoQ/YoY Buffer - After (minutes)</label>
                     <input type="number" class="settings-input" id="setting-qoq-after" value="75">
                 </div>
+                </div>
             </div>
 
             <!-- Lot Size Calculator Settings -->
             <div class="settings-section">
-                <div class="settings-section-header">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
                     <span class="settings-section-icon">💰</span>
                     <span>Lot Size Calculator</span>
+                    <span class="settings-section-arrow collapsed">▶</span>
                 </div>
 
+                <div class="settings-section-body collapsed">
                 <div class="settings-field">
                     <label class="settings-label">Default Risk Percentage (%)</label>
                     <input type="number" class="settings-input" id="setting-default-risk" value="1" step="0.1">
@@ -2323,15 +2360,18 @@
                         <option value="micro">Micro Lots</option>
                     </select>
                 </div>
+                </div>
             </div>
 
             <!-- Tasks & Reminders Settings -->
             <div class="settings-section">
-                <div class="settings-section-header">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
                     <span class="settings-section-icon">⏰</span>
                     <span>Tasks & Reminders</span>
+                    <span class="settings-section-arrow collapsed">▶</span>
                 </div>
 
+                <div class="settings-section-body collapsed">
                 <div class="settings-field">
                     <label class="settings-label">Group 1 Buffer (minutes)</label>
                     <input type="number" class="settings-input" id="setting-group1-buffer" value="5">
@@ -2353,15 +2393,33 @@
                         <span class="settings-label" style="margin-bottom: 0;">Enable Alarm Triggers</span>
                     </label>
                 </div>
+                </div>
+            </div>
+
+            <!-- Tasks Debug Section -->
+            <div class="settings-section">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
+                    <span class="settings-section-icon">🐛</span>
+                    <span>Tasks Debug</span>
+                    <span class="settings-section-arrow">▼</span>
+                </div>
+
+                <div class="settings-section-body">
+                    <div id="settings-debug-container">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
             </div>
 
             <!-- Notification Settings -->
             <div class="settings-section">
-                <div class="settings-section-header">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
                     <span class="settings-section-icon">🔔</span>
                     <span>Notifications</span>
+                    <span class="settings-section-arrow collapsed">▶</span>
                 </div>
 
+                <div class="settings-section-body collapsed">
                 <div class="settings-field">
                     <label class="settings-label">Telegram Bot Token</label>
                     <input type="text" class="settings-input" id="setting-telegram-token" placeholder="Enter Bot Token">
@@ -2378,15 +2436,18 @@
                         <span class="settings-label" style="margin-bottom: 0;">Enable Telegram Notifications</span>
                     </label>
                 </div>
+                </div>
             </div>
 
             <!-- Account Balance Settings -->
             <div class="settings-section">
-                <div class="settings-section-header">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
                     <span class="settings-section-icon">💵</span>
                     <span>Account Balance</span>
+                    <span class="settings-section-arrow collapsed">▶</span>
                 </div>
 
+                <div class="settings-section-body collapsed">
                 <div class="settings-field">
                     <label class="settings-label">Starting Balance ($)</label>
                     <input type="number" class="settings-input" id="setting-starting-balance" value="10000" readonly style="background: var(--bg-tertiary); cursor: not-allowed;">
@@ -2426,6 +2487,7 @@
                     <button class="settings-btn settings-btn-secondary" onclick="resetStartingBalance()" style="width: 100%;">
                         🔄 Reset Starting Balance
                     </button>
+                </div>
                 </div>
             </div>
         </div>
@@ -3429,11 +3491,27 @@
 
             // Close on outside click
             if (panel.classList.contains('show')) {
+                // Load debug info when opening
+                loadTasksDebugInfo();
                 setTimeout(() => {
                     document.addEventListener('click', closeSettingsOnOutsideClick);
                 }, 100);
             } else {
                 document.removeEventListener('click', closeSettingsOnOutsideClick);
+            }
+        }
+
+        function toggleSettingsCategory(header) {
+            const body = header.nextElementSibling;
+            const arrow = header.querySelector('.settings-section-arrow');
+
+            body.classList.toggle('collapsed');
+            arrow.classList.toggle('collapsed');
+
+            if (body.classList.contains('collapsed')) {
+                arrow.textContent = '▶';
+            } else {
+                arrow.textContent = '▼';
             }
         }
 
@@ -3678,6 +3756,112 @@
 
                 alert('Starting balance reset successfully!');
             }
+        }
+
+        function loadTasksDebugInfo() {
+            const container = document.getElementById('settings-debug-container');
+            if (!container) return;
+
+            const debugHTML = `
+                <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px;">
+                    <div style="font-weight: 600; margin-bottom: 0.75rem; font-size: 0.9rem;">Debug Controls:</div>
+                    <button onclick="showAllTasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: var(--accent-orange); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Show All Tasks</button>
+                    <button onclick="triggerGroup1Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 1 Now</button>
+                    <button onclick="triggerGroup2Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 2 Now</button>
+                    <button onclick="triggerGroup3Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 3 Now</button>
+                    <button onclick="resetAllTasks()" style="width: 100%; padding: 0.5rem; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Reset All Tasks</button>
+                </div>
+
+                <div id="settings-debug-time" style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.85rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Current Time:</div>
+                    <div style="color: var(--text-secondary);">Loading...</div>
+                </div>
+
+                <div id="settings-debug-next-task" style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.85rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
+                    <div style="color: var(--text-secondary);">Loading...</div>
+                </div>
+
+                <div id="settings-debug-storage" style="padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.75rem;">
+                    <div style="font-weight: 600; margin-bottom: 0.5rem;">localStorage Values:</div>
+                    <div style="color: var(--text-secondary); font-family: monospace; white-space: pre-wrap; word-break: break-all;">Loading...</div>
+                </div>
+            `;
+
+            container.innerHTML = debugHTML;
+
+            // Update debug info
+            updateDebugDisplay();
+
+            // Set interval to update debug info every second
+            if (window.debugUpdateInterval) {
+                clearInterval(window.debugUpdateInterval);
+            }
+            window.debugUpdateInterval = setInterval(updateDebugDisplay, 1000);
+        }
+
+        function updateDebugDisplay() {
+            const timeContainer = document.getElementById('settings-debug-time');
+            const nextTaskContainer = document.getElementById('settings-debug-next-task');
+            const storageContainer = document.getElementById('settings-debug-storage');
+
+            if (!timeContainer) return;
+
+            // Update current time
+            const now = new Date();
+            timeContainer.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">Current Time:</div>
+                <div style="color: var(--text-secondary);">${now.toLocaleString()}</div>
+            `;
+
+            // Update next task info
+            if (typeof window.weeklyTasks !== 'undefined') {
+                const nextTask = getNextScheduledTask();
+                if (nextTask) {
+                    nextTaskContainer.innerHTML = `
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
+                        <div style="color: var(--text-secondary);">${nextTask.title} - ${nextTask.time}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem;">Group ${nextTask.group}</div>
+                    `;
+                } else {
+                    nextTaskContainer.innerHTML = `
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
+                        <div style="color: var(--text-secondary);">No tasks scheduled</div>
+                    `;
+                }
+            }
+
+            // Update localStorage values
+            const tasksData = localStorage.getItem('weeklyTasks');
+            const tasksObj = tasksData ? JSON.parse(tasksData) : {};
+            storageContainer.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 0.5rem;">localStorage Values:</div>
+                <div style="color: var(--text-secondary); font-family: monospace; white-space: pre-wrap; word-break: break-all;">${JSON.stringify(tasksObj, null, 2)}</div>
+            `;
+        }
+
+        function getNextScheduledTask() {
+            if (typeof window.weeklyTasks === 'undefined') return null;
+
+            const now = new Date();
+            const currentDay = now.getDay();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+
+            let closestTask = null;
+            let minTimeDiff = Infinity;
+
+            window.weeklyTasks.forEach(task => {
+                const [hours, minutes] = task.time.split(':').map(Number);
+                const taskTime = hours * 60 + minutes;
+                const timeDiff = (taskTime - currentTime + 1440) % 1440;
+
+                if (timeDiff < minTimeDiff) {
+                    minTimeDiff = timeDiff;
+                    closestTask = task;
+                }
+            });
+
+            return closestTask;
         }
 
         function toggleSection(header) {
