@@ -358,6 +358,67 @@
             background: var(--text-secondary);
         }
 
+        /* Transaction Log */
+        .transaction-log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .transaction-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .transaction-amount.positive {
+            color: var(--accent-green);
+        }
+
+        .transaction-amount.negative {
+            color: #ef4444;
+        }
+
+        .transaction-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .transaction-log::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .transaction-log::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        .transaction-log::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .transaction-log::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
         .section { margin-bottom: 1rem; }
         .section-header {
             background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
@@ -2328,12 +2389,42 @@
 
                 <div class="settings-field">
                     <label class="settings-label">Starting Balance ($)</label>
-                    <input type="number" class="settings-input" id="setting-starting-balance" value="10000">
+                    <input type="number" class="settings-input" id="setting-starting-balance" value="10000" readonly style="background: var(--bg-tertiary); cursor: not-allowed;">
+                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Use 'Reset Starting Balance' button to change
+                    </div>
                 </div>
 
                 <div class="settings-field">
-                    <button class="settings-btn settings-btn-secondary" onclick="resetBalance()" style="width: 100%;">
-                        Reset Balance to Starting Amount
+                    <label class="settings-label">Add Transaction</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="number" class="settings-input" id="transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1;">
+                        <button class="settings-btn settings-btn-primary" onclick="addTransaction()" style="width: auto; padding: 0.75rem 1rem;">
+                            Add
+                        </button>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Examples: +500, -1250, +127.50, -45
+                    </div>
+                </div>
+
+                <div class="settings-field">
+                    <button class="transaction-log-toggle" onclick="toggleTransactionLog()" style="width: 100%; display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; cursor: pointer; color: var(--text-primary); font-weight: 500;">
+                        <span>📋 Transaction Log (<span id="transaction-count">0</span>)</span>
+                        <span id="transaction-log-arrow">▼</span>
+                    </button>
+                    <div id="transaction-log-container" style="display: none; margin-top: 0.5rem;">
+                        <div id="transaction-log" class="transaction-log">
+                            <div style="text-align: center; padding: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                                No transactions yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-field">
+                    <button class="settings-btn settings-btn-secondary" onclick="resetStartingBalance()" style="width: 100%;">
+                        🔄 Reset Starting Balance
                     </button>
                 </div>
             </div>
@@ -3439,11 +3530,153 @@
             }
         }
 
-        function resetBalance() {
-            if (confirm('Reset current balance to starting balance?')) {
+        // ==================== TRANSACTION SYSTEM ====================
+
+        const TRANSACTIONS_KEY = 'tradingSystemTransactions';
+
+        function getTransactions() {
+            const stored = localStorage.getItem(TRANSACTIONS_KEY);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function saveTransactions(transactions) {
+            localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
+        }
+
+        function addTransaction() {
+            const input = document.getElementById('transaction-amount');
+            const amount = parseFloat(input.value);
+
+            if (isNaN(amount) || amount === 0) {
+                alert('Please enter a valid transaction amount (e.g., +500 or -500)');
+                return;
+            }
+
+            const transaction = {
+                amount: amount,
+                timestamp: Date.now(),
+                date: new Date().toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                })
+            };
+
+            const transactions = getTransactions();
+            transactions.push(transaction);
+            saveTransactions(transactions);
+
+            // Update balance
+            updateBalanceFromTransactions();
+
+            // Clear input
+            input.value = '';
+
+            // Refresh transaction log
+            renderTransactionLog();
+
+            alert(`Transaction ${amount > 0 ? '+' : ''}$${Math.abs(amount).toFixed(2)} added!`);
+        }
+
+        function renderTransactionLog() {
+            const transactions = getTransactions();
+            const logContainer = document.getElementById('transaction-log');
+            const countElement = document.getElementById('transaction-count');
+
+            countElement.textContent = transactions.length;
+
+            if (transactions.length === 0) {
+                logContainer.innerHTML = `
+                    <div style="text-align: center; padding: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        No transactions yet
+                    </div>
+                `;
+                return;
+            }
+
+            // Show last 50 transactions, most recent first
+            const recentTransactions = transactions.slice(-50).reverse();
+
+            const html = recentTransactions.map(t => {
+                const isPositive = t.amount > 0;
+                const amountClass = isPositive ? 'positive' : 'negative';
+                const sign = isPositive ? '+' : '';
+
+                return `
+                    <div class="transaction-item">
+                        <div>
+                            <div class="transaction-amount ${amountClass}">
+                                ${sign}$${Math.abs(t.amount).toFixed(2)}
+                            </div>
+                        </div>
+                        <div class="transaction-date">
+                            ${t.date}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            logContainer.innerHTML = html;
+        }
+
+        function toggleTransactionLog() {
+            const container = document.getElementById('transaction-log-container');
+            const arrow = document.getElementById('transaction-log-arrow');
+
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                arrow.textContent = '▲';
+                renderTransactionLog();
+            } else {
+                container.style.display = 'none';
+                arrow.textContent = '▼';
+            }
+        }
+
+        function updateBalanceFromTransactions() {
+            const settings = loadSettings();
+            const transactions = getTransactions();
+
+            // Calculate current balance: starting + sum of all transactions
+            const transactionSum = transactions.reduce((sum, t) => sum + t.amount, 0);
+            const currentBalance = settings.startingBalance + transactionSum;
+
+            // Update Firebase
+            db.ref('accountBalance').set(currentBalance);
+        }
+
+        function resetStartingBalance() {
+            const newBalance = prompt('Enter new starting balance:', '10000');
+
+            if (newBalance === null) return; // Cancelled
+
+            const balance = parseFloat(newBalance);
+
+            if (isNaN(balance) || balance < 0) {
+                alert('Please enter a valid positive number');
+                return;
+            }
+
+            if (confirm(`Set new starting balance to $${balance.toFixed(2)}?\n\nThis will:\n- Clear all transactions\n- Set starting balance to $${balance.toFixed(2)}\n- Reset current balance to $${balance.toFixed(2)}`)) {
+                // Clear all transactions
+                localStorage.removeItem(TRANSACTIONS_KEY);
+
+                // Update settings
                 const settings = loadSettings();
-                db.ref('accountBalance').set(settings.startingBalance);
-                alert('Balance reset!');
+                settings.startingBalance = balance;
+                localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+                // Update Firebase
+                db.ref('startingBalance').set(balance);
+                db.ref('accountBalance').set(balance);
+
+                // Reload UI
+                loadSettings();
+                renderTransactionLog();
+
+                alert('Starting balance reset successfully!');
             }
         }
 
@@ -4145,6 +4378,9 @@
 
             // Load balance from Firebase
             loadBalanceData();
+
+            // Initialize transaction log
+            renderTransactionLog();
         }
 
         function loadBalanceData() {
