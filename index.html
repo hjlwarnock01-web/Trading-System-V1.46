@@ -1111,10 +1111,83 @@
             width: 280px;
         }
 
-        .balance-widget {
-            bottom: 780px;
-            z-index: 10004;
-            width: 280px;
+        /* DEPRECATED - Old balance widget styles removed */
+
+        /* Enhanced Account Balance Widget */
+        .balance-widget-enhanced {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .balance-header {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .balance-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .balance-current-row,
+        .balance-percentage-row,
+        .balance-starting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .balance-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .balance-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .balance-percentage {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .balance-percentage.positive {
+            color: var(--accent-green);
+        }
+
+        .balance-percentage.negative {
+            color: #ef4444;
+        }
+
+        .balance-percentage.neutral {
+            color: white;
+        }
+
+        .balance-arrow {
+            font-size: 1rem;
+            margin-left: 0.25rem;
+        }
+
+        .balance-starting {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
         }
 
         /* News Event Blocker (in sidebar) */
@@ -1278,24 +1351,7 @@
             margin-top: 0.5rem;
         }
 
-        .balance-widget .entry-content {
-            padding: 1rem;
-        }
-
-        .balance-display {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-green);
-            text-align: center;
-            padding: 0.5rem;
-        }
-
-        .balance-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 0.25rem;
-        }
+        /* DEPRECATED - Old balance display styles removed */
 
         .calc-input-group {
             margin-bottom: 0.75rem;
@@ -1738,13 +1794,39 @@
                 display: block !important;
             }
 
+            /* Balance Widget on Mobile - show on homepage only */
+            #balanceWidgetMobile {
+                display: block;
+                padding: 1rem;
+                margin-top: 60px; /* Below mobile header */
+            }
+
+            body[data-mobile-page="home"] #balanceWidgetMobile {
+                display: block !important;
+            }
+
+            body[data-mobile-page="setup"] #balanceWidgetMobile,
+            body[data-mobile-page="trading"] #balanceWidgetMobile {
+                display: none !important;
+            }
+
+            #balanceWidgetDesktop {
+                display: none; /* Hide on mobile */
+            }
+
+            /* Make balance widget more prominent on mobile */
+            @media (max-width: 768px) {
+                .balance-widget-enhanced {
+                    margin-bottom: 1rem;
+                }
+            }
+
             /* ===== PAGE 2 - SETUP & TOOLS ===== */
-            /* Lot Size Calculator, Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
+            /* Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
             body[data-mobile-page="setup"] .prices-sidebar {
                 display: block;
             }
             body[data-mobile-page="setup"] .prices-sidebar .sidebar-container,
-            body[data-mobile-page="setup"] #lotsizeWidget,
             body[data-mobile-page="setup"] #tests-tracker,
             body[data-mobile-page="setup"] #stage1Widget,
             body[data-mobile-page="setup"] #tasks-reminders-widget {
@@ -1752,14 +1834,32 @@
             }
 
             /* ===== PAGE 3 - TRADING DASHBOARD ===== */
-            /* Daily Trading Plan, Setup Status, Risk Assessment, Stage 2, Trading Watch */
+            /* Daily Trading Plan, Stage 2 Entry, Risk Assessment, Lot Size Calculator, Setup Status, Trading Watch */
             body[data-mobile-page="trading"] #daily-plan-widget,
-            body[data-mobile-page="trading"] #stage1-status,
-            body[data-mobile-page="trading"] #risk-assessment-widget,
             body[data-mobile-page="trading"] #stage2Widget,
+            body[data-mobile-page="trading"] #risk-assessment-widget,
+            body[data-mobile-page="trading"] #lotsizeWidget,
+            body[data-mobile-page="trading"] #stage1-status,
             body[data-mobile-page="trading"] #trading-watch {
                 display: block !important;
             }
+
+            /* Reorder widgets on Trading Dashboard page using flexbox */
+            body[data-mobile-page="trading"] {
+                display: flex;
+                flex-direction: column;
+            }
+
+            body[data-mobile-page="trading"] .mobile-header { order: 1; }
+            body[data-mobile-page="trading"] #daily-plan-widget { order: 2; }
+            body[data-mobile-page="trading"] #stage2Widget { order: 3; }
+            body[data-mobile-page="trading"] #risk-assessment-widget { order: 4; }
+            body[data-mobile-page="trading"] #lotsizeWidget { order: 5; }
+            body[data-mobile-page="trading"] #stage1-status { order: 6; }
+            body[data-mobile-page="trading"] #trading-watch { order: 7; }
+            body[data-mobile-page="trading"] .mobile-menu { order: 0; }
+            body[data-mobile-page="trading"] .mobile-menu-overlay { order: 0; }
+            body[data-mobile-page="trading"] > * { order: 99; } /* Default order for other elements */
 
             /* Full width mobile widgets - ALL widgets are static, not floating */
             .news-sidebar,
@@ -1803,6 +1903,13 @@
             .entry-widget .minimize-btn,
             #tasks-reminders-widget .minimize-btn {
                 display: none !important;
+            }
+
+            /* Remove scrollable behavior - show full content on mobile */
+            .entry-widget .entry-content,
+            #tasks-reminders-widget .tasks-content {
+                max-height: none !important;
+                overflow-y: visible !important;
             }
 
             .sidebar-container {
@@ -1882,6 +1989,9 @@
             <div class="content-grid">
                 <!-- Left Sidebar -->
                 <div class="news-sidebar">
+                    <!-- Account Balance (Top of Sidebar) -->
+                    <div id="balanceWidgetDesktop"></div>
+
                     <!-- News Event Blocker (replaces Market Events Alert) -->
                     <div class="sidebar-container" style="margin-bottom: 1.5rem;">
                         <div class="sidebar-header">
@@ -2033,6 +2143,9 @@
                     </div>
 
                 </div>
+
+                <!-- Account Balance (Top of Mobile Homepage) -->
+                <div id="balanceWidgetMobile"></div>
 
                 <!-- Main Trading System Content -->
                 <main class="main-sections">
@@ -2529,15 +2642,22 @@
         </div>
     </div>
 
-    <!-- Account Balance Widget -->
-    <div class="entry-widget balance-widget minimized" id="balanceWidget">
-        <div class="entry-header" onclick="toggleBalanceWidget()">
-            <span>Account Balance</span>
-            <button class="minimize-btn" onclick="event.stopPropagation(); toggleBalanceWidget()">−</button>
-        </div>
-        <div class="entry-content">
-            <div class="balance-label">Current Balance</div>
-            <div class="balance-display" id="balance-display">$10,000</div>
+    <!-- Account Balance Widget (Enhanced with Percentage) -->
+    <div class="balance-widget-enhanced" id="balanceWidget">
+        <div class="balance-header">Account Balance</div>
+        <div class="balance-content">
+            <div class="balance-current-row">
+                <span class="balance-label">Current:</span>
+                <span class="balance-current" id="balance-current">$10,000</span>
+            </div>
+            <div class="balance-percentage-row">
+                <span class="balance-label">Growth:</span>
+                <span class="balance-percentage" id="balance-percentage">100% <span class="balance-arrow"></span></span>
+            </div>
+            <div class="balance-starting-row">
+                <span class="balance-label">Starting:</span>
+                <span class="balance-starting" id="balance-starting">$10,000</span>
+            </div>
         </div>
     </div>
 
@@ -2788,6 +2908,23 @@
                 header.setAttribute('aria-expanded', 'false');
             }
         }
+
+        function initMobileSections() {
+            // Only collapse sections on mobile (max-width: 768px)
+            if (window.innerWidth <= 768) {
+                const sections = document.querySelectorAll('.main-sections .section');
+                sections.forEach(section => {
+                    const header = section.querySelector('.section-header');
+                    const content = section.querySelector('.section-content');
+                    if (header && content) {
+                        content.classList.add('hidden');
+                        header.classList.add('collapsed');
+                        header.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        }
+
         function handleIndicatorSelect() {
             const select = document.getElementById('indicator-select');
             const descriptionDiv = document.getElementById('indicator-description');
@@ -2938,6 +3075,14 @@
             initTestsTracker();
             initTasksReminders();
             console.log('Entry widgets initialized');
+
+            // Collapse homepage sections on mobile
+            initMobileSections();
+            console.log('Mobile sections initialized');
+
+            // Initialize Account Balance widget
+            initBalanceWidget();
+            console.log('Balance widget initialized');
 
             // Check for webhook trigger parameter in URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -3421,9 +3566,96 @@
             setTimeout(() => adjustWidgetStacking(), 50);
         }
 
-        function toggleBalanceWidget() {
-            const widget = document.getElementById('balanceWidget');
-            widget.classList.toggle('minimized');
+        // ==================== ACCOUNT BALANCE SYSTEM ====================
+
+        let startingBalance = 10000; // Default starting balance
+        let currentBalance = 10000;  // Default current balance
+
+        function initBalanceWidget() {
+            // Move the balance widget to the correct container
+            const balanceWidget = document.getElementById('balanceWidget');
+            const desktopContainer = document.getElementById('balanceWidgetDesktop');
+            const mobileContainer = document.getElementById('balanceWidgetMobile');
+
+            if (balanceWidget && desktopContainer && mobileContainer) {
+                // Clone the widget for both desktop and mobile
+                const desktopClone = balanceWidget.cloneNode(true);
+                const mobileClone = balanceWidget.cloneNode(true);
+
+                // Append to containers
+                desktopContainer.appendChild(desktopClone);
+                mobileContainer.appendChild(mobileClone);
+
+                // Remove original widget
+                balanceWidget.remove();
+            }
+
+            // Load balance from Firebase
+            loadBalanceData();
+        }
+
+        function loadBalanceData() {
+            // Listen for current balance
+            db.ref('accountBalance').on('value', (snapshot) => {
+                const balance = snapshot.val();
+                if (balance !== null) {
+                    currentBalance = balance;
+                    updateBalanceDisplay();
+                }
+            });
+
+            // Listen for starting balance
+            db.ref('startingBalance').on('value', (snapshot) => {
+                const balance = snapshot.val();
+                if (balance !== null) {
+                    startingBalance = balance;
+                    updateBalanceDisplay();
+                }
+            });
+        }
+
+        function updateBalanceDisplay() {
+            const currentElements = document.querySelectorAll('#balance-current');
+            const percentageElements = document.querySelectorAll('#balance-percentage');
+            const startingElements = document.querySelectorAll('#balance-starting');
+
+            // Format currency
+            const formatCurrency = (amount) => {
+                return '$' + amount.toLocaleString('en-US', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+            };
+
+            // Calculate percentage
+            const percentage = (currentBalance / startingBalance * 100).toFixed(1);
+            const percentageNum = parseFloat(percentage);
+
+            // Determine color class and arrow
+            let colorClass = 'neutral';
+            let arrow = '';
+
+            if (percentageNum > 100) {
+                colorClass = 'positive';
+                arrow = '▲';
+            } else if (percentageNum < 100) {
+                colorClass = 'negative';
+                arrow = '▼';
+            }
+
+            // Update all instances (desktop and mobile)
+            currentElements.forEach(el => {
+                el.textContent = formatCurrency(currentBalance);
+            });
+
+            percentageElements.forEach(el => {
+                el.className = 'balance-percentage ' + colorClass;
+                el.innerHTML = `${percentage}% <span class="balance-arrow">${arrow}</span>`;
+            });
+
+            startingElements.forEach(el => {
+                el.textContent = formatCurrency(startingBalance);
+            });
         }
 
         // ==================== NEWS BLOCKING SYSTEM ====================
@@ -5005,8 +5237,7 @@
             const resultDisplay = document.getElementById('calc-result');
             resultDisplay.textContent = lotSize.toFixed(2) + ' lots';
 
-            // Update balance widget
-            document.getElementById('balance-display').textContent = '$' + balance.toLocaleString();
+            // Balance is now updated via Firebase listener in updateBalanceDisplay()
 
             console.log('=== Calculation Complete ===\n');
         }
