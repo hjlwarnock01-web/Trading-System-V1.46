@@ -2286,11 +2286,6 @@
 
                 <div class="settings-section-body">
                 <div class="settings-field">
-                    <label class="settings-label">API Key</label>
-                    <input type="text" class="settings-input" id="setting-news-api-key" placeholder="Enter FCS API Key">
-                </div>
-
-                <div class="settings-field">
                     <label class="settings-label">Pre-Event Disparity Threshold (minutes)</label>
                     <input type="number" class="settings-input" id="setting-pre-disparity" value="30">
                 </div>
@@ -2593,10 +2588,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="news-input-group">
-                                        <label class="news-input-label">FCS API Key (Free: 500 calls/month)</label>
-                                        <input type="text" class="news-input" id="newsApiKey" value="62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW">
-                                    </div>
                                     <div class="news-input-group">
                                         <label class="news-input-label">Pre-Event Disparity (%) - Forecast vs Previous</label>
                                         <input type="number" class="news-input" id="newsPreEventThreshold" value="50" step="1" min="0">
@@ -3220,6 +3211,29 @@
                 <span class="balance-label">Starting:</span>
                 <span class="balance-starting" id="balance-starting">$10,000</span>
             </div>
+
+            <!-- Add Transaction Section -->
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="number" id="widget-transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1; padding: 0.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 0.9rem;">
+                    <button onclick="addTransaction()" style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Add</button>
+                </div>
+
+                <!-- Transaction Log Toggle -->
+                <button onclick="toggleWidgetTransactionLog()" style="width: 100%; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 6px; cursor: pointer; color: white; font-size: 0.85rem;">
+                    <span>📋 Transactions (<span id="widget-transaction-count">0</span>)</span>
+                    <span id="widget-transaction-arrow">▼</span>
+                </button>
+
+                <!-- Transaction Log -->
+                <div id="widget-transaction-log-container" style="display: none; margin-top: 0.5rem;">
+                    <div id="widget-transaction-log" style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 6px; padding: 0.5rem;">
+                        <div style="text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+                            No transactions yet
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -3464,7 +3478,6 @@
 
         // Default settings
         const defaultSettings = {
-            newsApiKey: '62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW',
             preDisparity: 30,
             postDisparity: 60,
             fedBefore: 60,
@@ -3530,7 +3543,6 @@
             const settings = saved ? JSON.parse(saved) : defaultSettings;
 
             // Populate all settings fields
-            document.getElementById('setting-news-api-key').value = settings.newsApiKey || '';
             document.getElementById('setting-pre-disparity').value = settings.preDisparity;
             document.getElementById('setting-post-disparity').value = settings.postDisparity;
             document.getElementById('setting-fed-before').value = settings.fedBefore;
@@ -3555,7 +3567,6 @@
 
         function saveSettings() {
             const settings = {
-                newsApiKey: document.getElementById('setting-news-api-key').value,
                 preDisparity: parseInt(document.getElementById('setting-pre-disparity').value),
                 postDisparity: parseInt(document.getElementById('setting-post-disparity').value),
                 fedBefore: parseInt(document.getElementById('setting-fed-before').value),
@@ -3584,7 +3595,6 @@
 
             // Apply settings to news blocking config
             if (typeof newsBlockingConfig !== 'undefined') {
-                newsBlockingConfig.apiKey = settings.newsApiKey;
                 newsBlockingConfig.preEventDisparityThreshold = settings.preDisparity;
                 newsBlockingConfig.postEventDisparityThreshold = settings.postDisparity;
                 newsBlockingConfig.fedEcbBuffer.before = settings.fedBefore;
@@ -3622,7 +3632,16 @@
         }
 
         function addTransaction() {
-            const input = document.getElementById('transaction-amount');
+            // Try widget input first, then settings input
+            const widgetInput = document.getElementById('widget-transaction-amount');
+            const settingsInput = document.getElementById('transaction-amount');
+            const input = widgetInput || settingsInput;
+
+            if (!input) {
+                alert('Transaction input not found');
+                return;
+            }
+
             const amount = parseFloat(input.value);
 
             if (isNaN(amount) || amount === 0) {
@@ -3649,13 +3668,72 @@
             // Update balance
             updateBalanceFromTransactions();
 
-            // Clear input
-            input.value = '';
+            // Clear both inputs
+            if (widgetInput) widgetInput.value = '';
+            if (settingsInput) settingsInput.value = '';
 
-            // Refresh transaction log
+            // Refresh transaction logs
             renderTransactionLog();
+            renderWidgetTransactionLog();
 
             alert(`Transaction ${amount > 0 ? '+' : ''}$${Math.abs(amount).toFixed(2)} added!`);
+        }
+
+        function toggleWidgetTransactionLog() {
+            const container = document.getElementById('widget-transaction-log-container');
+            const arrow = document.getElementById('widget-transaction-arrow');
+
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                arrow.textContent = '▲';
+                renderWidgetTransactionLog();
+            } else {
+                container.style.display = 'none';
+                arrow.textContent = '▼';
+            }
+        }
+
+        function renderWidgetTransactionLog() {
+            const transactions = getTransactions();
+            const logContainer = document.getElementById('widget-transaction-log');
+            const countElement = document.getElementById('widget-transaction-count');
+
+            if (!logContainer) return;
+
+            if (countElement) {
+                countElement.textContent = transactions.length;
+            }
+
+            if (transactions.length === 0) {
+                logContainer.innerHTML = `
+                    <div style="text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+                        No transactions yet
+                    </div>
+                `;
+                return;
+            }
+
+            // Show last 50 transactions, most recent first
+            const recentTransactions = transactions.slice(-50).reverse();
+
+            const html = recentTransactions.map(t => {
+                const isPositive = t.amount > 0;
+                const color = isPositive ? 'var(--accent-green)' : '#ef4444';
+                const sign = isPositive ? '+' : '';
+
+                return `
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 0.25rem; font-size: 0.85rem;">
+                        <div style="font-weight: 600; color: ${color};">
+                            ${sign}$${Math.abs(t.amount).toFixed(2)}
+                        </div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem;">
+                            ${t.date}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            logContainer.innerHTML = html;
         }
 
         function renderTransactionLog() {
@@ -4563,8 +4641,9 @@
             // Load balance from Firebase
             loadBalanceData();
 
-            // Initialize transaction log
+            // Initialize transaction logs
             renderTransactionLog();
+            renderWidgetTransactionLog();
         }
 
         function loadBalanceData() {
@@ -4635,8 +4714,7 @@
 
         // News Blocking Configuration
         let newsBlockingConfig = {
-            apiKey: '62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW',  // FCS API key (Free: 500 calls/month)
-            apiProvider: 'FCS',  // FCS or FOREXFACTORY
+            apiProvider: 'FOREXFACTORY',  // Using Forex Factory scraper (no API key required)
             preEventThreshold: 50,  // Forecast vs Previous disparity threshold (%)
             postEventThreshold: 50, // Actual vs Forecast disparity threshold (%)
             fedEcbBefore: 60,
@@ -4658,26 +4736,15 @@
             if (saved) {
                 const savedConfig = JSON.parse(saved);
 
-                // MIGRATION: Clear old API keys (Alpha Vantage, Finnhub)
-                if (savedConfig.apiKey === '2ITV5J6KDMOE4BYW' ||
-                    savedConfig.apiKey === 'PASTE_FINNHUB_API_KEY_HERE' ||
-                    savedConfig.apiKey === 'd4mr3f1r01qsn6g7uhhgd4mr3f1r01qsn6g7uhi0') {
-                    console.log('🔄 Migrating from old API provider to FCS API');
-                    console.log('Please get free FCS API key at: https://fcsapi.com/dashboard');
-                    savedConfig.apiKey = 'GET_FREE_KEY_AT_FCSAPI.COM';
-                }
-
-                // Merge with defaults (keep new Finnhub key if not in saved config)
+                // Merge with defaults
                 newsBlockingConfig = {
                     ...newsBlockingConfig,
-                    ...savedConfig,
-                    apiKey: savedConfig.apiKey || newsBlockingConfig.apiKey
+                    ...savedConfig
                 };
 
-                console.log('✅ Loaded config with API key:', newsBlockingConfig.apiKey.substring(0, 8) + '...');
+                console.log('✅ Loaded config from localStorage');
 
-                // Update inputs
-                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
+                // Update inputs (if legacy input exists)
                 document.getElementById('newsPreEventThreshold').value = newsBlockingConfig.preEventThreshold || 50;
                 document.getElementById('newsPostEventThreshold').value = newsBlockingConfig.postEventThreshold || 50;
                 document.getElementById('newsFedEcbBefore').value = newsBlockingConfig.fedEcbBefore;
@@ -4688,14 +4755,12 @@
                 // Save migrated config
                 localStorage.setItem('newsBlockingConfig', JSON.stringify(newsBlockingConfig));
             } else {
-                console.log('✅ Using default config with Finnhub API key');
-                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
+                console.log('✅ Using default config with Forex Factory scraper');
             }
         }
 
         // Save config to localStorage
         function saveNewsConfig() {
-            newsBlockingConfig.apiKey = document.getElementById('newsApiKey').value;
             newsBlockingConfig.preEventThreshold = parseFloat(document.getElementById('newsPreEventThreshold').value);
             newsBlockingConfig.postEventThreshold = parseFloat(document.getElementById('newsPostEventThreshold').value);
             newsBlockingConfig.fedEcbBefore = parseInt(document.getElementById('newsFedEcbBefore').value);
