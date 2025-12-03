@@ -1781,6 +1781,30 @@
                 bottom: auto !important;
             }
 
+            /* Remove minimize/collapse functionality on mobile - always show full widgets */
+            .entry-widget.minimized,
+            #tasks-reminders-widget.minimized {
+                width: 100% !important;
+            }
+
+            .entry-widget.minimized .entry-content,
+            #tasks-reminders-widget.minimized .tasks-content {
+                display: block !important;
+            }
+
+            /* Disable header click to toggle on mobile */
+            .entry-widget .entry-header,
+            #tasks-reminders-widget .tasks-header {
+                cursor: default !important;
+                pointer-events: none !important;
+            }
+
+            /* Hide minimize buttons on mobile */
+            .entry-widget .minimize-btn,
+            #tasks-reminders-widget .minimize-btn {
+                display: none !important;
+            }
+
             .sidebar-container {
                 margin-bottom: 1rem;
             }
