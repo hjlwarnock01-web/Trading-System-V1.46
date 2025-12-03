@@ -113,7 +113,7 @@
         .theme-toggle {
             position: absolute;
             top: 1rem;
-            right: 1rem;
+            right: 60px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
@@ -121,9 +121,243 @@
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            z-index: 1001;
         }
         .theme-toggle:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.05); }
         .theme-toggle svg { width: 20px; height: 20px; fill: white; display: block; }
+
+        /* Settings Button */
+        .settings-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .settings-toggle:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.05); }
+
+        /* Settings Dropdown Panel */
+        .settings-panel {
+            position: fixed;
+            top: 70px;
+            right: 1rem;
+            width: 400px;
+            max-height: 80vh;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .settings-panel.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .settings-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .settings-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .settings-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .settings-content {
+            padding: 1.5rem;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-section-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-section-icon {
+            font-size: 1.2rem;
+        }
+
+        .settings-field {
+            margin-bottom: 1rem;
+        }
+
+        .settings-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-input,
+        .settings-select {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .settings-input:focus,
+        .settings-select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .settings-checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .settings-checkbox-field:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .settings-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .settings-actions {
+            position: sticky;
+            bottom: 0;
+            background: var(--bg-primary);
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .settings-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .settings-btn-primary {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+        }
+
+        .settings-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        .settings-btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .settings-btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* Settings Panel Scrollbar */
+        .settings-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .settings-panel::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 0 15px 15px 0;
+        }
+
+        .settings-panel::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .settings-panel::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
         .section { margin-bottom: 1rem; }
         .section-header {
             background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
@@ -1936,6 +2170,181 @@
     </style>
 </head>
 <body data-mobile-page="home">
+    <!-- Settings Toggle Button (Fixed, Always Visible) -->
+    <button class="settings-toggle" onclick="toggleSettingsPanel()" aria-label="Open Settings" title="Settings">
+        ⚙️
+    </button>
+
+    <!-- Settings Panel (Dropdown) -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <div class="settings-title">⚙️ Settings</div>
+            <button class="settings-close" onclick="toggleSettingsPanel()" aria-label="Close">×</button>
+        </div>
+
+        <div class="settings-content">
+            <!-- News Event Blocker Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header">
+                    <span class="settings-section-icon">📰</span>
+                    <span>News Event Blocker</span>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">API Key</label>
+                    <input type="text" class="settings-input" id="setting-news-api-key" placeholder="Enter FCS API Key">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Pre-Event Disparity Threshold (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-pre-disparity" value="30">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Post-Event Disparity Threshold (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-post-disparity" value="60">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Fed/ECB Buffer - Before (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-fed-before" value="60">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Fed/ECB Buffer - After (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-fed-after" value="90">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">QoQ/YoY Buffer - Before (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-qoq-before" value="45">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">QoQ/YoY Buffer - After (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-qoq-after" value="75">
+                </div>
+            </div>
+
+            <!-- Lot Size Calculator Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header">
+                    <span class="settings-section-icon">💰</span>
+                    <span>Lot Size Calculator</span>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Default Risk Percentage (%)</label>
+                    <input type="number" class="settings-input" id="setting-default-risk" value="1" step="0.1">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Default Stop Loss (pips)</label>
+                    <input type="number" class="settings-input" id="setting-default-sl" value="20">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Default Instrument</label>
+                    <select class="settings-select" id="setting-default-instrument">
+                        <option value="EURUSD">EUR/USD</option>
+                        <option value="GBPUSD">GBP/USD</option>
+                        <option value="USDJPY">USD/JPY</option>
+                        <option value="AUDUSD">AUD/USD</option>
+                        <option value="USDCAD">USD/CAD</option>
+                    </select>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Lot Type Preference</label>
+                    <select class="settings-select" id="setting-lot-type">
+                        <option value="standard">Standard Lots</option>
+                        <option value="mini">Mini Lots</option>
+                        <option value="micro">Micro Lots</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tasks & Reminders Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header">
+                    <span class="settings-section-icon">⏰</span>
+                    <span>Tasks & Reminders</span>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Group 1 Buffer (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-group1-buffer" value="5">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Group 2 Buffer (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-group2-buffer" value="10">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Group 3 Buffer (minutes)</label>
+                    <input type="number" class="settings-input" id="setting-group3-buffer" value="15">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-checkbox-field">
+                        <input type="checkbox" class="settings-checkbox" id="setting-enable-alarms" checked>
+                        <span class="settings-label" style="margin-bottom: 0;">Enable Alarm Triggers</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header">
+                    <span class="settings-section-icon">🔔</span>
+                    <span>Notifications</span>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Telegram Bot Token</label>
+                    <input type="text" class="settings-input" id="setting-telegram-token" placeholder="Enter Bot Token">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Telegram Chat ID</label>
+                    <input type="text" class="settings-input" id="setting-telegram-chat-id" placeholder="Enter Chat ID">
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-checkbox-field">
+                        <input type="checkbox" class="settings-checkbox" id="setting-enable-notifications" checked>
+                        <span class="settings-label" style="margin-bottom: 0;">Enable Telegram Notifications</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Account Balance Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header">
+                    <span class="settings-section-icon">💵</span>
+                    <span>Account Balance</span>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Starting Balance ($)</label>
+                    <input type="number" class="settings-input" id="setting-starting-balance" value="10000">
+                </div>
+
+                <div class="settings-field">
+                    <button class="settings-btn settings-btn-secondary" onclick="resetBalance()" style="width: 100%;">
+                        Reset Balance to Starting Amount
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-actions">
+            <button class="settings-btn settings-btn-secondary" onclick="resetSettingsToDefaults()">Reset to Defaults</button>
+            <button class="settings-btn settings-btn-primary" onclick="saveSettings()">Save Settings</button>
+        </div>
+    </div>
+
     <!-- Mobile-Only Header with Hamburger Menu -->
     <div class="mobile-header">
         <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
@@ -2003,9 +2412,9 @@
                         </div>
 
                         <div id="news-blocker-sidebar" role="region" aria-label="News event blocking">
-                            <button class="news-settings-btn" onclick="toggleNewsSettings()" style="width: 100%; margin-bottom: 0.75rem;">⚙️ Settings</button>
+                            <!-- Settings moved to centralized settings panel -->
 
-                            <!-- Settings Panel (Hidden by default) -->
+                            <!-- Settings Panel (Hidden - kept for backwards compatibility) -->
                             <div id="newsSettingsPanel" style="display: none; margin-bottom: 0.75rem;">
                                 <div class="news-settings-panel">
                                     <!-- API Status -->
@@ -2895,6 +3304,149 @@
                 `;
             }
         }
+
+        // ==================== CENTRALIZED SETTINGS SYSTEM ====================
+
+        const SETTINGS_KEY = 'tradingSystemSettings';
+
+        // Default settings
+        const defaultSettings = {
+            newsApiKey: '62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW',
+            preDisparity: 30,
+            postDisparity: 60,
+            fedBefore: 60,
+            fedAfter: 90,
+            qoqBefore: 45,
+            qoqAfter: 75,
+            defaultRisk: 1,
+            defaultSL: 20,
+            defaultInstrument: 'EURUSD',
+            lotType: 'standard',
+            group1Buffer: 5,
+            group2Buffer: 10,
+            group3Buffer: 15,
+            enableAlarms: true,
+            telegramToken: '',
+            telegramChatId: '',
+            enableNotifications: true,
+            startingBalance: 10000
+        };
+
+        function toggleSettingsPanel() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('show');
+
+            // Close on outside click
+            if (panel.classList.contains('show')) {
+                setTimeout(() => {
+                    document.addEventListener('click', closeSettingsOnOutsideClick);
+                }, 100);
+            } else {
+                document.removeEventListener('click', closeSettingsOnOutsideClick);
+            }
+        }
+
+        function closeSettingsOnOutsideClick(event) {
+            const panel = document.getElementById('settingsPanel');
+            const button = document.querySelector('.settings-toggle');
+
+            if (!panel.contains(event.target) && !button.contains(event.target)) {
+                panel.classList.remove('show');
+                document.removeEventListener('click', closeSettingsOnOutsideClick);
+            }
+        }
+
+        function loadSettings() {
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : defaultSettings;
+
+            // Populate all settings fields
+            document.getElementById('setting-news-api-key').value = settings.newsApiKey || '';
+            document.getElementById('setting-pre-disparity').value = settings.preDisparity;
+            document.getElementById('setting-post-disparity').value = settings.postDisparity;
+            document.getElementById('setting-fed-before').value = settings.fedBefore;
+            document.getElementById('setting-fed-after').value = settings.fedAfter;
+            document.getElementById('setting-qoq-before').value = settings.qoqBefore;
+            document.getElementById('setting-qoq-after').value = settings.qoqAfter;
+            document.getElementById('setting-default-risk').value = settings.defaultRisk;
+            document.getElementById('setting-default-sl').value = settings.defaultSL;
+            document.getElementById('setting-default-instrument').value = settings.defaultInstrument;
+            document.getElementById('setting-lot-type').value = settings.lotType;
+            document.getElementById('setting-group1-buffer').value = settings.group1Buffer;
+            document.getElementById('setting-group2-buffer').value = settings.group2Buffer;
+            document.getElementById('setting-group3-buffer').value = settings.group3Buffer;
+            document.getElementById('setting-enable-alarms').checked = settings.enableAlarms;
+            document.getElementById('setting-telegram-token').value = settings.telegramToken || '';
+            document.getElementById('setting-telegram-chat-id').value = settings.telegramChatId || '';
+            document.getElementById('setting-enable-notifications').checked = settings.enableNotifications;
+            document.getElementById('setting-starting-balance').value = settings.startingBalance;
+
+            return settings;
+        }
+
+        function saveSettings() {
+            const settings = {
+                newsApiKey: document.getElementById('setting-news-api-key').value,
+                preDisparity: parseInt(document.getElementById('setting-pre-disparity').value),
+                postDisparity: parseInt(document.getElementById('setting-post-disparity').value),
+                fedBefore: parseInt(document.getElementById('setting-fed-before').value),
+                fedAfter: parseInt(document.getElementById('setting-fed-after').value),
+                qoqBefore: parseInt(document.getElementById('setting-qoq-before').value),
+                qoqAfter: parseInt(document.getElementById('setting-qoq-after').value),
+                defaultRisk: parseFloat(document.getElementById('setting-default-risk').value),
+                defaultSL: parseInt(document.getElementById('setting-default-sl').value),
+                defaultInstrument: document.getElementById('setting-default-instrument').value,
+                lotType: document.getElementById('setting-lot-type').value,
+                group1Buffer: parseInt(document.getElementById('setting-group1-buffer').value),
+                group2Buffer: parseInt(document.getElementById('setting-group2-buffer').value),
+                group3Buffer: parseInt(document.getElementById('setting-group3-buffer').value),
+                enableAlarms: document.getElementById('setting-enable-alarms').checked,
+                telegramToken: document.getElementById('setting-telegram-token').value,
+                telegramChatId: document.getElementById('setting-telegram-chat-id').value,
+                enableNotifications: document.getElementById('setting-enable-notifications').checked,
+                startingBalance: parseInt(document.getElementById('setting-starting-balance').value)
+            };
+
+            // Save to localStorage
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+            // Update Firebase starting balance
+            db.ref('startingBalance').set(settings.startingBalance);
+
+            // Apply settings to news blocking config
+            if (typeof newsBlockingConfig !== 'undefined') {
+                newsBlockingConfig.apiKey = settings.newsApiKey;
+                newsBlockingConfig.preEventDisparityThreshold = settings.preDisparity;
+                newsBlockingConfig.postEventDisparityThreshold = settings.postDisparity;
+                newsBlockingConfig.fedEcbBuffer.before = settings.fedBefore;
+                newsBlockingConfig.fedEcbBuffer.after = settings.fedAfter;
+                newsBlockingConfig.qoqYoyBuffer.before = settings.qoqBefore;
+                newsBlockingConfig.qoqYoyBuffer.after = settings.qoqAfter;
+            }
+
+            // Close panel
+            toggleSettingsPanel();
+
+            // Show confirmation
+            alert('Settings saved successfully!');
+        }
+
+        function resetSettingsToDefaults() {
+            if (confirm('Reset all settings to default values?')) {
+                localStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultSettings));
+                loadSettings();
+                alert('Settings reset to defaults!');
+            }
+        }
+
+        function resetBalance() {
+            if (confirm('Reset current balance to starting balance?')) {
+                const settings = loadSettings();
+                db.ref('accountBalance').set(settings.startingBalance);
+                alert('Balance reset!');
+            }
+        }
+
         function toggleSection(header) {
             const content = header.nextElementSibling;
             const isHidden = content.classList.contains('hidden');
@@ -3051,6 +3603,7 @@
             console.log('Firebase config:', firebaseConfig.databaseURL);
 
             initializeTheme();
+            loadSettings();
             loadForexPrices();
             setInterval(loadForexPrices, 3600000);
 
