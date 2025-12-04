@@ -2,8 +2,8 @@
   "name": "Harvey Trading System",
   "short_name": "Harvey Trading",
   "description": "Professional trading system with task management and notifications",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "/Trading-System-V1.46/index.html",
+  "scope": "/Trading-System-V1.46/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#2563eb",
@@ -35,7 +35,7 @@
       "name": "View Tasks",
       "short_name": "Tasks",
       "description": "Open tasks and reminders",
-      "url": "/index.html?page=tasks",
+      "url": "/Trading-System-V1.46/index.html?page=tasks",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>",
@@ -47,7 +47,7 @@
       "name": "Stage 1 Setup",
       "short_name": "Stage 1",
       "description": "Quick access to Stage 1 Setup",
-      "url": "/index.html#stage1",
+      "url": "/Trading-System-V1.46/index.html#stage1",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>1️⃣</text></svg>",
@@ -59,7 +59,7 @@
       "name": "Stage 2 Entry",
       "short_name": "Stage 2",
       "description": "Quick access to Stage 2 Entry",
-      "url": "/index.html#stage2",
+      "url": "/Trading-System-V1.46/index.html#stage2",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>2️⃣</text></svg>",
@@ -71,7 +71,7 @@
       "name": "News Blocker",
       "short_name": "News",
       "description": "Check news event blocker",
-      "url": "/index.html#news",
+      "url": "/Trading-System-V1.46/index.html#news",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>",

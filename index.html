@@ -3286,7 +3286,7 @@
         <div class="entry-content">
             <div class="calc-input-group">
                 <label class="calc-label">Instrument</label>
-                <select class="calc-input" id="calc-instrument" onchange="fetchInstrumentPrice(); startSmartRefresh();">
+                <select class="calc-input" id="calc-instrument" onchange="fetchInstrumentPrice();">
                     <option value="EURUSD">EUR/USD</option>
                     <option value="USDJPY">USD/JPY</option>
                     <option value="BTCUSD">BTC/USD</option>
@@ -3294,7 +3294,10 @@
             </div>
             <div class="calc-input-group">
                 <label class="calc-label">Current Price <span id="price-timestamp" style="font-size: 0.7rem; color: var(--text-secondary);"></span></label>
-                <div class="calc-input" style="background: var(--bg-primary); border-color: var(--accent-blue);" id="calc-price">Loading...</div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <div class="calc-input" style="flex: 1; background: var(--bg-primary); border-color: var(--accent-blue); cursor: pointer;" id="calc-price" onclick="fetchInstrumentPrice(true)">Click to fetch</div>
+                    <button class="settings-btn settings-btn-primary" onclick="fetchInstrumentPrice(true)" style="padding: 0.5rem 1rem; font-size: 0.75rem;">Update</button>
+                </div>
             </div>
             <div class="calc-input-group">
                 <label class="calc-label">Account Balance ($)</label>
@@ -4294,7 +4297,7 @@
 
             // Register Service Worker for PWA
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('/Trading-System-V1.46/service-worker.js')
                     .then((registration) => {
                         console.log('✅ Service Worker registered successfully:', registration.scope);
 
@@ -6515,10 +6518,15 @@
 
         // Lot Size Calculator - State and Price Tracking
         let currentPrice = null;
-        let priceRefreshInterval = null;
+        let priceCache = {
+            EURUSD: { price: null, timestamp: 0 },
+            USDJPY: { price: null, timestamp: 0 },
+            BTCUSD: { price: null, timestamp: 0 }
+        };
+        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 
-        // Fetch live price from APIs
-        async function fetchInstrumentPrice() {
+        // Fetch live price from APIs with caching
+        async function fetchInstrumentPrice(forceRefresh = false) {
             const instrument = document.getElementById('calc-instrument').value;
             const priceDisplay = document.getElementById('calc-price');
             const timestampDisplay = document.getElementById('price-timestamp');
@@ -6526,36 +6534,54 @@
             console.log('=== LOT SIZE CALCULATOR DEBUG ===');
             console.log('Instrument selected:', instrument);
 
+            // Check cache first (unless force refresh)
+            const now = Date.now();
+            const cached = priceCache[instrument];
+            if (!forceRefresh && cached.price && (now - cached.timestamp < CACHE_DURATION)) {
+                console.log('Using cached price for', instrument);
+                currentPrice = cached.price;
+
+                // Format and display cached price
+                let formattedPrice;
+                if (instrument === 'BTCUSD') {
+                    formattedPrice = '$' + cached.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                } else {
+                    formattedPrice = cached.price.toFixed(instrument === 'USDJPY' ? 3 : 5);
+                }
+
+                priceDisplay.textContent = formattedPrice;
+                priceDisplay.style.color = 'var(--accent-green)';
+
+                const cacheAge = Math.floor((now - cached.timestamp) / 1000);
+                timestampDisplay.textContent = `(${cacheAge}s ago)`;
+
+                calculateLotSize();
+                return;
+            }
+
             try {
                 priceDisplay.textContent = 'Updating...';
                 priceDisplay.style.color = 'var(--accent-orange)';
 
                 let price = null;
 
-                if (instrument === 'EURUSD') {
-                    // Fetch EUR/USD from Twelve Data API
-                    const response = await fetch('https://api.twelvedata.com/quote?symbol=EUR/USD&apikey=13311003a3e04160b4153bb6ea8897d3');
+                if (instrument === 'EURUSD' || instrument === 'USDJPY') {
+                    // Fetch from Exchangerate-API (free tier: 1,500 requests/month, no API key)
+                    const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
                     const data = await response.json();
 
-                    if (data.close) {
-                        price = parseFloat(data.close);
-                        console.log('EUR/USD price fetched from Twelve Data:', price);
+                    if (instrument === 'EURUSD' && data.rates && data.rates.EUR) {
+                        // EUR/USD = 1 / USD/EUR
+                        price = 1 / parseFloat(data.rates.EUR);
+                        console.log('EUR/USD price fetched from Exchangerate-API:', price);
+                    } else if (instrument === 'USDJPY' && data.rates && data.rates.JPY) {
+                        price = parseFloat(data.rates.JPY);
+                        console.log('USD/JPY price fetched from Exchangerate-API:', price);
                     } else {
-                        throw new Error('Failed to fetch EUR/USD rate: ' + (data.message || 'Unknown error'));
-                    }
-                } else if (instrument === 'USDJPY') {
-                    // Fetch USD/JPY from Twelve Data API
-                    const response = await fetch('https://api.twelvedata.com/quote?symbol=USD/JPY&apikey=13311003a3e04160b4153bb6ea8897d3');
-                    const data = await response.json();
-
-                    if (data.close) {
-                        price = parseFloat(data.close);
-                        console.log('USD/JPY price fetched from Twelve Data:', price);
-                    } else {
-                        throw new Error('Failed to fetch USD/JPY rate: ' + (data.message || 'Unknown error'));
+                        throw new Error('Failed to fetch exchange rate');
                     }
                 } else if (instrument === 'BTCUSD') {
-                    // Fetch BTC/USD from CoinGecko
+                    // Fetch BTC/USD from CoinGecko (free, no key required)
                     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
                     const data = await response.json();
 
@@ -6570,6 +6596,12 @@
                 if (price !== null) {
                     currentPrice = price;
 
+                    // Update cache
+                    priceCache[instrument] = {
+                        price: price,
+                        timestamp: now
+                    };
+
                     // Format price display
                     let formattedPrice;
                     if (instrument === 'BTCUSD') {
@@ -6582,15 +6614,15 @@
                     priceDisplay.style.color = 'var(--accent-green)';
 
                     // Update timestamp
-                    const now = new Date();
-                    timestampDisplay.textContent = `Updated: ${now.toLocaleTimeString()}`;
+                    const fetchTime = new Date();
+                    timestampDisplay.textContent = `(just now)`;
 
                     // Recalculate lot size
                     calculateLotSize();
                 }
             } catch (error) {
                 console.error('Error fetching price:', error);
-                priceDisplay.textContent = 'Error - Retry';
+                priceDisplay.textContent = 'Click Update';
                 priceDisplay.style.color = 'var(--accent-red)';
                 timestampDisplay.textContent = '(Failed)';
             }
@@ -6657,43 +6689,12 @@
             }
         }
 
-        // Start smart auto-refresh based on instrument
-        function startSmartRefresh() {
-            const instrument = document.getElementById('calc-instrument').value;
-
-            // Clear existing interval
-            if (priceRefreshInterval) {
-                clearInterval(priceRefreshInterval);
-            }
-
-            // Set interval based on instrument type
-            let refreshInterval;
-            if (instrument === 'BTCUSD') {
-                refreshInterval = 60000; // 1 minute for BTC
-                console.log('Auto-refresh set to 1 minute for BTC');
-            } else {
-                refreshInterval = 120000; // 2 minutes for forex
-                console.log('Auto-refresh set to 2 minutes for forex');
-            }
-
-            priceRefreshInterval = setInterval(() => {
-                console.log('Auto-refreshing instrument price...');
-                fetchInstrumentPrice();
-            }, refreshInterval);
-        }
-
         // Initialize calculator on page load
         window.addEventListener('DOMContentLoaded', () => {
-            // Initial price fetch
-            fetchInstrumentPrice();
-
-            // Start smart auto-refresh
-            startSmartRefresh();
-
             // Sync with Stage 2 if instrument is selected
             syncCalculatorWithStage2();
 
-            console.log('Lot Size Calculator initialized with smart refresh');
+            console.log('Lot Size Calculator initialized (manual refresh only)');
         });
 
         function selectInstrument(instrument) {
