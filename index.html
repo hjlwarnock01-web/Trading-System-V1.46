@@ -5023,6 +5023,8 @@
         // ==================== NEWS BLOCKING SYSTEM ====================
 
         // News Blocking Configuration
+        // Uses Forex Factory economic calendar via CORS proxy (nfs.faireconomy.media)
+        // NO API KEY REQUIRED - Free high-impact news data
         let newsBlockingConfig = {
             apiProvider: 'FOREXFACTORY',  // Using Forex Factory scraper (no API key required)
             preEventThreshold: 50,  // Forecast vs Previous disparity threshold (%)
@@ -5305,71 +5307,41 @@
             return events;
         }
 
-        // Fetch economic calendar from FCS API
+        // Fetch economic calendar from Forex Factory (via CORS proxy)
         async function fetchFinnhubCalendar() {
             console.log('\n' + '='.repeat(80));
-            console.log('🔄 FCS API - FETCHING ECONOMIC CALENDAR');
+            console.log('🔄 FOREX FACTORY - FETCHING ECONOMIC CALENDAR (NO API KEY NEEDED)');
             console.log('='.repeat(80));
 
             // Save config first (updates newsBlockingConfig from UI)
             saveNewsConfig();
 
-            const apiKey = newsBlockingConfig.apiKey;
             console.log('API Provider:', newsBlockingConfig.apiProvider);
-            console.log('API Key (first 10 chars):', apiKey ? apiKey.substring(0, 10) + '...' : 'MISSING');
-            console.log('Full API Key:', apiKey);
             console.log('Timestamp:', new Date().toISOString());
 
-            if (!apiKey || apiKey === 'GET_FREE_KEY_AT_FCSAPI.COM' || apiKey === 'PASTE_FINNHUB_API_KEY_HERE') {
-                console.error('❌ MISSING API KEY - Get free key at: https://fcsapi.com/dashboard');
-                alert('Please get your FREE FCS API key:\n\n1. Go to: https://fcsapi.com/dashboard\n2. Sign up (free)\n3. Copy API key\n4. Paste in Settings\n\nFree tier: 500 calls/month');
-                return getDefaultDemoEvents();
-            }
-
             try {
-                // Calculate date range for full month
+                // Calculate date range for this week
                 const now = new Date();
-                const monthFromNow = new Date(now.getTime() + (31 * 24 * 60 * 60 * 1000));
+                const weekFromNow = new Date(now.getTime() + (7 * 24 * 60 * 60 * 1000));
 
-                const fromDate = now.toISOString().split('T')[0];
-                const toDate = monthFromNow.toISOString().split('T')[0];
+                console.log('\n📅 Fetching this week\'s high-impact news events...');
 
-                console.log('\n📅 Date Range:');
-                console.log('  From:', fromDate);
-                console.log('  To:', toDate);
+                // Use ForexFactory via CORS proxy - fetch this week's calendar
+                const forexFactoryUrl = 'https://nfs.faireconomy.media/ff_calendar_thisweek.json';
 
-                // FCS API endpoint: economy_cal
-                const calendarUrl = `https://fcsapi.com/api-v3/forex/economy_cal?from=${fromDate}&to=${toDate}&access_key=${apiKey}`;
-                console.log('\n📡 Making FCS API Request:');
-                console.log('  Full URL:', calendarUrl);
+                console.log('\n📡 Making Forex Factory Request:');
+                console.log('  URL:', forexFactoryUrl);
+                console.log('  Method: GET (via CORS proxy - no API key required)');
 
                 console.log('\n⏳ Fetching...');
-                const response = await fetch(calendarUrl);
+                const response = await fetch(forexFactoryUrl);
 
                 console.log('\n📥 Response Received:');
                 console.log('  Status:', response.status, response.statusText);
                 console.log('  OK:', response.ok);
-                console.log('  Headers:', Object.fromEntries(response.headers.entries()));
 
                 if (!response.ok) {
                     console.error('❌ HTTP Error:', response.status, response.statusText);
-
-                    // Handle specific error codes
-                    if (response.status === 401) {
-                        console.error('❌ 401 UNAUTHORIZED: API key is invalid or missing');
-                        alert('Finnhub API Error: Invalid API key. Please check your API key in Settings.');
-                    } else if (response.status === 403) {
-                        console.error('❌ 403 FORBIDDEN: Economic calendar endpoint requires PAID Finnhub subscription');
-                        console.error('Your API key is valid, but the free tier does not include economic calendar access');
-                        console.error('Solutions:');
-                        console.error('  1. Upgrade Finnhub plan at: https://finnhub.io/pricing');
-                        console.error('  2. Use a different API with free economic calendar (Trading Economics, FCS API)');
-                        alert('Finnhub Economic Calendar requires a PAID subscription.\n\nYour free tier API key cannot access this endpoint.\n\nOptions:\n1. Upgrade at finnhub.io/pricing\n2. Ask Claude to switch to a free alternative API');
-                    } else if (response.status === 429) {
-                        console.error('❌ 429 RATE LIMIT: Too many requests');
-                        alert('Finnhub API Error: Rate limit exceeded. Please wait and try again.');
-                    }
-
                     throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
                 }
 
@@ -5378,71 +5350,50 @@
 
                 console.log('\n📊 Response Data:');
                 console.log('  Type:', typeof data);
-                console.log('  Keys:', Object.keys(data));
-                console.log('  Full Response:', JSON.stringify(data, null, 2));
+                console.log('  Array length:', Array.isArray(data) ? data.length : 'N/A');
 
-                // Check for FCS API errors
-                if (data.status === false || data.error) {
-                    console.error('\n❌ FCS API Error:', data.msg || data.error);
-                    newsBlockingConfig.apiStatus = 'failed';
-                    updateStatusDisplay();
-                    throw new Error('FCS API Error: ' + (data.msg || data.error));
-                }
+                if (data && Array.isArray(data) && data.length > 0) {
+                    console.log('  Sample event (first):', data[0]);
+                    console.log('\n🔄 Parsing Forex Factory events...');
 
-                // Parse FCS economic calendar (response.response array)
-                if (data.response && Array.isArray(data.response)) {
-                    console.log('\n✓ FCS response field found');
-                    console.log('  Array length:', data.response.length);
-                    console.log('  Sample event (first):', data.response[0]);
+                    const events = parseForexFactoryCalendar(data);
 
-                    if (data.response.length > 0) {
-                        console.log('\n🔄 Parsing FCS events...');
-                        const events = parseFCSCalendar(data.response);
-
-                        console.log('\n📈 Parse Results:');
-                        console.log('  Total from API:', data.response.length);
-                        console.log('  After filtering:', events.length);
+                    console.log('\n📈 Parse Results:');
+                    console.log('  Total from Forex Factory:', data.length);
+                    console.log('  After filtering (high-impact only):', events.length);
+                    if (events.length > 0) {
                         console.log('  First 3 events:', events.slice(0, 3));
+                    }
 
-                        if (events.length > 0) {
-                            console.log(`\n✅ SUCCESS: Got ${events.length} events from FCS API`);
-                            saveEventsToCache(events, 'FCS_API');
-                            return events;
-                        } else {
-                            console.log('\n⚠️ No high-impact events found after filtering');
-                            console.log('All events were filtered out (not high impact or outside date range)');
-                        }
+                    if (events.length > 0) {
+                        console.log(`\n✅ SUCCESS: Got ${events.length} high-impact events from Forex Factory`);
+                        saveEventsToCache(events, 'FOREX_FACTORY');
+                        return events;
                     } else {
-                        console.log('\n⚠️ FCS response array is empty');
+                        console.log('\n⚠️ No high-impact events found after filtering');
                     }
                 } else {
-                    console.log('\n⚠️ No response field in FCS API response');
-                    console.log('Available fields:', Object.keys(data));
+                    console.log('\n⚠️ Forex Factory response is empty or invalid format');
                 }
 
             } catch (error) {
                 console.log('\n' + '='.repeat(80));
-                console.log('❌ FCS API FAILED');
+                console.log('❌ FOREX FACTORY FETCH FAILED');
                 console.log('='.repeat(80));
                 console.error('Error Type:', error.name);
                 console.error('Error Message:', error.message);
                 console.error('Full Error:', error);
-                console.error('Stack Trace:', error.stack);
 
                 newsBlockingConfig.apiStatus = 'failed';
                 updateStatusDisplay();
             }
 
-            // API failed - return default demo events
+            // Fetch failed - return default demo events
             console.log('\n' + '='.repeat(80));
             console.log('⚠️ FALLING BACK TO DEFAULT EVENTS');
             console.log('='.repeat(80));
-            console.log('Reason: FCS API failed or returned no events');
-            console.log('Possible causes:');
-            console.log('  1. Invalid API key - Get free key at https://fcsapi.com/dashboard');
-            console.log('  2. Rate limit exceeded (500 calls/month on free tier)');
-            console.log('  3. No events in date range');
-            console.log('  4. Network/CORS error');
+            console.log('Reason: Forex Factory fetch failed or returned no events');
+            console.log('Using demo events for testing');
 
             const defaultEvents = getDefaultDemoEvents();
             console.log('\n📋 Using', defaultEvents.length, 'default demo events');
@@ -5463,6 +5414,121 @@
             newsBlockingConfig.lastSuccessfulFetch = Date.now();
             newsBlockingConfig.eventsCount = events.length;
             updateStatusDisplay();
+        }
+
+        // Parse Forex Factory calendar response (from CORS proxy JSON)
+        function parseForexFactoryCalendar(ffEvents) {
+            console.log('\n📊 PARSING FOREX FACTORY ECONOMIC CALENDAR');
+            console.log('Total events from Forex Factory:', ffEvents.length);
+
+            const events = [];
+            const now = Date.now();
+            const weekFromNow = now + (7 * 24 * 60 * 60 * 1000);
+
+            let processedCount = 0;
+            let highImpactCount = 0;
+            let inTimeRangeCount = 0;
+            let currencyFilteredCount = 0;
+
+            ffEvents.forEach((item, index) => {
+                processedCount++;
+
+                // Forex Factory format: { title, country, date, impact, forecast, previous, actual }
+                // Date format: typically "2024-12-04T14:30:00-05:00" or similar
+                const eventTime = new Date(item.date).getTime();
+
+                // Only future events in next week
+                if (eventTime < now || eventTime > weekFromNow) {
+                    if (processedCount <= 5) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Outside time range`);
+                    }
+                    return;
+                }
+                inTimeRangeCount++;
+
+                // Filter for high impact events only
+                // Forex Factory uses: "Low", "Medium", "High", "Holiday"
+                const impact = String(item.impact || '').toLowerCase();
+                if (impact !== 'high' && impact !== 'holiday') {
+                    if (processedCount <= 10) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Impact: ${impact} (filtered out)`);
+                    }
+                    return;
+                }
+                highImpactCount++;
+
+                // Map country code to currency
+                const currencyMap = {
+                    'USD': 'USD',
+                    'EUR': 'EUR',
+                    'JPY': 'JPY',
+                    'GBP': 'GBP',
+                    'CHF': 'CHF',
+                    'CAD': 'CAD',
+                    'AUD': 'AUD',
+                    'NZD': 'NZD',
+                    'CNY': 'CNY'
+                };
+                const currency = currencyMap[item.country] || item.country;
+
+                // FILTER: Only show USD, EUR, JPY events (for USDJPY, EURUSD, BTCUSD pairs)
+                const allowedCurrencies = ['USD', 'EUR', 'JPY'];
+                if (!allowedCurrencies.includes(currency)) {
+                    currencyFilteredCount++;
+                    if (processedCount <= 10) {
+                        console.log(`Event ${processedCount}: "${item.title}" - Currency: ${currency} (filtered out - only showing USD/EUR/JPY)`);
+                    }
+                    return;
+                }
+
+                // Parse numeric values
+                const parseValue = (val) => {
+                    if (val === null || val === undefined || val === '' || val === '-') return null;
+                    // Remove % and other characters
+                    const cleaned = String(val).replace(/[%,]/g, '');
+                    const parsed = parseFloat(cleaned);
+                    return isNaN(parsed) ? null : parsed;
+                };
+
+                const event = {
+                    time: eventTime,
+                    currency: currency,
+                    name: item.title || item.event || item.name,
+                    importance: impact === 'holiday' ? 'holiday' : 'high',
+                    actual: parseValue(item.actual),
+                    forecast: parseValue(item.forecast),
+                    previous: parseValue(item.previous)
+                };
+
+                // Detect blocking using our existing logic
+                const blocking = detectEventBlocking(event);
+                event.isBlocked = blocking.isBlocked;
+                event.blockReason = blocking.reason;
+                event.bufferBefore = blocking.bufferBefore;
+                event.bufferAfter = blocking.bufferAfter;
+                event.affectedPairs = getAffectedPairs(event.currency);
+
+                // Calculate blackout window
+                event.blackoutStart = event.time - (blocking.bufferBefore * 60 * 1000);
+                event.blackoutEnd = event.time + (blocking.bufferAfter * 60 * 1000);
+
+                events.push(event);
+
+                if (events.length <= 5) {
+                    console.log(`✓ Event ${events.length}:`, event.name, '@', new Date(event.time).toLocaleString(),
+                        `[${event.currency}]`, `Blocked: ${event.isBlocked}`);
+                }
+            });
+
+            console.log('\n📊 FOREX FACTORY PARSING SUMMARY:');
+            console.log('Events processed:', processedCount);
+            console.log('Events in time range:', inTimeRangeCount);
+            console.log('High impact events:', highImpactCount);
+            console.log('Filtered by currency (non-USD/EUR/JPY):', currencyFilteredCount);
+            console.log('Final events (USD/EUR/JPY only):', events.length);
+            console.log('✅ Parsed events:', events);
+
+            return events;
         }
 
         // Parse FCS API economic calendar response
