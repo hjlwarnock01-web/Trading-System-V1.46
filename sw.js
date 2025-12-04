@@ -5,9 +5,7 @@ const TELEGRAM_CHAT_ID = '5279215525';
 
 const urlsToCache = [
   '/index.html',
-  '/manifest.json',
-  '/widget-data.json',
-  '/widget-config.js'
+  '/manifest.json'
 ];
 
 // Install event - cache resources

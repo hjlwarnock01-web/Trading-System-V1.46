@@ -2504,22 +2504,10 @@
                                         App icon will appear on home screen
                                     </div>
                                 </li>
-                                <li style="margin-bottom: 0.75rem;">
+                                <li>
                                     <strong>Open the app</strong>
                                     <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
                                         Grant notification permission when asked
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Add Widget (iOS 14+)</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Long press home screen → Tap "+" → Search "Harvey"
-                                    </div>
-                                </li>
-                                <li>
-                                    <strong>Configure Widget</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Choose size (Small, Medium, or Large)
                                     </div>
                                 </li>
                             </ol>
@@ -7866,9 +7854,6 @@ Good luck with your trade!`);
 
             // Save state
             saveTasksState();
-
-            // Update widget data
-            updateWidgetData();
         }
 
         function checkGroupCompletion() {
@@ -8085,57 +8070,7 @@ Good luck with your trade!`);
             }
         }
 
-        // ==================== WIDGET DATA & NOTIFICATIONS ====================
-
-        // Update widget data.json for iOS widget
-        function updateWidgetData() {
-            console.log('📱 Updating widget data...');
-
-            // Get current active tasks
-            const activeTasks = getCurrentActiveTasks();
-
-            // Calculate progress
-            const allTasks = [...TASK_DEFINITIONS.group1, ...TASK_DEFINITIONS.group2, ...TASK_DEFINITIONS.group3];
-            const completedCount = allTasks.filter(task => tasksState.completedTasks[task.id]).length;
-            const totalCount = allTasks.length;
-
-            // Determine active group
-            let groupActive = null;
-            if (tasksState.scheduledTimes.group1 && !tasksState.completionTimes.group1) {
-                groupActive = 1;
-            } else if (tasksState.scheduledTimes.group2 && !tasksState.completionTimes.group2) {
-                groupActive = 2;
-            } else if (tasksState.scheduledTimes.group3 && !tasksState.completionTimes.group3) {
-                groupActive = 3;
-            }
-
-            const widgetData = {
-                tasks: activeTasks.map(task => ({
-                    id: task.id,
-                    name: task.name,
-                    completed: tasksState.completedTasks[task.id] || false,
-                    time: getTaskTime(task.id),
-                    group: getTaskGroup(task.id)
-                })),
-                nextUpdate: new Date(Date.now() + 15 * 60 * 1000).toISOString(), // 15 minutes
-                groupActive: groupActive,
-                wakeAlarmTriggered: tasksState.wakeAlarm.triggeredToday,
-                scheduledTimes: tasksState.scheduledTimes,
-                progress: {
-                    completed: completedCount,
-                    total: totalCount,
-                    percentage: Math.round((completedCount / totalCount) * 100)
-                },
-                lastUpdate: new Date().toISOString()
-            };
-
-            // Store in localStorage for widget access
-            localStorage.setItem('widgetData', JSON.stringify(widgetData));
-
-            console.log('✅ Widget data updated:', widgetData);
-
-            return widgetData;
-        }
+        // ==================== PUSH NOTIFICATIONS ====================
 
         function getCurrentActiveTasks() {
             const tasks = [];
@@ -8216,13 +8151,25 @@ Good luck with your trade!`);
                 return;
             }
 
-            const taskNames = tasks.map(t => t.name).slice(0, 5).join(', ');
-            const remainingCount = tasks.length - 5;
+            // Format notification title and body
+            let title = '⏰ Tasks Ready';
+            let body = '';
 
-            const title = `⏰ ${group === 'wake' ? 'Wake Alarm' : 'Tasks Ready'} - ${group.toUpperCase()}`;
-            const body = tasks.length > 5
-                ? `${taskNames}... +${remainingCount} more`
-                : taskNames;
+            if (group === 'wake') {
+                body = 'Group 1 tasks in 1 hour';
+            } else if (group === 'sunday') {
+                body = 'Weekly prep tasks ready';
+            } else if (group === 'wednesday') {
+                body = 'Check M Zone validity';
+            } else {
+                // Group 1, 2, 3 - list task names
+                const taskNames = tasks.map(t => t.name);
+                if (taskNames.length > 1) {
+                    body = `${taskNames[0]} + ${taskNames.length - 1} more task${taskNames.length > 2 ? 's' : ''}`;
+                } else {
+                    body = taskNames[0] || 'Tasks are ready';
+                }
+            }
 
             window.swRegistration.showNotification(title, {
                 body: body,
@@ -8244,7 +8191,7 @@ Good luck with your trade!`);
 
             // Mark as sent
             localStorage.setItem(notificationKey, 'sent');
-            console.log('✅ Notification sent for', group);
+            console.log('✅ Notification sent:', title, '-', body);
         }
 
         // Check if tasks are due and send notifications
@@ -8328,7 +8275,6 @@ Good luck with your trade!`);
         setInterval(() => {
             console.log('🔄 Checking for due tasks...');
             checkTasksDueAndNotify();
-            updateWidgetData();
         }, 60000); // Check every minute
 
         // Wake Alarm System

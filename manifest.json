@@ -90,26 +90,5 @@
       "title": "title",
       "text": "text"
     }
-  },
-  "widgets": [
-    {
-      "name": "Tasks Widget",
-      "short_name": "Tasks",
-      "description": "View your current trading tasks",
-      "tag": "tasks",
-      "template": "tasks-template",
-      "ms_ac_template": "adaptive-card.json",
-      "data": "widget-data.json",
-      "type": "application/json",
-      "screenshots": [],
-      "icons": [
-        {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✓</text></svg>",
-          "sizes": "96x96"
-        }
-      ],
-      "auth": false,
-      "update": 900
-    }
-  ]
+  }
 }
