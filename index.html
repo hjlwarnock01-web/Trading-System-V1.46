@@ -4297,9 +4297,18 @@
 
             // Register Service Worker for PWA
             if ('serviceWorker' in navigator) {
+                console.log('🔧 Attempting to register Service Worker...');
                 navigator.serviceWorker.register('/Trading-System-V1.46/service-worker.js')
                     .then((registration) => {
                         console.log('✅ Service Worker registered successfully:', registration.scope);
+
+                        // Store registration globally for push notifications
+                        window.swRegistration = registration;
+
+                        // Update notification status display
+                        setTimeout(() => {
+                            updateNotificationStatus();
+                        }, 500);
 
                         // Request notification permission automatically
                         requestNotificationPermission();
@@ -4323,39 +4332,138 @@
                                 }
                             }
                         });
-
-                        // Store registration globally for push notifications
-                        window.swRegistration = registration;
                     })
                     .catch((error) => {
                         console.error('❌ Service Worker registration failed:', error);
+                        console.error('Error details:', error.message, error.stack);
+
+                        // Update status to show error
+                        setTimeout(() => {
+                            updateNotificationStatus();
+                        }, 500);
                     });
+            } else {
+                console.error('❌ Service Worker not supported in this browser');
+                setTimeout(() => {
+                    updateNotificationStatus();
+                }, 500);
+            }
+
+            // Update notification status display
+            function updateNotificationStatus() {
+                console.log('\n=== NOTIFICATION STATUS CHECK ===');
+
+                const statusIcon = document.getElementById('pwa-status-icon');
+                const statusText = document.getElementById('pwa-status-text');
+                const statusDetail = document.getElementById('pwa-status-detail');
+
+                // Check Notification API
+                const notificationSupported = 'Notification' in window;
+                console.log('1. Notification API available:', notificationSupported);
+
+                if (!notificationSupported) {
+                    statusIcon.textContent = '❌';
+                    statusText.textContent = 'Not Supported';
+                    statusDetail.innerHTML = 'Your browser does not support notifications';
+                    console.log('❌ BLOCKED: Notification API not available');
+                    return;
+                }
+
+                // Check permission status
+                const permission = Notification.permission;
+                console.log('2. Notification permission:', permission);
+
+                // Check service worker
+                const swSupported = 'serviceWorker' in navigator;
+                const swRegistered = !!window.swRegistration;
+                console.log('3. Service Worker supported:', swSupported);
+                console.log('4. Service Worker registered:', swRegistered);
+
+                // Check push support
+                const pushSupported = swSupported && 'PushManager' in window;
+                console.log('5. Push API supported:', pushSupported);
+
+                // Update UI
+                let details = [];
+                details.push(`<strong>Permission:</strong> ${permission}`);
+                details.push(`<strong>Service Worker:</strong> ${swRegistered ? 'Registered ✅' : 'Not registered ❌'}`);
+                details.push(`<strong>Push Support:</strong> ${pushSupported ? 'Yes ✅' : 'No ❌'}`);
+
+                if (permission === 'granted') {
+                    statusIcon.textContent = '✅';
+                    statusText.textContent = 'Enabled';
+                    statusDetail.innerHTML = details.join('<br>');
+                    console.log('✅ Notifications fully enabled and ready');
+                } else if (permission === 'denied') {
+                    statusIcon.textContent = '🚫';
+                    statusText.textContent = 'Blocked';
+                    statusDetail.innerHTML = details.join('<br>') + '<br><em style="color: var(--accent-orange);">You must enable in browser settings</em>';
+                    console.log('🚫 BLOCKED: User denied notification permission');
+                } else {
+                    statusIcon.textContent = '⏳';
+                    statusText.textContent = 'Not Enabled';
+                    statusDetail.innerHTML = details.join('<br>') + '<br><em style="color: var(--accent-blue);">Click "Enable Push Notifications" below</em>';
+                    console.log('⏳ Waiting for user to grant permission');
+                }
+
+                console.log('=== END STATUS CHECK ===\n');
             }
 
             // Request notification permission
             async function requestNotificationPermission() {
+                console.log('\n=== REQUESTING NOTIFICATION PERMISSION ===');
+
                 if (!('Notification' in window)) {
-                    console.warn('⚠️ Notifications not supported');
+                    console.error('❌ BLOCKED: Notification API not available');
+                    alert('❌ Your browser does not support notifications');
+                    updateNotificationStatus();
                     return;
                 }
 
-                console.log('📱 Current notification permission:', Notification.permission);
+                console.log('📱 Current permission status:', Notification.permission);
 
-                if (Notification.permission === 'default') {
-                    try {
-                        const permission = await Notification.requestPermission();
-                        console.log('🔔 Notification permission:', permission);
-
-                        if (permission === 'granted') {
-                            console.log('✅ Notifications enabled!');
-                            showTestNotification();
-                        }
-                    } catch (error) {
-                        console.error('❌ Error requesting permission:', error);
-                    }
-                } else if (Notification.permission === 'granted') {
-                    console.log('✅ Notifications already enabled');
+                if (Notification.permission === 'denied') {
+                    console.error('🚫 BLOCKED: User previously denied permission');
+                    alert('🚫 Notifications are blocked. Please enable them in your browser settings:\n\n1. Click the lock/info icon in the address bar\n2. Find "Notifications"\n3. Change to "Allow"');
+                    updateNotificationStatus();
+                    return;
                 }
+
+                if (Notification.permission === 'granted') {
+                    console.log('✅ Permission already granted');
+                    alert('✅ Notifications are already enabled!');
+                    updateNotificationStatus();
+                    showTestNotification();
+                    return;
+                }
+
+                // Request permission
+                try {
+                    console.log('🔔 Showing permission prompt to user...');
+                    const permission = await Notification.requestPermission();
+                    console.log('📥 User response:', permission);
+
+                    if (permission === 'granted') {
+                        console.log('✅ SUCCESS: Permission granted!');
+                        alert('✅ Notifications enabled! You\'ll receive task reminders.');
+                        updateNotificationStatus();
+                        showTestNotification();
+                    } else if (permission === 'denied') {
+                        console.error('🚫 User denied permission');
+                        alert('🚫 You denied notification permission. You can enable it later in browser settings.');
+                        updateNotificationStatus();
+                    } else {
+                        console.warn('⚠️ User dismissed prompt');
+                        updateNotificationStatus();
+                    }
+                } catch (error) {
+                    console.error('❌ ERROR requesting permission:', error);
+                    console.error('Error details:', error.message, error.stack);
+                    alert('❌ Error requesting permission: ' + error.message);
+                    updateNotificationStatus();
+                }
+
+                console.log('=== END PERMISSION REQUEST ===\n');
             }
 
             // Show a test notification
@@ -4394,34 +4502,67 @@
 
             // Test push notification
             function testPushNotification() {
-                console.log('🧪 Testing push notification...');
+                console.log('\n=== TESTING PUSH NOTIFICATION ===');
 
+                // Check Notification API
                 if (!('Notification' in window)) {
+                    console.error('❌ BLOCKED: Notification API not available');
                     alert('❌ Notifications not supported on this device');
                     return;
                 }
+                console.log('✅ Step 1: Notification API available');
 
-                if (Notification.permission !== 'granted') {
-                    alert('⚠️ Please enable notifications first');
+                // Check permission
+                const permission = Notification.permission;
+                console.log('📱 Step 2: Permission status:', permission);
+
+                if (permission !== 'granted') {
+                    console.error('❌ BLOCKED: Permission not granted (status:', permission + ')');
+                    alert('⚠️ Please enable notifications first by clicking "Enable Push Notifications"');
                     requestNotificationPermission();
                     return;
                 }
+                console.log('✅ Step 2: Permission granted');
+
+                // Check service worker
+                console.log('🔧 Step 3: Checking service worker...');
+                console.log('   - Service Worker in navigator:', 'serviceWorker' in navigator);
+                console.log('   - window.swRegistration exists:', !!window.swRegistration);
+                console.log('   - window.swRegistration value:', window.swRegistration);
 
                 if (!window.swRegistration) {
-                    alert('❌ Service worker not registered');
+                    console.error('❌ BLOCKED: Service worker not registered');
+                    alert('❌ Service worker not registered. Please reload the page.');
                     return;
                 }
+                console.log('✅ Step 3: Service worker registered');
 
-                window.swRegistration.showNotification('🧪 Test Notification', {
-                    body: 'If you see this, push notifications are working! 🎉',
-                    icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>💹</text></svg>',
-                    badge: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>',
-                    vibrate: [200, 100, 200],
-                    tag: 'test',
-                    requireInteraction: false
-                });
+                // Send notification
+                try {
+                    console.log('📤 Step 4: Attempting to show notification...');
+                    window.swRegistration.showNotification('🧪 Test Notification', {
+                        body: 'If you see this, push notifications are working! 🎉',
+                        icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>💹</text></svg>',
+                        badge: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>',
+                        vibrate: [200, 100, 200],
+                        tag: 'test-' + Date.now(),
+                        requireInteraction: false,
+                        timestamp: Date.now()
+                    });
 
-                console.log('✅ Test notification sent');
+                    console.log('✅ SUCCESS: Notification sent successfully!');
+                    console.log('   - If you don\'t see it, check:');
+                    console.log('     1. Browser notification settings');
+                    console.log('     2. System notification settings (Do Not Disturb mode)');
+                    console.log('     3. Browser console for errors');
+                    alert('✅ Test notification sent! Check if you received it.');
+                } catch (error) {
+                    console.error('❌ ERROR showing notification:', error);
+                    console.error('Error details:', error.message, error.stack);
+                    alert('❌ Error showing notification: ' + error.message);
+                }
+
+                console.log('=== END TEST ===\n');
                 alert('✅ Test notification sent! Check your notifications.');
             }
 
