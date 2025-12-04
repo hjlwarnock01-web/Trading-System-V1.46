@@ -1,0 +1,17 @@
+{
+  "tasks": [],
+  "nextUpdate": null,
+  "groupActive": null,
+  "wakeAlarmTriggered": false,
+  "scheduledTimes": {
+    "group1": null,
+    "group2": null,
+    "group3": null
+  },
+  "progress": {
+    "completed": 0,
+    "total": 0,
+    "percentage": 0
+  },
+  "lastUpdate": null
+}

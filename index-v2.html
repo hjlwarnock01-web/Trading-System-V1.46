@@ -1,3 +1,6 @@
+<!-- PROFESSIONAL REDESIGN VERSION - Work in Progress -->
+<!-- Original: index.html | Redesign: index-v2.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +9,11 @@
     <title>Trading System Rules - Professional Documentation</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💹</text></svg>">
     <meta name="description" content="Professional trading system rules and risk management framework">
+
+    <!-- Google Fonts - Professional Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- PWA Configuration -->
     <link rel="manifest" href="/manifest.json">
@@ -19,49 +27,78 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ==================== PROFESSIONAL DESIGN SYSTEM ==================== */
         :root {
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8fafc;
-            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            --text-primary: #1a202c;
-            --text-secondary: #4b5563;
-            --text-muted: #6b7280;
-            --border-color: #e2e8f0;
-            --accent-blue: #2563eb;
-            --accent-green: #059669;
-            --accent-red: #dc2626;
+            /* Modern Color Palette */
+            --primary-dark: #1a1f3a;
+            --primary: #2d3561;
+            --accent-blue: #4f7cff;
+            --accent-blue-hover: #6b91ff;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
             --accent-yellow: #f59e0b;
-            --shadow-primary: rgba(0, 0, 0, 0.05);
-            --shadow-secondary: rgba(0, 0, 0, 0.08);
-        }
-        [data-theme="dark"] {
-            --bg-primary: #1e293b;
-            --bg-secondary: #374151;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --text-primary: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+
+            /* Backgrounds */
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --bg-elevated: #1f2937;
+            --bg-glass: rgba(26, 31, 46, 0.8);
+            --bg-gradient: linear-gradient(135deg, #1a1f3a 0%, #2d3561 100%);
+
+            /* Text Colors */
+            --text-primary: #f9fafb;
             --text-secondary: #d1d5db;
             --text-muted: #9ca3af;
-            --border-color: #4b5563;
-            --shadow-primary: rgba(0, 0, 0, 0.3);
-            --shadow-secondary: rgba(0, 0, 0, 0.25);
+
+            /* Borders & Shadows */
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow-primary: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+            --shadow-secondary: 0 10px 15px rgba(0, 0, 0, 0.4), 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        [data-theme="dark"] {
+            /* Dark theme uses same colors since we're already dark */
+            --bg-primary: #0f1419;
+            --bg-secondary: #1a1f2e;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+        /* Base Resets & Smooth Scrolling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Modern Typography & Layout */
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
+            letter-spacing: 0.01em;
             color: var(--text-primary);
-            background: var(--bg-gradient);
+            background: var(--bg-primary);
             font-size: 14px;
-            transition: all 0.3s ease;
+            font-weight: 400;
+            transition: background-color 0.3s ease;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
+        /* Premium Container with Glass Effect */
         .container {
-            max-width: 900px;
+            max-width: 1440px;
             margin: 0 auto;
-            padding: 1rem;
+            padding: 1.5rem;
             background: var(--bg-primary);
             min-height: 100vh;
-            box-shadow: 0 0 30px var(--shadow-primary);
+            position: relative;
         }
         .page-wrapper { display: flex; flex-direction: column; gap: 1.5rem; }
         .content-grid {
@@ -82,375 +119,101 @@
                 align-items: start;
             }
         }
+        /* Premium Header Design */
         .header {
             text-align: center;
-            margin-bottom: 2.5rem;
-            padding: 2rem 1.5rem;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            margin-bottom: 2rem;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, #3d4a7f 100%);
             border-radius: 12px;
             color: white;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+            box-shadow: var(--shadow-secondary), 0 0 40px rgba(79, 124, 255, 0.15);
             position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         .header h1 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+        .header h1::before {
+            content: 'HTS';
+            position: absolute;
+            left: 50%;
+            top: -2.5rem;
+            transform: translateX(-50%);
+            font-size: 1.25rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.025em;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            background: var(--accent-blue);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(79, 124, 255, 0.4);
         }
         .header .version {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.15);
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(10px);
-            padding: 0.4rem 1.2rem;
-            border-radius: 25px;
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
             display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            position: relative;
+            z-index: 1;
+            transition: all 0.2s ease;
         }
+        .header .version:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-1px);
+        }
+        /* Premium Theme Toggle */
         .theme-toggle {
             position: absolute;
-            top: 1rem;
-            right: 60px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 0.5rem;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            padding: 0.75rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(10px);
-            z-index: 1001;
-        }
-        .theme-toggle:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.05); }
-        .theme-toggle svg { width: 20px; height: 20px; fill: white; display: block; }
-
-        /* Settings Button */
-        .settings-toggle {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            z-index: 1001;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        .settings-toggle:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.05); }
-
-        /* Settings Dropdown Panel */
-        .settings-panel {
-            position: fixed;
-            top: 70px;
-            right: 1rem;
-            width: 400px;
-            max-height: 80vh;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(20px);
-            overflow-y: auto;
-            z-index: 1000;
-            display: none;
-        }
-
-        .settings-panel.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .settings-header {
-            position: sticky;
-            top: 0;
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             z-index: 10;
         }
-
-        .settings-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .settings-close {
+        .theme-toggle:hover {
             background: rgba(255, 255, 255, 0.2);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 6px;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-
-        .settings-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .settings-content {
-            padding: 1.5rem;
-        }
-
-        .settings-section {
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .settings-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .settings-section-header {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            padding: 1rem 1.5rem;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            transition: background 0.2s ease;
-            user-select: none;
-        }
-
-        .settings-section-header:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .settings-section-icon {
-            font-size: 1.2rem;
-        }
-
-        .settings-section-arrow {
-            margin-left: auto;
-            font-size: 0.9rem;
+        .theme-toggle:active { transform: translateY(0); }
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+            display: block;
             transition: transform 0.3s ease;
         }
-
-        .settings-section-arrow.collapsed {
-            transform: rotate(-90deg);
-        }
-
-        .settings-section-body {
-            padding: 1.5rem;
-            background: var(--bg-primary);
-            max-height: 1000px;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-        }
-
-        .settings-section-body.collapsed {
-            max-height: 0;
-            padding: 0 1.5rem;
-        }
-
-        .settings-field {
-            margin-bottom: 1rem;
-        }
-
-        .settings-field:last-child {
-            margin-bottom: 0;
-        }
-
-        .settings-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .settings-input,
-        .settings-select {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .settings-input:focus,
-        .settings-select:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .settings-checkbox-field {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .settings-checkbox-field:hover {
-            background: var(--bg-tertiary);
-        }
-
-        .settings-checkbox {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        .settings-actions {
-            position: sticky;
-            bottom: 0;
-            background: var(--bg-primary);
-            padding: 1rem 1.5rem;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .settings-btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .settings-btn-primary {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            color: white;
-        }
-
-        .settings-btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
-        }
-
-        .settings-btn-secondary {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .settings-btn-secondary:hover {
-            background: var(--bg-tertiary);
-        }
-
-        /* Settings Panel Scrollbar */
-        .settings-panel::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .settings-panel::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: 0 15px 15px 0;
-        }
-
-        .settings-panel::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        .settings-panel::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
-        }
-
-        /* Transaction Log */
-        .transaction-log {
-            max-height: 300px;
-            overflow-y: auto;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.5rem;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem;
-            background: var(--bg-secondary);
-            border-radius: 6px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .transaction-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .transaction-amount {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .transaction-amount.positive {
-            color: var(--accent-green);
-        }
-
-        .transaction-amount.negative {
-            color: #ef4444;
-        }
-
-        .transaction-date {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .transaction-log::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .transaction-log::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-            border-radius: 3px;
-        }
-
-        .transaction-log::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-
-        .transaction-log::-webkit-scrollbar-thumb:hover {
-            background: var(--text-secondary);
-        }
-
+        .theme-toggle:hover svg { transform: rotate(15deg); }
         .section { margin-bottom: 1rem; }
         .section-header {
             background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
@@ -624,23 +387,41 @@
             border-radius: 6px;
             border-left: 3px solid var(--accent-green);
         }
+        /* Premium Sidebar Containers with Glass Effect */
         .sidebar-container {
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px var(--shadow-secondary);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-primary);
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+        }
+        .sidebar-container:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-secondary);
+            border-color: rgba(255, 255, 255, 0.12);
         }
         @media (min-width: 1024px) {
             .sidebar-container {
                 max-height: 500px;
                 overflow-y: auto;
-                margin-bottom: 0;
+                margin-bottom: 1.5rem;
             }
-            .sidebar-container::-webkit-scrollbar { width: 6px; }
-            .sidebar-container::-webkit-scrollbar-track { background: var(--bg-secondary); border-radius: 3px; }
-            .sidebar-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+            .sidebar-container::-webkit-scrollbar { width: 8px; }
+            .sidebar-container::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+            }
+            .sidebar-container::-webkit-scrollbar-thumb {
+                background: rgba(79, 124, 255, 0.5);
+                border-radius: 4px;
+                transition: background 0.2s ease;
+            }
+            .sidebar-container::-webkit-scrollbar-thumb:hover {
+                background: rgba(79, 124, 255, 0.8);
+            }
         }
         .sidebar-header { display: flex; align-items: center; margin-bottom: 1rem; }
         .sidebar-header h3 { font-weight: 600; font-size: 1.1rem; margin: 0 0 0 0.5rem; }
@@ -1407,17 +1188,23 @@
         }
 
         /* Trading Entry Widgets */
+        /* Premium Trading Entry Widgets */
         .entry-widget {
             position: fixed;
             right: 20px;
-            width: 350px;
-            background: var(--bg-primary);
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            width: 380px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            box-shadow: var(--shadow-secondary), 0 0 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             z-index: 10000;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        .entry-widget:hover {
+            box-shadow: var(--shadow-xl), 0 0 40px rgba(79, 124, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .stage1-widget {
@@ -1438,83 +1225,10 @@
             width: 280px;
         }
 
-        /* DEPRECATED - Old balance widget styles removed */
-
-        /* Enhanced Account Balance Widget */
-        .balance-widget-enhanced {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
-
-        .balance-header {
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            text-align: center;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .balance-content {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .balance-current-row,
-        .balance-percentage-row,
-        .balance-starting-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-        }
-
-        .balance-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-        }
-
-        .balance-current {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .balance-percentage {
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .balance-percentage.positive {
-            color: var(--accent-green);
-        }
-
-        .balance-percentage.negative {
-            color: #ef4444;
-        }
-
-        .balance-percentage.neutral {
-            color: white;
-        }
-
-        .balance-arrow {
-            font-size: 1rem;
-            margin-left: 0.25rem;
-        }
-
-        .balance-starting {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
+        .balance-widget {
+            bottom: 780px;
+            z-index: 10004;
+            width: 280px;
         }
 
         /* News Event Blocker (in sidebar) */
@@ -1678,7 +1392,24 @@
             margin-top: 0.5rem;
         }
 
-        /* DEPRECATED - Old balance display styles removed */
+        .balance-widget .entry-content {
+            padding: 1rem;
+        }
+
+        .balance-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .balance-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
 
         .calc-input-group {
             margin-bottom: 0.75rem;
@@ -1736,22 +1467,38 @@
             display: none;
         }
 
+        /* Premium Widget Header with Shimmer Effect */
         .entry-header {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
-            padding: 15px 20px;
-            font-weight: 600;
-            font-size: 1.1em;
+            padding: 1.25rem 1.5rem;
+            font-weight: 700;
+            font-size: 0.95rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            transition: all 0.3s ease;
+            letter-spacing: 0.025em;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
         }
-
+        .entry-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .entry-header:hover::before {
+            left: 100%;
+        }
         .entry-header:hover {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #2d3561 0%, #3d4a7f 100%);
         }
 
         .minimize-btn {
@@ -1806,28 +1553,52 @@
             gap: 10px;
         }
 
+        /* Premium Buttons with Modern Effects */
         .entry-btn {
-            padding: 15px;
-            border: 2px solid var(--border-color);
+            padding: 14px 20px;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
-            background: var(--bg-primary);
+            background: var(--bg-elevated);
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.9375rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: center;
             color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
         }
-
+        .entry-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(79, 124, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .entry-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
         .entry-btn:hover {
             border-color: var(--accent-blue);
-            background: var(--bg-secondary);
-            transform: translateX(5px);
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #6b91ff 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 124, 255, 0.35);
         }
-
+        .entry-btn:active {
+            transform: translateY(0);
+        }
         .entry-btn.selected {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #6b91ff 100%);
             color: white;
             border-color: var(--accent-blue);
+            box-shadow: 0 6px 16px rgba(79, 124, 255, 0.3);
         }
 
         .entry-btn-long {
@@ -2096,7 +1867,6 @@
             /* Hide all content by default on mobile */
             .news-sidebar > *,
             .main-content,
-            .main-sections,
             .prices-sidebar > *,
             .entry-widget,
             #tasks-reminders-widget {
@@ -2104,9 +1874,7 @@
             }
 
             /* Show widgets based on active mobile page */
-
-            /* ===== PAGE 1 - HOME ===== */
-            /* News Event Blocker, Account Balance, 6 Dropdown Sections */
+            /* HOME PAGE: News Event Blocker + Account Balance */
             body[data-mobile-page="home"] .news-sidebar {
                 display: block;
             }
@@ -2116,43 +1884,12 @@
             body[data-mobile-page="home"] #balanceWidget {
                 display: block !important;
             }
-            /* Show 6 dropdown sections ONLY on homepage */
-            body[data-mobile-page="home"] .main-sections {
-                display: block !important;
-            }
 
-            /* Balance Widget on Mobile - show on homepage only */
-            #balanceWidgetMobile {
-                display: block;
-                padding: 1rem;
-                margin-top: 60px; /* Below mobile header */
-            }
-
-            body[data-mobile-page="home"] #balanceWidgetMobile {
-                display: block !important;
-            }
-
-            body[data-mobile-page="setup"] #balanceWidgetMobile,
-            body[data-mobile-page="trading"] #balanceWidgetMobile {
-                display: none !important;
-            }
-
-            #balanceWidgetDesktop {
-                display: none; /* Hide on mobile */
-            }
-
-            /* Make balance widget more prominent on mobile */
-            @media (max-width: 768px) {
-                .balance-widget-enhanced {
-                    margin-bottom: 1rem;
-                }
-            }
-
-            /* ===== PAGE 2 - SETUP & TOOLS ===== */
-            /* Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
+            /* SETUP & TOOLS PAGE: Lot Size Calculator, Live Prices, Improvements & Tests, Stage 1, Tasks & Reminders */
             body[data-mobile-page="setup"] .prices-sidebar {
                 display: block;
             }
+            body[data-mobile-page="setup"] #lotsizeWidget,
             body[data-mobile-page="setup"] .prices-sidebar .sidebar-container,
             body[data-mobile-page="setup"] #tests-tracker,
             body[data-mobile-page="setup"] #stage1Widget,
@@ -2160,35 +1897,20 @@
                 display: block !important;
             }
 
-            /* ===== PAGE 3 - TRADING DASHBOARD ===== */
-            /* Daily Trading Plan, Stage 2 Entry, Risk Assessment, Lot Size Calculator, Setup Status, Trading Watch */
+            /* TRADING DASHBOARD PAGE: Daily Trading Plan, Setup Status, Risk Assessment, Stage 2, Trading Watch */
+            body[data-mobile-page="trading"] .news-sidebar,
+            body[data-mobile-page="trading"] .prices-sidebar {
+                display: block;
+            }
             body[data-mobile-page="trading"] #daily-plan-widget,
-            body[data-mobile-page="trading"] #stage2Widget,
-            body[data-mobile-page="trading"] #risk-assessment-widget,
-            body[data-mobile-page="trading"] #lotsizeWidget,
             body[data-mobile-page="trading"] #stage1-status,
+            body[data-mobile-page="trading"] #risk-assessment-widget,
+            body[data-mobile-page="trading"] #stage2Widget,
             body[data-mobile-page="trading"] #trading-watch {
                 display: block !important;
             }
 
-            /* Reorder widgets on Trading Dashboard page using flexbox */
-            body[data-mobile-page="trading"] {
-                display: flex;
-                flex-direction: column;
-            }
-
-            body[data-mobile-page="trading"] .mobile-header { order: 1; }
-            body[data-mobile-page="trading"] #daily-plan-widget { order: 2; }
-            body[data-mobile-page="trading"] #stage2Widget { order: 3; }
-            body[data-mobile-page="trading"] #risk-assessment-widget { order: 4; }
-            body[data-mobile-page="trading"] #lotsizeWidget { order: 5; }
-            body[data-mobile-page="trading"] #stage1-status { order: 6; }
-            body[data-mobile-page="trading"] #trading-watch { order: 7; }
-            body[data-mobile-page="trading"] .mobile-menu { order: 0; }
-            body[data-mobile-page="trading"] .mobile-menu-overlay { order: 0; }
-            body[data-mobile-page="trading"] > * { order: 99; } /* Default order for other elements */
-
-            /* Full width mobile widgets - ALL widgets are static, not floating */
+            /* Full width mobile widgets */
             .news-sidebar,
             .prices-sidebar {
                 width: 100%;
@@ -2196,47 +1918,18 @@
                 padding: 1rem;
             }
 
-            /* All entry widgets are static on mobile (NO floating widgets) */
-            .entry-widget,
+            .entry-widget {
+                position: static;
+                width: 100%;
+                max-width: 100%;
+                margin: 1rem;
+            }
+
             #tasks-reminders-widget {
-                position: static !important;
-                width: 100% !important;
-                max-width: 100% !important;
-                margin: 1rem !important;
-                left: auto !important;
-                right: auto !important;
-                bottom: auto !important;
-            }
-
-            /* Remove minimize/collapse functionality on mobile - always show full widgets */
-            .entry-widget.minimized,
-            #tasks-reminders-widget.minimized {
-                width: 100% !important;
-            }
-
-            .entry-widget.minimized .entry-content,
-            #tasks-reminders-widget.minimized .tasks-content {
-                display: block !important;
-            }
-
-            /* Disable header click to toggle on mobile */
-            .entry-widget .entry-header,
-            #tasks-reminders-widget .tasks-header {
-                cursor: default !important;
-                pointer-events: none !important;
-            }
-
-            /* Hide minimize buttons on mobile */
-            .entry-widget .minimize-btn,
-            #tasks-reminders-widget .minimize-btn {
-                display: none !important;
-            }
-
-            /* Remove scrollable behavior - show full content on mobile */
-            .entry-widget .entry-content,
-            #tasks-reminders-widget .tasks-content {
-                max-height: none !important;
-                overflow-y: visible !important;
+                position: static;
+                width: 100%;
+                max-width: 100%;
+                margin: 1rem;
             }
 
             .sidebar-container {
@@ -2263,368 +1956,6 @@
     </style>
 </head>
 <body data-mobile-page="home">
-    <!-- Settings Toggle Button (Fixed, Always Visible) -->
-    <button class="settings-toggle" onclick="toggleSettingsPanel()" aria-label="Open Settings" title="Settings">
-        ⚙️
-    </button>
-
-    <!-- Settings Panel (Dropdown) -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <div class="settings-title">⚙️ Settings</div>
-            <button class="settings-close" onclick="toggleSettingsPanel()" aria-label="Close">×</button>
-        </div>
-
-        <div class="settings-content">
-            <!-- News Event Blocker Settings -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">📰</span>
-                    <span>News Event Blocker</span>
-                    <span class="settings-section-arrow">▼</span>
-                </div>
-
-                <div class="settings-section-body">
-                <div class="settings-field">
-                    <label class="settings-label">Pre-Event Disparity Threshold (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-pre-disparity" value="30">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Post-Event Disparity Threshold (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-post-disparity" value="60">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Fed/ECB Buffer - Before (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-fed-before" value="60">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Fed/ECB Buffer - After (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-fed-after" value="90">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">QoQ/YoY Buffer - Before (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-qoq-before" value="45">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">QoQ/YoY Buffer - After (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-qoq-after" value="75">
-                </div>
-                </div>
-            </div>
-
-            <!-- Lot Size Calculator Settings -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">💰</span>
-                    <span>Lot Size Calculator</span>
-                    <span class="settings-section-arrow collapsed">▶</span>
-                </div>
-
-                <div class="settings-section-body collapsed">
-                <div class="settings-field">
-                    <label class="settings-label">Default Risk Percentage (%)</label>
-                    <input type="number" class="settings-input" id="setting-default-risk" value="1" step="0.1">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Default Stop Loss (pips)</label>
-                    <input type="number" class="settings-input" id="setting-default-sl" value="20">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Default Instrument</label>
-                    <select class="settings-select" id="setting-default-instrument">
-                        <option value="EURUSD">EUR/USD</option>
-                        <option value="GBPUSD">GBP/USD</option>
-                        <option value="USDJPY">USD/JPY</option>
-                        <option value="AUDUSD">AUD/USD</option>
-                        <option value="USDCAD">USD/CAD</option>
-                    </select>
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Lot Type Preference</label>
-                    <select class="settings-select" id="setting-lot-type">
-                        <option value="standard">Standard Lots</option>
-                        <option value="mini">Mini Lots</option>
-                        <option value="micro">Micro Lots</option>
-                    </select>
-                </div>
-                </div>
-            </div>
-
-            <!-- Tasks & Reminders Settings -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">⏰</span>
-                    <span>Tasks & Reminders</span>
-                    <span class="settings-section-arrow collapsed">▶</span>
-                </div>
-
-                <div class="settings-section-body collapsed">
-                <div class="settings-field">
-                    <label class="settings-label">Group 1 Buffer (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-group1-buffer" value="5">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Group 2 Buffer (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-group2-buffer" value="10">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Group 3 Buffer (minutes)</label>
-                    <input type="number" class="settings-input" id="setting-group3-buffer" value="15">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-checkbox-field">
-                        <input type="checkbox" class="settings-checkbox" id="setting-enable-alarms" checked>
-                        <span class="settings-label" style="margin-bottom: 0;">Enable Alarm Triggers</span>
-                    </label>
-                </div>
-                </div>
-            </div>
-
-            <!-- Tasks Debug Section -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">🐛</span>
-                    <span>Tasks Debug</span>
-                    <span class="settings-section-arrow">▼</span>
-                </div>
-
-                <div class="settings-section-body">
-                    <div id="settings-debug-container">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Notification Settings -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">🔔</span>
-                    <span>Notifications</span>
-                    <span class="settings-section-arrow collapsed">▶</span>
-                </div>
-
-                <div class="settings-section-body collapsed">
-                <div class="settings-field">
-                    <label class="settings-label">Push Notifications Status</label>
-                    <div id="pwa-notification-status" style="padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.875rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span id="pwa-status-icon">⏳</span>
-                            <span id="pwa-status-text" style="font-weight: 500;">Checking...</span>
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="pwa-status-detail">
-                            Loading notification status...
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings-field">
-                    <button class="settings-btn settings-btn-primary" onclick="requestNotificationPermission()" style="width: 100%;">
-                        🔔 Enable Push Notifications
-                    </button>
-                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                        Get notified when tasks are due
-                    </div>
-                </div>
-
-                <div class="settings-field">
-                    <button class="settings-btn settings-btn-secondary" onclick="testPushNotification()" style="width: 100%;">
-                        🧪 Test Notification
-                    </button>
-                </div>
-
-                <div class="settings-field" style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                    <label class="settings-label">Telegram Bot Token</label>
-                    <input type="text" class="settings-input" id="setting-telegram-token" placeholder="Enter Bot Token">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Telegram Chat ID</label>
-                    <input type="text" class="settings-input" id="setting-telegram-chat-id" placeholder="Enter Chat ID">
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-checkbox-field">
-                        <input type="checkbox" class="settings-checkbox" id="setting-enable-notifications" checked>
-                        <span class="settings-label" style="margin-bottom: 0;">Enable Telegram Notifications</span>
-                    </label>
-                </div>
-                </div>
-            </div>
-
-            <!-- PWA Installation -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">📱</span>
-                    <span>Install as iOS Widget</span>
-                    <span class="settings-section-arrow collapsed">▶</span>
-                </div>
-
-                <div class="settings-section-body collapsed">
-                    <div style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💹 Harvey Trading Widget</div>
-                        <div style="font-size: 0.9rem; opacity: 0.95;">Get your tasks on iOS home screen & lock screen</div>
-                    </div>
-
-                    <div class="settings-field">
-                        <label class="settings-label" style="font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem;">📲 Installation Steps:</label>
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <ol style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Open in Safari</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Must use Safari browser (not Chrome)
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Tap Share button</strong> <span style="font-size: 1.2rem;">⬆️</span>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Bottom of screen (middle button)
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Select "Add to Home Screen"</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Scroll down if you don't see it
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Tap "Add"</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        App icon will appear on home screen
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Open the app</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Grant notification permission when asked
-                                    </div>
-                                </li>
-                                <li style="margin-bottom: 0.75rem;">
-                                    <strong>Add Widget (iOS 14+)</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Long press home screen → Tap "+" → Search "Harvey"
-                                    </div>
-                                </li>
-                                <li>
-                                    <strong>Configure Widget</strong>
-                                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                                        Choose size (Small, Medium, or Large)
-                                    </div>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="settings-field">
-                        <label class="settings-label" style="font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem;">📊 Widget Features:</label>
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
-                                <li style="margin-bottom: 0.5rem;"><strong>Small Widget:</strong> Shows next 3 tasks + time</li>
-                                <li style="margin-bottom: 0.5rem;"><strong>Medium Widget:</strong> Shows next 6 tasks with checkboxes</li>
-                                <li style="margin-bottom: 0.5rem;"><strong>Large Widget:</strong> Shows all current tasks + progress bar</li>
-                                <li style="margin-bottom: 0.5rem;"><strong>Auto-updates:</strong> Refreshes every 15 minutes</li>
-                                <li><strong>Tap to open:</strong> Opens app directly to tasks</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="settings-field">
-                        <label class="settings-label" style="font-weight: 600; font-size: 1rem; margin-bottom: 0.75rem;">🔔 Notification Features:</label>
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                            <ul style="margin: 0; padding-left: 1.25rem; line-height: 1.8;">
-                                <li style="margin-bottom: 0.5rem;">⏰ Wake alarm (1 hour before Group 1)</li>
-                                <li style="margin-bottom: 0.5rem;">1️⃣ Group 1 tasks due notification</li>
-                                <li style="margin-bottom: 0.5rem;">2️⃣ Group 2 tasks due notification</li>
-                                <li style="margin-bottom: 0.5rem;">3️⃣ Group 3 tasks due notification</li>
-                                <li>📅 Weekly tasks (Sunday & Wednesday)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="settings-field">
-                        <div style="background: rgba(37, 99, 235, 0.1); border: 1px solid rgba(37, 99, 235, 0.3); padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-primary);">
-                            <strong>💡 Pro Tip:</strong> Enable notifications for best experience. You'll get alerts exactly when tasks are due!
-                        </div>
-                    </div>
-
-                    <div class="settings-field">
-                        <button class="settings-btn settings-btn-primary" onclick="checkPWAInstallation()" style="width: 100%;">
-                            ✅ Check Installation Status
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Account Balance Settings -->
-            <div class="settings-section">
-                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
-                    <span class="settings-section-icon">💵</span>
-                    <span>Account Balance</span>
-                    <span class="settings-section-arrow collapsed">▶</span>
-                </div>
-
-                <div class="settings-section-body collapsed">
-                <div class="settings-field">
-                    <label class="settings-label">Starting Balance ($)</label>
-                    <input type="number" class="settings-input" id="setting-starting-balance" value="10000" readonly style="background: var(--bg-tertiary); cursor: not-allowed;">
-                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                        Use 'Reset Starting Balance' button to change
-                    </div>
-                </div>
-
-                <div class="settings-field">
-                    <label class="settings-label">Add Transaction</label>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="number" class="settings-input" id="transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1;">
-                        <button class="settings-btn settings-btn-primary" onclick="addTransaction()" style="width: auto; padding: 0.75rem 1rem;">
-                            Add
-                        </button>
-                    </div>
-                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                        Examples: +500, -1250, +127.50, -45
-                    </div>
-                </div>
-
-                <div class="settings-field">
-                    <button class="transaction-log-toggle" onclick="toggleTransactionLog()" style="width: 100%; display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; cursor: pointer; color: var(--text-primary); font-weight: 500;">
-                        <span>📋 Transaction Log (<span id="transaction-count">0</span>)</span>
-                        <span id="transaction-log-arrow">▼</span>
-                    </button>
-                    <div id="transaction-log-container" style="display: none; margin-top: 0.5rem;">
-                        <div id="transaction-log" class="transaction-log">
-                            <div style="text-align: center; padding: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
-                                No transactions yet
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="settings-field">
-                    <button class="settings-btn settings-btn-secondary" onclick="resetStartingBalance()" style="width: 100%;">
-                        🔄 Reset Starting Balance
-                    </button>
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="settings-actions">
-            <button class="settings-btn settings-btn-secondary" onclick="resetSettingsToDefaults()">Reset to Defaults</button>
-            <button class="settings-btn settings-btn-primary" onclick="saveSettings()">Save Settings</button>
-        </div>
-    </div>
-
     <!-- Mobile-Only Header with Hamburger Menu -->
     <div class="mobile-header">
         <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
@@ -2678,9 +2009,6 @@
             <div class="content-grid">
                 <!-- Left Sidebar -->
                 <div class="news-sidebar">
-                    <!-- Account Balance (Top of Sidebar) -->
-                    <div id="balanceWidgetDesktop"></div>
-
                     <!-- News Event Blocker (replaces Market Events Alert) -->
                     <div class="sidebar-container" style="margin-bottom: 1.5rem;">
                         <div class="sidebar-header">
@@ -2692,9 +2020,9 @@
                         </div>
 
                         <div id="news-blocker-sidebar" role="region" aria-label="News event blocking">
-                            <!-- Settings moved to centralized settings panel -->
+                            <button class="news-settings-btn" onclick="toggleNewsSettings()" style="width: 100%; margin-bottom: 0.75rem;">⚙️ Settings</button>
 
-                            <!-- Settings Panel (Hidden - kept for backwards compatibility) -->
+                            <!-- Settings Panel (Hidden by default) -->
                             <div id="newsSettingsPanel" style="display: none; margin-bottom: 0.75rem;">
                                 <div class="news-settings-panel">
                                     <!-- API Status -->
@@ -2720,6 +2048,10 @@
                                         </div>
                                     </div>
 
+                                    <div class="news-input-group">
+                                        <label class="news-input-label">FCS API Key (Free: 500 calls/month)</label>
+                                        <input type="text" class="news-input" id="newsApiKey" value="62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW">
+                                    </div>
                                     <div class="news-input-group">
                                         <label class="news-input-label">Pre-Event Disparity (%) - Forecast vs Previous</label>
                                         <input type="number" class="news-input" id="newsPreEventThreshold" value="50" step="1" min="0">
@@ -2828,9 +2160,6 @@
                     </div>
 
                 </div>
-
-                <!-- Account Balance (Top of Mobile Homepage) -->
-                <div id="balanceWidgetMobile"></div>
 
                 <!-- Main Trading System Content -->
                 <main class="main-sections">
@@ -3327,45 +2656,15 @@
         </div>
     </div>
 
-    <!-- Account Balance Widget (Enhanced with Percentage) -->
-    <div class="balance-widget-enhanced" id="balanceWidget">
-        <div class="balance-header">Account Balance</div>
-        <div class="balance-content">
-            <div class="balance-current-row">
-                <span class="balance-label">Current:</span>
-                <span class="balance-current" id="balance-current">$10,000</span>
-            </div>
-            <div class="balance-percentage-row">
-                <span class="balance-label">Growth:</span>
-                <span class="balance-percentage" id="balance-percentage">100% <span class="balance-arrow"></span></span>
-            </div>
-            <div class="balance-starting-row">
-                <span class="balance-label">Starting:</span>
-                <span class="balance-starting" id="balance-starting">$10,000</span>
-            </div>
-
-            <!-- Add Transaction Section -->
-            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
-                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
-                    <input type="number" id="widget-transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1; padding: 0.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 0.9rem;">
-                    <button onclick="addTransaction()" style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Add</button>
-                </div>
-
-                <!-- Transaction Log Toggle -->
-                <button onclick="toggleWidgetTransactionLog()" style="width: 100%; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 0.5rem; border-radius: 6px; cursor: pointer; color: white; font-size: 0.85rem;">
-                    <span>📋 Transactions (<span id="widget-transaction-count">0</span>)</span>
-                    <span id="widget-transaction-arrow">▼</span>
-                </button>
-
-                <!-- Transaction Log -->
-                <div id="widget-transaction-log-container" style="display: none; margin-top: 0.5rem;">
-                    <div id="widget-transaction-log" style="max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.2); border-radius: 6px; padding: 0.5rem;">
-                        <div style="text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
-                            No transactions yet
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Account Balance Widget -->
+    <div class="entry-widget balance-widget minimized" id="balanceWidget">
+        <div class="entry-header" onclick="toggleBalanceWidget()">
+            <span>Account Balance</span>
+            <button class="minimize-btn" onclick="event.stopPropagation(); toggleBalanceWidget()">−</button>
+        </div>
+        <div class="entry-content">
+            <div class="balance-label">Current Balance</div>
+            <div class="balance-display" id="balance-display">$10,000</div>
         </div>
     </div>
 
@@ -3603,477 +2902,6 @@
                 `;
             }
         }
-
-        // ==================== CENTRALIZED SETTINGS SYSTEM ====================
-
-        const SETTINGS_KEY = 'tradingSystemSettings';
-
-        // Default settings
-        const defaultSettings = {
-            preDisparity: 30,
-            postDisparity: 60,
-            fedBefore: 60,
-            fedAfter: 90,
-            qoqBefore: 45,
-            qoqAfter: 75,
-            defaultRisk: 1,
-            defaultSL: 20,
-            defaultInstrument: 'EURUSD',
-            lotType: 'standard',
-            group1Buffer: 5,
-            group2Buffer: 10,
-            group3Buffer: 15,
-            enableAlarms: true,
-            telegramToken: '',
-            telegramChatId: '',
-            enableNotifications: true,
-            startingBalance: 10000
-        };
-
-        function toggleSettingsPanel() {
-            const panel = document.getElementById('settingsPanel');
-            panel.classList.toggle('show');
-
-            // Close on outside click
-            if (panel.classList.contains('show')) {
-                // Load debug info when opening
-                loadTasksDebugInfo();
-                setTimeout(() => {
-                    document.addEventListener('click', closeSettingsOnOutsideClick);
-                }, 100);
-            } else {
-                document.removeEventListener('click', closeSettingsOnOutsideClick);
-            }
-        }
-
-        function toggleSettingsCategory(header) {
-            const body = header.nextElementSibling;
-            const arrow = header.querySelector('.settings-section-arrow');
-
-            body.classList.toggle('collapsed');
-            arrow.classList.toggle('collapsed');
-
-            if (body.classList.contains('collapsed')) {
-                arrow.textContent = '▶';
-            } else {
-                arrow.textContent = '▼';
-            }
-        }
-
-        function closeSettingsOnOutsideClick(event) {
-            const panel = document.getElementById('settingsPanel');
-            const button = document.querySelector('.settings-toggle');
-
-            if (!panel.contains(event.target) && !button.contains(event.target)) {
-                panel.classList.remove('show');
-                document.removeEventListener('click', closeSettingsOnOutsideClick);
-            }
-        }
-
-        function loadSettings() {
-            const saved = localStorage.getItem(SETTINGS_KEY);
-            const settings = saved ? JSON.parse(saved) : defaultSettings;
-
-            // Populate all settings fields
-            document.getElementById('setting-pre-disparity').value = settings.preDisparity;
-            document.getElementById('setting-post-disparity').value = settings.postDisparity;
-            document.getElementById('setting-fed-before').value = settings.fedBefore;
-            document.getElementById('setting-fed-after').value = settings.fedAfter;
-            document.getElementById('setting-qoq-before').value = settings.qoqBefore;
-            document.getElementById('setting-qoq-after').value = settings.qoqAfter;
-            document.getElementById('setting-default-risk').value = settings.defaultRisk;
-            document.getElementById('setting-default-sl').value = settings.defaultSL;
-            document.getElementById('setting-default-instrument').value = settings.defaultInstrument;
-            document.getElementById('setting-lot-type').value = settings.lotType;
-            document.getElementById('setting-group1-buffer').value = settings.group1Buffer;
-            document.getElementById('setting-group2-buffer').value = settings.group2Buffer;
-            document.getElementById('setting-group3-buffer').value = settings.group3Buffer;
-            document.getElementById('setting-enable-alarms').checked = settings.enableAlarms;
-            document.getElementById('setting-telegram-token').value = settings.telegramToken || '';
-            document.getElementById('setting-telegram-chat-id').value = settings.telegramChatId || '';
-            document.getElementById('setting-enable-notifications').checked = settings.enableNotifications;
-            document.getElementById('setting-starting-balance').value = settings.startingBalance;
-
-            return settings;
-        }
-
-        function saveSettings() {
-            const settings = {
-                preDisparity: parseInt(document.getElementById('setting-pre-disparity').value),
-                postDisparity: parseInt(document.getElementById('setting-post-disparity').value),
-                fedBefore: parseInt(document.getElementById('setting-fed-before').value),
-                fedAfter: parseInt(document.getElementById('setting-fed-after').value),
-                qoqBefore: parseInt(document.getElementById('setting-qoq-before').value),
-                qoqAfter: parseInt(document.getElementById('setting-qoq-after').value),
-                defaultRisk: parseFloat(document.getElementById('setting-default-risk').value),
-                defaultSL: parseInt(document.getElementById('setting-default-sl').value),
-                defaultInstrument: document.getElementById('setting-default-instrument').value,
-                lotType: document.getElementById('setting-lot-type').value,
-                group1Buffer: parseInt(document.getElementById('setting-group1-buffer').value),
-                group2Buffer: parseInt(document.getElementById('setting-group2-buffer').value),
-                group3Buffer: parseInt(document.getElementById('setting-group3-buffer').value),
-                enableAlarms: document.getElementById('setting-enable-alarms').checked,
-                telegramToken: document.getElementById('setting-telegram-token').value,
-                telegramChatId: document.getElementById('setting-telegram-chat-id').value,
-                enableNotifications: document.getElementById('setting-enable-notifications').checked,
-                startingBalance: parseInt(document.getElementById('setting-starting-balance').value)
-            };
-
-            // Save to localStorage
-            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-
-            // Update Firebase starting balance
-            db.ref('startingBalance').set(settings.startingBalance);
-
-            // Apply settings to news blocking config
-            if (typeof newsBlockingConfig !== 'undefined') {
-                newsBlockingConfig.preEventDisparityThreshold = settings.preDisparity;
-                newsBlockingConfig.postEventDisparityThreshold = settings.postDisparity;
-                newsBlockingConfig.fedEcbBuffer.before = settings.fedBefore;
-                newsBlockingConfig.fedEcbBuffer.after = settings.fedAfter;
-                newsBlockingConfig.qoqYoyBuffer.before = settings.qoqBefore;
-                newsBlockingConfig.qoqYoyBuffer.after = settings.qoqAfter;
-            }
-
-            // Close panel
-            toggleSettingsPanel();
-
-            // Show confirmation
-            alert('Settings saved successfully!');
-        }
-
-        function resetSettingsToDefaults() {
-            if (confirm('Reset all settings to default values?')) {
-                localStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultSettings));
-                loadSettings();
-                alert('Settings reset to defaults!');
-            }
-        }
-
-        // ==================== TRANSACTION SYSTEM ====================
-
-        const TRANSACTIONS_KEY = 'tradingSystemTransactions';
-
-        function getTransactions() {
-            const stored = localStorage.getItem(TRANSACTIONS_KEY);
-            return stored ? JSON.parse(stored) : [];
-        }
-
-        function saveTransactions(transactions) {
-            localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
-        }
-
-        function addTransaction() {
-            // Try widget input first, then settings input
-            const widgetInput = document.getElementById('widget-transaction-amount');
-            const settingsInput = document.getElementById('transaction-amount');
-            const input = widgetInput || settingsInput;
-
-            if (!input) {
-                alert('Transaction input not found');
-                return;
-            }
-
-            const amount = parseFloat(input.value);
-
-            if (isNaN(amount) || amount === 0) {
-                alert('Please enter a valid transaction amount (e.g., +500 or -500)');
-                return;
-            }
-
-            const transaction = {
-                amount: amount,
-                timestamp: Date.now(),
-                date: new Date().toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                })
-            };
-
-            const transactions = getTransactions();
-            transactions.push(transaction);
-            saveTransactions(transactions);
-
-            // Update balance
-            updateBalanceFromTransactions();
-
-            // Clear both inputs
-            if (widgetInput) widgetInput.value = '';
-            if (settingsInput) settingsInput.value = '';
-
-            // Refresh transaction logs
-            renderTransactionLog();
-            renderWidgetTransactionLog();
-
-            alert(`Transaction ${amount > 0 ? '+' : ''}$${Math.abs(amount).toFixed(2)} added!`);
-        }
-
-        function toggleWidgetTransactionLog() {
-            const container = document.getElementById('widget-transaction-log-container');
-            const arrow = document.getElementById('widget-transaction-arrow');
-
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                arrow.textContent = '▲';
-                renderWidgetTransactionLog();
-            } else {
-                container.style.display = 'none';
-                arrow.textContent = '▼';
-            }
-        }
-
-        function renderWidgetTransactionLog() {
-            const transactions = getTransactions();
-            const logContainer = document.getElementById('widget-transaction-log');
-            const countElement = document.getElementById('widget-transaction-count');
-
-            if (!logContainer) return;
-
-            if (countElement) {
-                countElement.textContent = transactions.length;
-            }
-
-            if (transactions.length === 0) {
-                logContainer.innerHTML = `
-                    <div style="text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
-                        No transactions yet
-                    </div>
-                `;
-                return;
-            }
-
-            // Show last 50 transactions, most recent first
-            const recentTransactions = transactions.slice(-50).reverse();
-
-            const html = recentTransactions.map(t => {
-                const isPositive = t.amount > 0;
-                const color = isPositive ? 'var(--accent-green)' : '#ef4444';
-                const sign = isPositive ? '+' : '';
-
-                return `
-                    <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 0.25rem; font-size: 0.85rem;">
-                        <div style="font-weight: 600; color: ${color};">
-                            ${sign}$${Math.abs(t.amount).toFixed(2)}
-                        </div>
-                        <div style="color: rgba(255,255,255,0.6); font-size: 0.75rem;">
-                            ${t.date}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            logContainer.innerHTML = html;
-        }
-
-        function renderTransactionLog() {
-            const transactions = getTransactions();
-            const logContainer = document.getElementById('transaction-log');
-            const countElement = document.getElementById('transaction-count');
-
-            countElement.textContent = transactions.length;
-
-            if (transactions.length === 0) {
-                logContainer.innerHTML = `
-                    <div style="text-align: center; padding: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
-                        No transactions yet
-                    </div>
-                `;
-                return;
-            }
-
-            // Show last 50 transactions, most recent first
-            const recentTransactions = transactions.slice(-50).reverse();
-
-            const html = recentTransactions.map(t => {
-                const isPositive = t.amount > 0;
-                const amountClass = isPositive ? 'positive' : 'negative';
-                const sign = isPositive ? '+' : '';
-
-                return `
-                    <div class="transaction-item">
-                        <div>
-                            <div class="transaction-amount ${amountClass}">
-                                ${sign}$${Math.abs(t.amount).toFixed(2)}
-                            </div>
-                        </div>
-                        <div class="transaction-date">
-                            ${t.date}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            logContainer.innerHTML = html;
-        }
-
-        function toggleTransactionLog() {
-            const container = document.getElementById('transaction-log-container');
-            const arrow = document.getElementById('transaction-log-arrow');
-
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                arrow.textContent = '▲';
-                renderTransactionLog();
-            } else {
-                container.style.display = 'none';
-                arrow.textContent = '▼';
-            }
-        }
-
-        function updateBalanceFromTransactions() {
-            const settings = loadSettings();
-            const transactions = getTransactions();
-
-            // Calculate current balance: starting + sum of all transactions
-            const transactionSum = transactions.reduce((sum, t) => sum + t.amount, 0);
-            const currentBalance = settings.startingBalance + transactionSum;
-
-            // Update Firebase
-            db.ref('accountBalance').set(currentBalance);
-        }
-
-        function resetStartingBalance() {
-            const newBalance = prompt('Enter new starting balance:', '10000');
-
-            if (newBalance === null) return; // Cancelled
-
-            const balance = parseFloat(newBalance);
-
-            if (isNaN(balance) || balance < 0) {
-                alert('Please enter a valid positive number');
-                return;
-            }
-
-            if (confirm(`Set new starting balance to $${balance.toFixed(2)}?\n\nThis will:\n- Clear all transactions\n- Set starting balance to $${balance.toFixed(2)}\n- Reset current balance to $${balance.toFixed(2)}`)) {
-                // Clear all transactions
-                localStorage.removeItem(TRANSACTIONS_KEY);
-
-                // Update settings
-                const settings = loadSettings();
-                settings.startingBalance = balance;
-                localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-
-                // Update Firebase
-                db.ref('startingBalance').set(balance);
-                db.ref('accountBalance').set(balance);
-
-                // Reload UI
-                loadSettings();
-                renderTransactionLog();
-
-                alert('Starting balance reset successfully!');
-            }
-        }
-
-        function loadTasksDebugInfo() {
-            const container = document.getElementById('settings-debug-container');
-            if (!container) return;
-
-            const debugHTML = `
-                <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px;">
-                    <div style="font-weight: 600; margin-bottom: 0.75rem; font-size: 0.9rem;">Debug Controls:</div>
-                    <button onclick="showAllTasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: var(--accent-orange); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Show All Tasks</button>
-                    <button onclick="triggerGroup1Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 1 Now</button>
-                    <button onclick="triggerGroup2Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 2 Now</button>
-                    <button onclick="triggerGroup3Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 3 Now</button>
-                    <button onclick="resetAllTasks()" style="width: 100%; padding: 0.5rem; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Reset All Tasks</button>
-                </div>
-
-                <div id="settings-debug-time" style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.85rem;">
-                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Current Time:</div>
-                    <div style="color: var(--text-secondary);">Loading...</div>
-                </div>
-
-                <div id="settings-debug-next-task" style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.85rem;">
-                    <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
-                    <div style="color: var(--text-secondary);">Loading...</div>
-                </div>
-
-                <div id="settings-debug-storage" style="padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-size: 0.75rem;">
-                    <div style="font-weight: 600; margin-bottom: 0.5rem;">localStorage Values:</div>
-                    <div style="color: var(--text-secondary); font-family: monospace; white-space: pre-wrap; word-break: break-all;">Loading...</div>
-                </div>
-            `;
-
-            container.innerHTML = debugHTML;
-
-            // Update debug info
-            updateDebugDisplay();
-
-            // Set interval to update debug info every second
-            if (window.debugUpdateInterval) {
-                clearInterval(window.debugUpdateInterval);
-            }
-            window.debugUpdateInterval = setInterval(updateDebugDisplay, 1000);
-        }
-
-        function updateDebugDisplay() {
-            const timeContainer = document.getElementById('settings-debug-time');
-            const nextTaskContainer = document.getElementById('settings-debug-next-task');
-            const storageContainer = document.getElementById('settings-debug-storage');
-
-            if (!timeContainer) return;
-
-            // Update current time
-            const now = new Date();
-            timeContainer.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 0.5rem;">Current Time:</div>
-                <div style="color: var(--text-secondary);">${now.toLocaleString()}</div>
-            `;
-
-            // Update next task info
-            if (typeof window.weeklyTasks !== 'undefined') {
-                const nextTask = getNextScheduledTask();
-                if (nextTask) {
-                    nextTaskContainer.innerHTML = `
-                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
-                        <div style="color: var(--text-secondary);">${nextTask.title} - ${nextTask.time}</div>
-                        <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.25rem;">Group ${nextTask.group}</div>
-                    `;
-                } else {
-                    nextTaskContainer.innerHTML = `
-                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Next Scheduled Task:</div>
-                        <div style="color: var(--text-secondary);">No tasks scheduled</div>
-                    `;
-                }
-            }
-
-            // Update localStorage values
-            const tasksData = localStorage.getItem('weeklyTasks');
-            const tasksObj = tasksData ? JSON.parse(tasksData) : {};
-            storageContainer.innerHTML = `
-                <div style="font-weight: 600; margin-bottom: 0.5rem;">localStorage Values:</div>
-                <div style="color: var(--text-secondary); font-family: monospace; white-space: pre-wrap; word-break: break-all;">${JSON.stringify(tasksObj, null, 2)}</div>
-            `;
-        }
-
-        function getNextScheduledTask() {
-            if (typeof window.weeklyTasks === 'undefined') return null;
-
-            const now = new Date();
-            const currentDay = now.getDay();
-            const currentTime = now.getHours() * 60 + now.getMinutes();
-
-            let closestTask = null;
-            let minTimeDiff = Infinity;
-
-            window.weeklyTasks.forEach(task => {
-                const [hours, minutes] = task.time.split(':').map(Number);
-                const taskTime = hours * 60 + minutes;
-                const timeDiff = (taskTime - currentTime + 1440) % 1440;
-
-                if (timeDiff < minTimeDiff) {
-                    minTimeDiff = timeDiff;
-                    closestTask = task;
-                }
-            });
-
-            return closestTask;
-        }
-
         function toggleSection(header) {
             const content = header.nextElementSibling;
             const isHidden = content.classList.contains('hidden');
@@ -4087,23 +2915,6 @@
                 header.setAttribute('aria-expanded', 'false');
             }
         }
-
-        function initMobileSections() {
-            // Only collapse sections on mobile (max-width: 768px)
-            if (window.innerWidth <= 768) {
-                const sections = document.querySelectorAll('.main-sections .section');
-                sections.forEach(section => {
-                    const header = section.querySelector('.section-header');
-                    const content = section.querySelector('.section-content');
-                    if (header && content) {
-                        content.classList.add('hidden');
-                        header.classList.add('collapsed');
-                        header.setAttribute('aria-expanded', 'false');
-                    }
-                });
-            }
-        }
-
         function handleIndicatorSelect() {
             const select = document.getElementById('indicator-select');
             const descriptionDiv = document.getElementById('indicator-description');
@@ -4230,7 +3041,6 @@
             console.log('Firebase config:', firebaseConfig.databaseURL);
 
             initializeTheme();
-            loadSettings();
             loadForexPrices();
             setInterval(loadForexPrices, 3600000);
 
@@ -4255,14 +3065,6 @@
             initTestsTracker();
             initTasksReminders();
             console.log('Entry widgets initialized');
-
-            // Collapse homepage sections on mobile
-            initMobileSections();
-            console.log('Mobile sections initialized');
-
-            // Initialize Account Balance widget
-            initBalanceWidget();
-            console.log('Balance widget initialized');
 
             // Check for webhook trigger parameter in URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -4308,15 +3110,10 @@
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sw.js')
                     .then((registration) => {
-                        console.log('✅ Service Worker registered successfully:', registration.scope);
-
-                        // Request notification permission automatically
-                        requestNotificationPermission();
+                        console.log('Service Worker registered successfully:', registration.scope);
 
                         // Handle messages from service worker
                         navigator.serviceWorker.addEventListener('message', (event) => {
-                            console.log('📨 Message from SW:', event.data);
-
                             if (event.data.type === 'CHECK_WAKE_TRIGGER') {
                                 const today = event.data.today;
                                 const alreadyTriggered = tasksState.wakeAlarm.triggeredToday &&
@@ -4324,186 +3121,13 @@
                                 event.ports[0]?.postMessage({ alreadyTriggered });
                             } else if (event.data.type === 'TRIGGER_WAKE_ALARM') {
                                 handleWakeTrigger();
-                            } else if (event.data.type === 'NAVIGATE_TO_TASKS') {
-                                // Handle deep link from notification
-                                console.log('🔗 Navigating to tasks:', event.data.data);
-                                if (event.data.data?.group) {
-                                    handleTasksDeepLink(event.data.data.group);
-                                }
                             }
                         });
-
-                        // Store registration globally for push notifications
-                        window.swRegistration = registration;
                     })
                     .catch((error) => {
-                        console.error('❌ Service Worker registration failed:', error);
+                        console.error('Service Worker registration failed:', error);
                     });
             }
-
-            // Request notification permission
-            async function requestNotificationPermission() {
-                if (!('Notification' in window)) {
-                    console.warn('⚠️ Notifications not supported');
-                    return;
-                }
-
-                console.log('📱 Current notification permission:', Notification.permission);
-
-                if (Notification.permission === 'default') {
-                    try {
-                        const permission = await Notification.requestPermission();
-                        console.log('🔔 Notification permission:', permission);
-
-                        if (permission === 'granted') {
-                            console.log('✅ Notifications enabled!');
-                            showTestNotification();
-                        }
-                    } catch (error) {
-                        console.error('❌ Error requesting permission:', error);
-                    }
-                } else if (Notification.permission === 'granted') {
-                    console.log('✅ Notifications already enabled');
-                }
-            }
-
-            // Show a test notification
-            function showTestNotification() {
-                if (Notification.permission === 'granted' && window.swRegistration) {
-                    console.log('🧪 Showing test notification');
-                    window.swRegistration.showNotification('Harvey Trading System', {
-                        body: 'Notifications are now enabled! You\'ll receive task reminders.',
-                        icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>💹</text></svg>',
-                        badge: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>',
-                        tag: 'welcome',
-                        requireInteraction: false
-                    });
-                }
-            }
-
-            // Handle deep links to tasks
-            function handleTasksDeepLink(group) {
-                console.log('🔗 Deep linking to group:', group);
-
-                // Switch to mobile home page if on mobile
-                if (window.innerWidth <= 768) {
-                    window.currentMobilePage = 'home';
-                    updateMobilePage();
-                }
-
-                // Scroll to tasks section or trigger specific group
-                if (group === 'group1') {
-                    triggerGroup1Tasks();
-                } else if (group === 'group2') {
-                    triggerGroup2Tasks();
-                } else if (group === 'group3') {
-                    triggerGroup3Tasks();
-                }
-            }
-
-            // Test push notification
-            function testPushNotification() {
-                console.log('🧪 Testing push notification...');
-
-                if (!('Notification' in window)) {
-                    alert('❌ Notifications not supported on this device');
-                    return;
-                }
-
-                if (Notification.permission !== 'granted') {
-                    alert('⚠️ Please enable notifications first');
-                    requestNotificationPermission();
-                    return;
-                }
-
-                if (!window.swRegistration) {
-                    alert('❌ Service worker not registered');
-                    return;
-                }
-
-                window.swRegistration.showNotification('🧪 Test Notification', {
-                    body: 'If you see this, push notifications are working! 🎉',
-                    icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>💹</text></svg>',
-                    badge: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>',
-                    vibrate: [200, 100, 200],
-                    tag: 'test',
-                    requireInteraction: false
-                });
-
-                console.log('✅ Test notification sent');
-                alert('✅ Test notification sent! Check your notifications.');
-            }
-
-            // Check PWA installation status
-            function checkPWAInstallation() {
-                console.log('🔍 Checking PWA installation...');
-
-                const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
-                                    window.navigator.standalone ||
-                                    document.referrer.includes('android-app://');
-
-                const hasServiceWorker = 'serviceWorker' in navigator && navigator.serviceWorker.controller;
-                const hasNotifications = 'Notification' in window;
-                const notificationPermission = hasNotifications ? Notification.permission : 'unsupported';
-                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-                let message = '📱 PWA Installation Status:\n\n';
-                message += `✓ Running as App: ${isStandalone ? '✅ Yes' : '❌ No (Open in browser)'}\n`;
-                message += `✓ Service Worker: ${hasServiceWorker ? '✅ Active' : '❌ Not registered'}\n`;
-                message += `✓ Notifications: ${notificationPermission === 'granted' ? '✅ Enabled' : notificationPermission === 'denied' ? '❌ Denied' : '⚠️ Not enabled'}\n`;
-                message += `✓ Device: ${isIOS ? '📱 iOS' : '🤖 Android/Desktop'}\n\n`;
-
-                if (isStandalone && hasServiceWorker && notificationPermission === 'granted') {
-                    message += '🎉 Perfect! Everything is set up correctly.\n\nYou can now add the widget to your home screen!';
-                } else {
-                    message += '⚠️ Setup incomplete. Please:\n';
-                    if (!isStandalone) message += '1. Install app via "Add to Home Screen"\n';
-                    if (!hasServiceWorker) message += '2. Reload the page\n';
-                    if (notificationPermission !== 'granted') message += '3. Enable notifications\n';
-                }
-
-                alert(message);
-            }
-
-            // Update PWA notification status display
-            function updatePWAStatus() {
-                const statusIcon = document.getElementById('pwa-status-icon');
-                const statusText = document.getElementById('pwa-status-text');
-                const statusDetail = document.getElementById('pwa-status-detail');
-
-                if (!statusIcon || !statusText || !statusDetail) return;
-
-                const hasNotifications = 'Notification' in window;
-                const permission = hasNotifications ? Notification.permission : 'unsupported';
-                const hasServiceWorker = 'serviceWorker' in navigator && navigator.serviceWorker.controller;
-
-                if (permission === 'granted' && hasServiceWorker) {
-                    statusIcon.textContent = '✅';
-                    statusText.textContent = 'Active';
-                    statusText.style.color = 'var(--accent-green)';
-                    statusDetail.textContent = 'Push notifications are enabled and working';
-                } else if (permission === 'denied') {
-                    statusIcon.textContent = '❌';
-                    statusText.textContent = 'Blocked';
-                    statusText.style.color = 'var(--accent-red)';
-                    statusDetail.textContent = 'Please enable notifications in browser settings';
-                } else if (permission === 'default') {
-                    statusIcon.textContent = '⚠️';
-                    statusText.textContent = 'Not Enabled';
-                    statusText.style.color = 'var(--accent-yellow)';
-                    statusDetail.textContent = 'Click "Enable Push Notifications" button above';
-                } else {
-                    statusIcon.textContent = '❌';
-                    statusText.textContent = 'Not Supported';
-                    statusText.style.color = 'var(--text-secondary)';
-                    statusDetail.textContent = 'This device does not support push notifications';
-                }
-            }
-
-            // Update PWA status on page load
-            setTimeout(() => {
-                updatePWAStatus();
-            }, 1000);
         });
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
             if (!localStorage.getItem(THEME_KEY)) {
@@ -4924,107 +3548,17 @@
             setTimeout(() => adjustWidgetStacking(), 50);
         }
 
-        // ==================== ACCOUNT BALANCE SYSTEM ====================
-
-        let startingBalance = 10000; // Default starting balance
-        let currentBalance = 10000;  // Default current balance
-
-        function initBalanceWidget() {
-            // Move the balance widget to the correct container
-            const balanceWidget = document.getElementById('balanceWidget');
-            const desktopContainer = document.getElementById('balanceWidgetDesktop');
-            const mobileContainer = document.getElementById('balanceWidgetMobile');
-
-            if (balanceWidget && desktopContainer && mobileContainer) {
-                // Clone the widget for both desktop and mobile
-                const desktopClone = balanceWidget.cloneNode(true);
-                const mobileClone = balanceWidget.cloneNode(true);
-
-                // Append to containers
-                desktopContainer.appendChild(desktopClone);
-                mobileContainer.appendChild(mobileClone);
-
-                // Remove original widget
-                balanceWidget.remove();
-            }
-
-            // Load balance from Firebase
-            loadBalanceData();
-
-            // Initialize transaction logs
-            renderTransactionLog();
-            renderWidgetTransactionLog();
-        }
-
-        function loadBalanceData() {
-            // Listen for current balance
-            db.ref('accountBalance').on('value', (snapshot) => {
-                const balance = snapshot.val();
-                if (balance !== null) {
-                    currentBalance = balance;
-                    updateBalanceDisplay();
-                }
-            });
-
-            // Listen for starting balance
-            db.ref('startingBalance').on('value', (snapshot) => {
-                const balance = snapshot.val();
-                if (balance !== null) {
-                    startingBalance = balance;
-                    updateBalanceDisplay();
-                }
-            });
-        }
-
-        function updateBalanceDisplay() {
-            const currentElements = document.querySelectorAll('#balance-current');
-            const percentageElements = document.querySelectorAll('#balance-percentage');
-            const startingElements = document.querySelectorAll('#balance-starting');
-
-            // Format currency
-            const formatCurrency = (amount) => {
-                return '$' + amount.toLocaleString('en-US', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
-            };
-
-            // Calculate percentage
-            const percentage = (currentBalance / startingBalance * 100).toFixed(1);
-            const percentageNum = parseFloat(percentage);
-
-            // Determine color class and arrow
-            let colorClass = 'neutral';
-            let arrow = '';
-
-            if (percentageNum > 100) {
-                colorClass = 'positive';
-                arrow = '▲';
-            } else if (percentageNum < 100) {
-                colorClass = 'negative';
-                arrow = '▼';
-            }
-
-            // Update all instances (desktop and mobile)
-            currentElements.forEach(el => {
-                el.textContent = formatCurrency(currentBalance);
-            });
-
-            percentageElements.forEach(el => {
-                el.className = 'balance-percentage ' + colorClass;
-                el.innerHTML = `${percentage}% <span class="balance-arrow">${arrow}</span>`;
-            });
-
-            startingElements.forEach(el => {
-                el.textContent = formatCurrency(startingBalance);
-            });
+        function toggleBalanceWidget() {
+            const widget = document.getElementById('balanceWidget');
+            widget.classList.toggle('minimized');
         }
 
         // ==================== NEWS BLOCKING SYSTEM ====================
 
         // News Blocking Configuration
         let newsBlockingConfig = {
-            apiProvider: 'FOREXFACTORY',  // Using Forex Factory scraper (no API key required)
+            apiKey: '62fxQsYmnCJeE5S3GuA3Q7jV5XbpQGfW',  // FCS API key (Free: 500 calls/month)
+            apiProvider: 'FCS',  // FCS or FOREXFACTORY
             preEventThreshold: 50,  // Forecast vs Previous disparity threshold (%)
             postEventThreshold: 50, // Actual vs Forecast disparity threshold (%)
             fedEcbBefore: 60,
@@ -5046,15 +3580,26 @@
             if (saved) {
                 const savedConfig = JSON.parse(saved);
 
-                // Merge with defaults
+                // MIGRATION: Clear old API keys (Alpha Vantage, Finnhub)
+                if (savedConfig.apiKey === '2ITV5J6KDMOE4BYW' ||
+                    savedConfig.apiKey === 'PASTE_FINNHUB_API_KEY_HERE' ||
+                    savedConfig.apiKey === 'd4mr3f1r01qsn6g7uhhgd4mr3f1r01qsn6g7uhi0') {
+                    console.log('🔄 Migrating from old API provider to FCS API');
+                    console.log('Please get free FCS API key at: https://fcsapi.com/dashboard');
+                    savedConfig.apiKey = 'GET_FREE_KEY_AT_FCSAPI.COM';
+                }
+
+                // Merge with defaults (keep new Finnhub key if not in saved config)
                 newsBlockingConfig = {
                     ...newsBlockingConfig,
-                    ...savedConfig
+                    ...savedConfig,
+                    apiKey: savedConfig.apiKey || newsBlockingConfig.apiKey
                 };
 
-                console.log('✅ Loaded config from localStorage');
+                console.log('✅ Loaded config with API key:', newsBlockingConfig.apiKey.substring(0, 8) + '...');
 
-                // Update inputs (if legacy input exists)
+                // Update inputs
+                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
                 document.getElementById('newsPreEventThreshold').value = newsBlockingConfig.preEventThreshold || 50;
                 document.getElementById('newsPostEventThreshold').value = newsBlockingConfig.postEventThreshold || 50;
                 document.getElementById('newsFedEcbBefore').value = newsBlockingConfig.fedEcbBefore;
@@ -5065,12 +3610,14 @@
                 // Save migrated config
                 localStorage.setItem('newsBlockingConfig', JSON.stringify(newsBlockingConfig));
             } else {
-                console.log('✅ Using default config with Forex Factory scraper');
+                console.log('✅ Using default config with Finnhub API key');
+                document.getElementById('newsApiKey').value = newsBlockingConfig.apiKey;
             }
         }
 
         // Save config to localStorage
         function saveNewsConfig() {
+            newsBlockingConfig.apiKey = document.getElementById('newsApiKey').value;
             newsBlockingConfig.preEventThreshold = parseFloat(document.getElementById('newsPreEventThreshold').value);
             newsBlockingConfig.postEventThreshold = parseFloat(document.getElementById('newsPostEventThreshold').value);
             newsBlockingConfig.fedEcbBefore = parseInt(document.getElementById('newsFedEcbBefore').value);
@@ -6585,7 +5132,8 @@
             const resultDisplay = document.getElementById('calc-result');
             resultDisplay.textContent = lotSize.toFixed(2) + ' lots';
 
-            // Balance is now updated via Firebase listener in updateBalanceDisplay()
+            // Update balance widget
+            document.getElementById('balance-display').textContent = '$' + balance.toLocaleString();
 
             console.log('=== Calculation Complete ===\n');
         }
@@ -7800,9 +6348,6 @@ Good luck with your trade!`);
 
             // Save state
             saveTasksState();
-
-            // Update widget data
-            updateWidgetData();
         }
 
         function checkGroupCompletion() {
@@ -8018,252 +6563,6 @@ Good luck with your trade!`);
                 saveTasksState();
             }
         }
-
-        // ==================== WIDGET DATA & NOTIFICATIONS ====================
-
-        // Update widget data.json for iOS widget
-        function updateWidgetData() {
-            console.log('📱 Updating widget data...');
-
-            // Get current active tasks
-            const activeTasks = getCurrentActiveTasks();
-
-            // Calculate progress
-            const allTasks = [...TASK_DEFINITIONS.group1, ...TASK_DEFINITIONS.group2, ...TASK_DEFINITIONS.group3];
-            const completedCount = allTasks.filter(task => tasksState.completedTasks[task.id]).length;
-            const totalCount = allTasks.length;
-
-            // Determine active group
-            let groupActive = null;
-            if (tasksState.scheduledTimes.group1 && !tasksState.completionTimes.group1) {
-                groupActive = 1;
-            } else if (tasksState.scheduledTimes.group2 && !tasksState.completionTimes.group2) {
-                groupActive = 2;
-            } else if (tasksState.scheduledTimes.group3 && !tasksState.completionTimes.group3) {
-                groupActive = 3;
-            }
-
-            const widgetData = {
-                tasks: activeTasks.map(task => ({
-                    id: task.id,
-                    name: task.name,
-                    completed: tasksState.completedTasks[task.id] || false,
-                    time: getTaskTime(task.id),
-                    group: getTaskGroup(task.id)
-                })),
-                nextUpdate: new Date(Date.now() + 15 * 60 * 1000).toISOString(), // 15 minutes
-                groupActive: groupActive,
-                wakeAlarmTriggered: tasksState.wakeAlarm.triggeredToday,
-                scheduledTimes: tasksState.scheduledTimes,
-                progress: {
-                    completed: completedCount,
-                    total: totalCount,
-                    percentage: Math.round((completedCount / totalCount) * 100)
-                },
-                lastUpdate: new Date().toISOString()
-            };
-
-            // Store in localStorage for widget access
-            localStorage.setItem('widgetData', JSON.stringify(widgetData));
-
-            console.log('✅ Widget data updated:', widgetData);
-
-            return widgetData;
-        }
-
-        function getCurrentActiveTasks() {
-            const tasks = [];
-
-            // Add Group 1 tasks if scheduled and not complete
-            if (tasksState.scheduledTimes.group1 && !tasksState.completionTimes.group1) {
-                tasks.push(...TASK_DEFINITIONS.group1.filter(t => !tasksState.completedTasks[t.id]));
-            }
-
-            // Add Group 2 tasks if scheduled and not complete
-            if (tasksState.scheduledTimes.group2 && !tasksState.completionTimes.group2) {
-                tasks.push(...TASK_DEFINITIONS.group2.filter(t => !tasksState.completedTasks[t.id]));
-            }
-
-            // Add Group 3 tasks if scheduled and not complete
-            if (tasksState.scheduledTimes.group3 && !tasksState.completionTimes.group3) {
-                tasks.push(...TASK_DEFINITIONS.group3.filter(t => !tasksState.completedTasks[t.id]));
-            }
-
-            // Add weekly tasks if it's the right day
-            const dayOfWeek = new Date().getDay();
-            if (dayOfWeek === 0) { // Sunday
-                tasks.push(...TASK_DEFINITIONS.sunday.filter(t => !tasksState.completedTasks[t.id]));
-            } else if (dayOfWeek === 3) { // Wednesday
-                tasks.push(...TASK_DEFINITIONS.wednesday.filter(t => !tasksState.completedTasks[t.id]));
-            }
-
-            return tasks.slice(0, 12); // Limit to 12 tasks
-        }
-
-        function getTaskTime(taskId) {
-            if (taskId.startsWith('group1') && tasksState.scheduledTimes.group1) {
-                return new Date(tasksState.scheduledTimes.group1).toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit'
-                });
-            } else if (taskId.startsWith('group2') && tasksState.scheduledTimes.group2) {
-                return new Date(tasksState.scheduledTimes.group2).toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit'
-                });
-            } else if (taskId.startsWith('group3') && tasksState.scheduledTimes.group3) {
-                return new Date(tasksState.scheduledTimes.group3).toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit'
-                });
-            }
-            return null;
-        }
-
-        function getTaskGroup(taskId) {
-            if (taskId.startsWith('group1')) return 'group1';
-            if (taskId.startsWith('group2')) return 'group2';
-            if (taskId.startsWith('group3')) return 'group3';
-            if (taskId.startsWith('sunday')) return 'sunday';
-            if (taskId.startsWith('wednesday')) return 'wednesday';
-            return null;
-        }
-
-        // Send push notification for tasks
-        function sendTaskNotification(group, tasks) {
-            console.log(`📤 Sending notification for ${group}:`, tasks);
-
-            if (!('Notification' in window) || Notification.permission !== 'granted') {
-                console.warn('⚠️ Notifications not enabled');
-                return;
-            }
-
-            if (!window.swRegistration) {
-                console.warn('⚠️ Service worker not registered');
-                return;
-            }
-
-            // Check if already sent today
-            const notificationKey = `notification_${group}_${new Date().toISOString().split('T')[0]}`;
-            if (localStorage.getItem(notificationKey)) {
-                console.log('📭 Notification already sent for', group, 'today');
-                return;
-            }
-
-            const taskNames = tasks.map(t => t.name).slice(0, 5).join(', ');
-            const remainingCount = tasks.length - 5;
-
-            const title = `⏰ ${group === 'wake' ? 'Wake Alarm' : 'Tasks Ready'} - ${group.toUpperCase()}`;
-            const body = tasks.length > 5
-                ? `${taskNames}... +${remainingCount} more`
-                : taskNames;
-
-            window.swRegistration.showNotification(title, {
-                body: body,
-                icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%232563eb%22/><text x=%2250%22 y=%2270%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>💹</text></svg>',
-                badge: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✓</text></svg>',
-                vibrate: [300, 100, 300, 100, 300],
-                tag: `task-${group}`,
-                requireInteraction: true,
-                actions: [
-                    { action: 'open', title: 'Open Tasks' },
-                    { action: 'dismiss', title: 'Dismiss' }
-                ],
-                data: {
-                    group: group,
-                    url: `/index.html?page=tasks&group=${group}`
-                },
-                timestamp: Date.now()
-            });
-
-            // Mark as sent
-            localStorage.setItem(notificationKey, 'sent');
-            console.log('✅ Notification sent for', group);
-        }
-
-        // Check if tasks are due and send notifications
-        function checkTasksDueAndNotify() {
-            const now = new Date();
-
-            // Check wake alarm (1 hour before Group 1)
-            if (tasksState.scheduledTimes.group1 && !tasksState.wakeAlarm.triggeredToday) {
-                const group1Time = new Date(tasksState.scheduledTimes.group1);
-                const wakeTime = new Date(group1Time.getTime() - (60 * 60 * 1000)); // 1 hour before
-
-                if (now >= wakeTime && now < group1Time) {
-                    const timeDiff = Math.abs(now - wakeTime);
-                    if (timeDiff < 60000) { // Within 1 minute
-                        console.log('⏰ Wake alarm due!');
-                        sendTaskNotification('wake', [{ name: `Group 1 in 1 hour (${group1Time.toLocaleTimeString()})` }]);
-                    }
-                }
-            }
-
-            // Check Group 1
-            if (tasksState.scheduledTimes.group1 && !tasksState.completionTimes.group1) {
-                const group1Time = new Date(tasksState.scheduledTimes.group1);
-                const timeDiff = Math.abs(now - group1Time);
-
-                if (now >= group1Time && timeDiff < 60000) { // Within 1 minute
-                    console.log('📢 Group 1 tasks are due!');
-                    const tasks = TASK_DEFINITIONS.group1.filter(t => !tasksState.completedTasks[t.id]);
-                    if (tasks.length > 0) {
-                        sendTaskNotification('group1', tasks);
-                    }
-                }
-            }
-
-            // Check Group 2
-            if (tasksState.scheduledTimes.group2 && !tasksState.completionTimes.group2) {
-                const group2Time = new Date(tasksState.scheduledTimes.group2);
-                const timeDiff = Math.abs(now - group2Time);
-
-                if (now >= group2Time && timeDiff < 60000) { // Within 1 minute
-                    console.log('📢 Group 2 tasks are due!');
-                    const tasks = TASK_DEFINITIONS.group2.filter(t => !tasksState.completedTasks[t.id]);
-                    if (tasks.length > 0) {
-                        sendTaskNotification('group2', tasks);
-                    }
-                }
-            }
-
-            // Check Group 3
-            if (tasksState.scheduledTimes.group3 && !tasksState.completionTimes.group3) {
-                const group3Time = new Date(tasksState.scheduledTimes.group3);
-                const timeDiff = Math.abs(now - group3Time);
-
-                if (now >= group3Time && timeDiff < 60000) { // Within 1 minute
-                    console.log('📢 Group 3 tasks are due!');
-                    const tasks = TASK_DEFINITIONS.group3.filter(t => !tasksState.completedTasks[t.id]);
-                    if (tasks.length > 0) {
-                        sendTaskNotification('group3', tasks);
-                    }
-                }
-            }
-
-            // Check weekly tasks
-            const dayOfWeek = new Date().getDay();
-            const hour = new Date().getHours();
-
-            if (dayOfWeek === 0 && hour === 9 && now.getMinutes() < 1) { // Sunday 9am
-                const tasks = TASK_DEFINITIONS.sunday.filter(t => !tasksState.completedTasks[t.id]);
-                if (tasks.length > 0) {
-                    sendTaskNotification('sunday', tasks);
-                }
-            } else if (dayOfWeek === 3 && hour === 9 && now.getMinutes() < 1) { // Wednesday 9am
-                const tasks = TASK_DEFINITIONS.wednesday.filter(t => !tasksState.completedTasks[t.id]);
-                if (tasks.length > 0) {
-                    sendTaskNotification('wednesday', tasks);
-                }
-            }
-        }
-
-        // Start notification checker (runs every minute)
-        setInterval(() => {
-            console.log('🔄 Checking for due tasks...');
-            checkTasksDueAndNotify();
-            updateWidgetData();
-        }, 60000); // Check every minute
 
         // Wake Alarm System
         async function handleWakeTrigger() {

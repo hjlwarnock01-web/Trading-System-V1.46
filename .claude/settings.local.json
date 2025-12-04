@@ -11,7 +11,8 @@
       "WebFetch(domain:www.econdb.com)",
       "WebFetch(domain:finnhub.io)",
       "WebSearch",
-      "WebFetch(domain:fcsapi.com)"
+      "WebFetch(domain:fcsapi.com)",
+      "Bash(test:*)"
     ],
     "deny": [],
     "ask": []
