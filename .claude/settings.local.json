@@ -12,9 +12,7 @@
       "WebFetch(domain:finnhub.io)",
       "WebSearch",
       "WebFetch(domain:fcsapi.com)",
-      "Bash(test:*)",
-      "Bash(grep:*)",
-      "Bash(findstr:*)"
+      "Bash(test:*)"
     ],
     "deny": [],
     "ask": []

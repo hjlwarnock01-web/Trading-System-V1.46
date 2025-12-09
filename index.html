@@ -8,7 +8,7 @@
     <meta name="description" content="Professional trading system rules and risk management framework">
 
     <!-- PWA Configuration -->
-    <link rel="manifest" href="/Trading-System-V1.46/manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Harvey Trading">
@@ -3150,27 +3150,11 @@
 
                     <!-- Daily Trading Plan Widget -->
                     <div id="daily-plan-widget">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                            <h2 style="margin: 0;">Daily Trading Plan:</h2>
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <label style="font-weight: 600; font-size: 0.9rem;">Pair:</label>
-                                <select id="daily-plan-pair-select" style="padding: 0.4rem 0.6rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary); font-size: 0.9rem; cursor: pointer;">
-                                    <option value="">Select...</option>
-                                    <option value="BTCUSD">BTCUSD</option>
-                                    <option value="EURUSD">EURUSD</option>
-                                    <option value="USDJPY">USDJPY</option>
-                                </select>
-                            </div>
-                        </div>
+                        <h2>Daily Trading Plan:</h2>
                         <div id="daily-plan-content">
                             <div id="daily-plan-question"></div>
                             <div id="daily-plan-buttons"></div>
                             <div id="daily-plan-result" style="display: none;"></div>
-                        </div>
-                        <div id="daily-plan-history-section" style="margin-top: 1.5rem;">
-                            <h3 style="font-size: 1rem; margin-bottom: 0.75rem; color: var(--text-secondary);">Trading Plan History</h3>
-                            <div id="daily-plan-history-list" style="max-height: 400px; overflow-y: auto; background: var(--bg-secondary); border-radius: 6px; padding: 0.75rem;"></div>
-                            <button onclick="clearDailyPlanHistory()" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Clear History</button>
                         </div>
                     </div>
 
@@ -3279,7 +3263,6 @@
                     <div style="font-weight: 600; margin-bottom: 0.5rem; font-size: 0.85rem;">Debug Controls:</div>
                     <button onclick="manualTriggerWakeAlarm()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.4rem; background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Trigger Wake Alarm Now</button>
                     <button onclick="showAllTasks()" style="width: 100%; padding: 0.4rem; margin-bottom: 0.4rem; background: var(--accent-orange); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Show All Tasks</button>
-                    <button onclick="testTelegramNotification()" style="width: 100%; padding: 0.4rem; margin-bottom: 0.4rem; background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">📱 Send Test Telegram</button>
                     <button onclick="triggerGroup1Tasks()" style="width: 100%; padding: 0.4rem; margin-bottom: 0.4rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Trigger Group 1 Now</button>
                     <button onclick="triggerGroup2Tasks()" style="width: 100%; padding: 0.4rem; margin-bottom: 0.4rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Trigger Group 2 Now</button>
                     <button onclick="triggerGroup3Tasks()" style="width: 100%; padding: 0.4rem; margin-bottom: 0.4rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Trigger Group 3 Now</button>
@@ -3354,9 +3337,9 @@
 
             <!-- Add Transaction Section -->
             <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
-                <div style="display: flex; gap: 0.4rem; margin-bottom: 0.5rem; align-items: center;">
-                    <input type="number" id="widget-transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1; min-width: 0; padding: 0.5rem 0.4rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 0.85rem;">
-                    <button onclick="addTransaction()" style="padding: 0.5rem 0.75rem; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; font-size: 0.85rem; white-space: nowrap; flex-shrink: 0;">Add</button>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="number" id="widget-transaction-amount" placeholder="+500 or -500" step="0.01" style="flex: 1; padding: 0.5rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; color: white; font-size: 0.9rem;">
+                    <button onclick="addTransaction()" style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Add</button>
                 </div>
 
                 <!-- Transaction Log Toggle -->
@@ -3984,7 +3967,6 @@
                 <div style="margin-bottom: 1rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px;">
                     <div style="font-weight: 600; margin-bottom: 0.75rem; font-size: 0.9rem;">Debug Controls:</div>
                     <button onclick="showAllTasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: var(--accent-orange); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Show All Tasks</button>
-                    <button onclick="testTelegramNotification()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">📱 Send Test Telegram</button>
                     <button onclick="triggerGroup1Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 1 Now</button>
                     <button onclick="triggerGroup2Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 2 Now</button>
                     <button onclick="triggerGroup3Tasks()" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500;">Trigger Group 3 Now</button>
@@ -6993,8 +6975,7 @@ Good luck with your trade!`);
         // Daily Trading Plan System
         let dailyPlanState = {
             currentQuestion: 0,
-            answers: {},
-            selectedPair: ''
+            answers: {}
         };
 
         const dailyPlanQuestions = [
@@ -7029,11 +7010,6 @@ Good luck with your trade!`);
             const saved = localStorage.getItem('dailyPlanState');
             if (saved) {
                 dailyPlanState = JSON.parse(saved);
-                // Restore pair selection
-                const pairSelect = document.getElementById('daily-plan-pair-select');
-                if (pairSelect && dailyPlanState.selectedPair) {
-                    pairSelect.value = dailyPlanState.selectedPair;
-                }
                 if (dailyPlanState.currentQuestion >= dailyPlanQuestions.length) {
                     showDailyPlanResult();
                 } else {
@@ -7042,18 +7018,6 @@ Good luck with your trade!`);
             } else {
                 updateDailyPlanDisplay();
             }
-
-            // Add pair selection change handler
-            const pairSelect = document.getElementById('daily-plan-pair-select');
-            if (pairSelect) {
-                pairSelect.addEventListener('change', function() {
-                    dailyPlanState.selectedPair = this.value;
-                    saveDailyPlanState();
-                });
-            }
-
-            // Load and display history
-            loadDailyPlanHistory();
         }
 
         function updateDailyPlanDisplay() {
@@ -7099,10 +7063,7 @@ Good luck with your trade!`);
             const plan = calculateDailyPlan();
             resultDiv.innerHTML = `
                 <div class="plan-result-text"><strong>Daily Trading Plan:</strong><br><br>${plan}</div>
-                <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
-                    <button class="plan-new-analysis-btn" onclick="saveDailyPlanToHistory()" style="flex: 1; background: linear-gradient(135deg, #059669 0%, #047857 100%);">Save to History</button>
-                    <button class="plan-new-analysis-btn" onclick="resetDailyPlan()" style="flex: 1;">New Analysis</button>
-                </div>
+                <button class="plan-new-analysis-btn" onclick="resetDailyPlan()">New Analysis</button>
             `;
         }
 
@@ -7560,11 +7521,9 @@ Good luck with your trade!`);
         }
 
         function resetDailyPlan() {
-            const currentPair = dailyPlanState.selectedPair;
             dailyPlanState = {
                 currentQuestion: 0,
-                answers: {},
-                selectedPair: currentPair  // Keep the selected pair
+                answers: {}
             };
             saveDailyPlanState();
             updateDailyPlanDisplay();
@@ -7572,178 +7531,6 @@ Good luck with your trade!`);
 
         function saveDailyPlanState() {
             localStorage.setItem('dailyPlanState', JSON.stringify(dailyPlanState));
-        }
-
-        // Daily Plan History Management
-        async function saveDailyPlanToHistory() {
-            const pair = dailyPlanState.selectedPair;
-            if (!pair) {
-                alert('Please select a pair before saving to history');
-                return;
-            }
-
-            const plan = calculateDailyPlan();
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-
-            const historyEntry = {
-                pair: pair,
-                date: now.toISOString(),
-                dateDisplay: `${dateStr} ${timeStr}`,
-                plan: plan,
-                user: 'Harvey',  // Can be changed to track which user saved it
-                timestamp: now.getTime()
-            };
-
-            console.log('💾 Saving Daily Trading Plan to localStorage...');
-            console.log('Entry:', historyEntry);
-
-            // Get existing history
-            let history = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
-
-            // Add new entry at the beginning (newest first)
-            history.unshift(historyEntry);
-
-            // Keep only last 50 entries
-            if (history.length > 50) {
-                history = history.slice(0, 50);
-            }
-
-            // Save to localStorage
-            localStorage.setItem('dailyPlanHistory', JSON.stringify(history));
-
-            // Save to Firebase
-            try {
-                console.log('☁️ Saving Daily Trading Plan to Firebase...');
-                const dailyPlanRef = db.ref('dailyTradingPlan');
-                const newEntryRef = dailyPlanRef.push();
-
-                await newEntryRef.set({
-                    pair: historyEntry.pair,
-                    result: historyEntry.plan,
-                    date: historyEntry.date,
-                    dateDisplay: historyEntry.dateDisplay,
-                    user: historyEntry.user,
-                    timestamp: historyEntry.timestamp
-                });
-
-                console.log('✅ Daily Trading Plan saved to Firebase successfully!');
-                console.log('Firebase key:', newEntryRef.key);
-            } catch (error) {
-                console.error('❌ Failed to save Daily Trading Plan to Firebase:', error);
-                console.error('Error details:', error.message);
-            }
-
-            // Refresh display
-            loadDailyPlanHistory();
-
-            // Show confirmation
-            alert('✅ Trading plan saved to history and synced to Firebase!');
-        }
-
-        async function loadDailyPlanHistory() {
-            console.log('📥 Loading Daily Trading Plan history from Firebase...');
-
-            try {
-                const dailyPlanRef = db.ref('dailyTradingPlan');
-
-                // Load initial data
-                const snapshot = await dailyPlanRef.orderByChild('timestamp').limitToLast(50).once('value');
-
-                if (snapshot.exists()) {
-                    const firebaseData = [];
-                    snapshot.forEach((childSnapshot) => {
-                        const data = childSnapshot.val();
-                        firebaseData.push({
-                            pair: data.pair,
-                            date: data.date,
-                            dateDisplay: data.dateDisplay,
-                            plan: data.result,
-                            user: data.user || 'Unknown',
-                            timestamp: data.timestamp
-                        });
-                    });
-
-                    // Sort by timestamp (newest first)
-                    firebaseData.sort((a, b) => b.timestamp - a.timestamp);
-
-                    console.log('✅ Loaded', firebaseData.length, 'entries from Firebase');
-
-                    // Merge with localStorage and update
-                    localStorage.setItem('dailyPlanHistory', JSON.stringify(firebaseData));
-
-                    // Display the history
-                    displayDailyPlanHistory(firebaseData);
-                } else {
-                    console.log('ℹ️ No Firebase data found, loading from localStorage');
-                    const localHistory = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
-                    displayDailyPlanHistory(localHistory);
-                }
-
-                // Set up real-time listener for new entries
-                dailyPlanRef.on('child_added', (snapshot) => {
-                    const data = snapshot.val();
-                    console.log('🔔 New Daily Trading Plan added to Firebase:', data);
-
-                    // Reload and display
-                    loadDailyPlanHistory();
-                });
-
-            } catch (error) {
-                console.error('❌ Failed to load Daily Trading Plan from Firebase:', error);
-                console.error('Error details:', error.message);
-
-                // Fall back to localStorage
-                const localHistory = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
-                displayDailyPlanHistory(localHistory);
-            }
-        }
-
-        function displayDailyPlanHistory(history) {
-            const historyList = document.getElementById('daily-plan-history-list');
-
-            if (!historyList) return;
-
-            if (history.length === 0) {
-                historyList.innerHTML = '<div style="color: var(--text-secondary); text-align: center; padding: 1rem; font-size: 0.9rem;">No history yet. Complete an analysis and save it!</div>';
-                return;
-            }
-
-            historyList.innerHTML = history.map(entry => {
-                const userBadge = entry.user ? `<span style="font-size: 0.75rem; padding: 0.15rem 0.4rem; background: var(--bg-secondary); border-radius: 3px; margin-left: 0.5rem;">${entry.user}</span>` : '';
-                return `
-                <div style="padding: 0.75rem; margin-bottom: 0.75rem; background: var(--bg-primary); border-radius: 4px; border-left: 3px solid var(--accent-blue);">
-                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--accent-blue);">${entry.pair} <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">| ${entry.dateDisplay}</span>${userBadge}</div>
-                    <div style="font-size: 0.9rem; line-height: 1.5; color: var(--text-primary);">${entry.plan}</div>
-                </div>
-            `;
-            }).join('');
-        }
-
-        async function clearDailyPlanHistory() {
-            if (confirm('Are you sure you want to clear all trading plan history? This will clear both local and Firebase history.')) {
-                console.log('🗑️ Clearing Daily Trading Plan history...');
-
-                // Clear localStorage
-                localStorage.removeItem('dailyPlanHistory');
-                console.log('✅ localStorage cleared');
-
-                // Clear Firebase
-                try {
-                    console.log('☁️ Clearing Firebase Daily Trading Plan history...');
-                    const dailyPlanRef = db.ref('dailyTradingPlan');
-                    await dailyPlanRef.remove();
-                    console.log('✅ Firebase history cleared successfully!');
-                } catch (error) {
-                    console.error('❌ Failed to clear Firebase history:', error);
-                    console.error('Error details:', error.message);
-                }
-
-                // Reload display
-                loadDailyPlanHistory();
-                alert('✅ History cleared from both local storage and Firebase!');
-            }
         }
 
         // Risk Assessment System
@@ -8274,7 +8061,7 @@ Good luck with your trade!`);
             renderTaskDisplay();
         }
 
-        async function triggerGroup1Tasks() {
+        function triggerGroup1Tasks() {
             console.log('Triggering Group 1 tasks NOW');
             tasksState.scheduledTimes.group1 = new Date().toISOString();
             tasksState.completionTimes.group1 = null;
@@ -8284,13 +8071,9 @@ Good luck with your trade!`);
             });
             saveTasksState();
             renderTaskDisplay();
-
-            // Send Telegram notification
-            const message = '🔔 Group 1 Tasks Triggered!\n\nTime for Stage 1 Setup + News Check';
-            await sendTelegramNotification(message);
         }
 
-        async function triggerGroup2Tasks() {
+        function triggerGroup2Tasks() {
             console.log('Triggering Group 2 tasks NOW');
             // Ensure Group 1 is marked complete
             if (!tasksState.completionTimes.group1) {
@@ -8304,13 +8087,9 @@ Good luck with your trade!`);
             });
             saveTasksState();
             renderTaskDisplay();
-
-            // Send Telegram notification
-            const message = '🔔 Group 2 Tasks Triggered!\n\nTime for Stage 2 Instrument Selection';
-            await sendTelegramNotification(message);
         }
 
-        async function triggerGroup3Tasks() {
+        function triggerGroup3Tasks() {
             console.log('Triggering Group 3 tasks NOW');
             // Ensure Groups 1 and 2 are marked complete
             if (!tasksState.completionTimes.group1) {
@@ -8327,10 +8106,6 @@ Good luck with your trade!`);
             });
             saveTasksState();
             renderTaskDisplay();
-
-            // Send Telegram notification
-            const message = '🔔 Group 3 Tasks Triggered!\n\nTime for Stage 3 Trading';
-            await sendTelegramNotification(message);
         }
 
         function resetAllTasks() {
@@ -8705,77 +8480,41 @@ Good luck with your trade!`);
 
         // Telegram Notification System
         async function sendTelegramNotification(message) {
-            console.log('=== TELEGRAM NOTIFICATION ATTEMPT ===');
-            console.log('Message:', message);
-
-            // Check if notifications are enabled
-            const settings = loadSettings();
-            console.log('Telegram Notifications Enabled:', settings.enableNotifications);
-
-            if (!settings.enableNotifications) {
-                console.log('❌ Telegram notifications are disabled in settings');
-                return { success: false, error: 'Notifications disabled in settings' };
-            }
-
-            console.log('Bot Token:', TELEGRAM_BOT_TOKEN);
-            console.log('Chat ID:', TELEGRAM_CHAT_ID);
-
             const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            console.log('API URL:', url);
-
-            const requestBody = {
-                chat_id: TELEGRAM_CHAT_ID,
-                text: message,
-                parse_mode: 'HTML'
-            };
-            console.log('Request Body:', JSON.stringify(requestBody, null, 2));
 
             try {
-                console.log('Sending fetch request...');
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
                 });
 
-                console.log('Response Status:', response.status);
-                console.log('Response OK:', response.ok);
-
                 const data = await response.json();
-                console.log('API Response:', JSON.stringify(data, null, 2));
 
                 if (data.ok) {
-                    console.log('✅ Telegram notification sent successfully!');
+                    console.log('Telegram notification sent:', message);
                     return { success: true };
                 } else {
-                    console.error('❌ Telegram API error:', data.description);
+                    console.error('Telegram API error:', data);
                     return { success: false, error: data.description };
                 }
             } catch (error) {
-                console.error('❌ Failed to send Telegram notification:', error);
-                console.error('Error details:', error.message);
+                console.error('Failed to send Telegram notification:', error);
                 return { success: false, error: error.message };
             }
         }
 
-        async function testTelegramNotification() {
-            console.log('User clicked Send Test Telegram button');
-            const result = await sendTelegramNotification('✅ Test message from Harvey Trading System\n\nIf you see this, Telegram notifications are working!');
-
-            if (result.success) {
-                alert('✅ Telegram notification sent successfully!\n\nCheck your Telegram app.');
-            } else {
-                alert('❌ Failed to send Telegram notification\n\nError: ' + result.error + '\n\nCheck the console for details.');
-            }
-
-            return result;
-        }
-
         async function sendTestNotification() {
-            // Alias for compatibility
-            return await testTelegramNotification();
+            // This function is kept for compatibility but no longer has a UI button
+            const result = await sendTelegramNotification('Test notification from Harvey Trading System');
+            console.log('Test notification result:', result);
+            return result;
         }
 
         // Notification Scheduler - Dynamic scheduling based on task times
