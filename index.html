@@ -6688,14 +6688,16 @@
             const priceDisplay = document.getElementById('calc-price');
             const timestampDisplay = document.getElementById('price-timestamp');
 
-            console.log('=== LOT SIZE CALCULATOR DEBUG ===');
-            console.log('Instrument selected:', instrument);
+            console.log('=== LOT SIZE CALCULATOR PRICE UPDATE ===');
+            console.log('Instrument:', instrument);
+            console.log('Force Refresh:', forceRefresh);
 
             // Check cache first (unless force refresh)
             const now = Date.now();
             const cached = priceCache[instrument];
             if (!forceRefresh && cached.price && (now - cached.timestamp < CACHE_DURATION)) {
-                console.log('Using cached price for', instrument);
+                console.log('✓ Using cached price for', instrument);
+                console.log('Cache age:', Math.floor((now - cached.timestamp) / 1000) + 's');
                 currentPrice = cached.price;
 
                 // Format and display cached price
@@ -6709,49 +6711,77 @@
                 priceDisplay.textContent = formattedPrice;
                 priceDisplay.style.color = 'var(--accent-green)';
 
-                const cacheAge = Math.floor((now - cached.timestamp) / 1000);
-                timestampDisplay.textContent = `(${cacheAge}s ago)`;
+                // Show actual cache time
+                const cacheDate = new Date(cached.timestamp);
+                const timeStr = cacheDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                timestampDisplay.textContent = `(${timeStr})`;
 
                 calculateLotSize();
                 return;
             }
 
             try {
+                console.log('🔄 Fetching fresh price from API...');
                 priceDisplay.textContent = 'Updating...';
                 priceDisplay.style.color = 'var(--accent-orange)';
 
                 let price = null;
+                let apiUrl = '';
 
                 if (instrument === 'EURUSD' || instrument === 'USDJPY') {
-                    // Fetch from Exchangerate-API (free tier: 1,500 requests/month, no API key)
-                    const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                    // Add cache-busting timestamp to prevent browser caching
+                    apiUrl = `https://api.exchangerate-api.com/v4/latest/USD?t=${now}`;
+                    console.log('API URL:', apiUrl);
+
+                    const response = await fetch(apiUrl, {
+                        cache: 'no-store',  // Prevent browser caching
+                        headers: {
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
+                    console.log('Response status:', response.status);
+
                     const data = await response.json();
+                    console.log('Raw API response:', data);
 
                     if (instrument === 'EURUSD' && data.rates && data.rates.EUR) {
                         // EUR/USD = 1 / USD/EUR
                         price = 1 / parseFloat(data.rates.EUR);
-                        console.log('EUR/USD price fetched from Exchangerate-API:', price);
+                        console.log('✅ EUR/USD rate (USD/EUR):', data.rates.EUR);
+                        console.log('✅ EUR/USD price calculated:', price);
                     } else if (instrument === 'USDJPY' && data.rates && data.rates.JPY) {
                         price = parseFloat(data.rates.JPY);
-                        console.log('USD/JPY price fetched from Exchangerate-API:', price);
+                        console.log('✅ USD/JPY price:', price);
                     } else {
-                        throw new Error('Failed to fetch exchange rate');
+                        throw new Error('Failed to fetch exchange rate - rates missing');
                     }
                 } else if (instrument === 'BTCUSD') {
-                    // Fetch BTC/USD from CoinGecko (free, no key required)
-                    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                    // Add cache-busting timestamp
+                    apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&t=${now}`;
+                    console.log('API URL:', apiUrl);
+
+                    const response = await fetch(apiUrl, {
+                        cache: 'no-store',  // Prevent browser caching
+                        headers: {
+                            'Cache-Control': 'no-cache'
+                        }
+                    });
+                    console.log('Response status:', response.status);
+
                     const data = await response.json();
+                    console.log('Raw API response:', data);
 
                     if (data.bitcoin && data.bitcoin.usd) {
                         price = data.bitcoin.usd;
-                        console.log('BTC/USD price fetched from CoinGecko:', price);
+                        console.log('✅ BTC/USD price:', price);
                     } else {
-                        throw new Error('Failed to fetch BTC/USD price');
+                        throw new Error('Failed to fetch BTC/USD price - data missing');
                     }
                 }
 
                 if (price !== null) {
                     currentPrice = price;
+                    console.log('✅ Price successfully fetched:', price);
 
                     // Update cache
                     priceCache[instrument] = {
@@ -6770,15 +6800,18 @@
                     priceDisplay.textContent = formattedPrice;
                     priceDisplay.style.color = 'var(--accent-green)';
 
-                    // Update timestamp
-                    const fetchTime = new Date();
-                    timestampDisplay.textContent = `(just now)`;
+                    // Show actual update time (not "just now")
+                    const fetchTime = new Date(now);
+                    const timeStr = fetchTime.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+                    timestampDisplay.textContent = `(${timeStr})`;
+                    console.log('Last updated:', timeStr);
 
                     // Recalculate lot size
                     calculateLotSize();
                 }
             } catch (error) {
-                console.error('Error fetching price:', error);
+                console.error('❌ Error fetching price:', error);
+                console.error('Error message:', error.message);
                 priceDisplay.textContent = 'Click Update';
                 priceDisplay.style.color = 'var(--accent-red)';
                 timestampDisplay.textContent = '(Failed)';
