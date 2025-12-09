@@ -7572,8 +7572,8 @@ Good luck with your trade!`);
             localStorage.setItem('dailyPlanState', JSON.stringify(dailyPlanState));
         }
 
-        // Daily Plan History Management (localStorage only)
-        function saveDailyPlanToHistory() {
+        // Daily Plan History Management (localStorage + Firebase sync)
+        async function saveDailyPlanToHistory() {
             const pair = dailyPlanState.selectedPair;
             if (!pair) {
                 alert('Please select a pair before saving to history');
@@ -7590,8 +7590,12 @@ Good luck with your trade!`);
                 timestamp: now.getTime(),
                 date: now.toISOString(),
                 dateDisplay: `${dateStr} ${timeStr}`,
-                plan: plan
+                plan: plan,
+                user: 'Harvey'  // Change to 'Partner' for partner's device
             };
+
+            console.log('💾 Saving Daily Trading Plan to localStorage...');
+            console.log('Entry:', historyEntry);
 
             // Get existing history
             let history = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
@@ -7607,17 +7611,111 @@ Good luck with your trade!`);
             // Save to localStorage
             localStorage.setItem('dailyPlanHistory', JSON.stringify(history));
 
+            // Push to Firebase
+            try {
+                console.log('☁️ Pushing to Firebase...');
+                const dailyPlanRef = db.ref('dailyTradingPlan/' + historyEntry.timestamp);
+
+                await dailyPlanRef.set({
+                    pair: historyEntry.pair,
+                    timestamp: historyEntry.timestamp,
+                    result: historyEntry.plan,
+                    date: historyEntry.date,
+                    dateDisplay: historyEntry.dateDisplay,
+                    user: historyEntry.user
+                });
+
+                console.log('✅ Successfully pushed to Firebase!');
+                console.log('Firebase path:', '/dailyTradingPlan/' + historyEntry.timestamp);
+            } catch (error) {
+                console.error('❌ Failed to push to Firebase:', error);
+                console.error('Error details:', error.message);
+                console.log('⚠️ Falling back to localStorage only');
+            }
+
             // Refresh display
-            loadDailyPlanHistory();
+            await loadDailyPlanHistory();
 
             // Show confirmation
             alert('✅ Trading plan saved to history!');
         }
 
-        function loadDailyPlanHistory() {
-            const history = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
+        async function loadDailyPlanHistory() {
             const historyList = document.getElementById('daily-plan-history-list');
+            if (!historyList) return;
 
+            console.log('📥 Loading from Firebase...');
+
+            try {
+                // Fetch from Firebase
+                const dailyPlanRef = db.ref('dailyTradingPlan');
+                const snapshot = await dailyPlanRef.orderByChild('timestamp').limitToLast(50).once('value');
+
+                let firebaseData = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const data = childSnapshot.val();
+                        firebaseData.push({
+                            pair: data.pair,
+                            timestamp: data.timestamp,
+                            date: data.date,
+                            dateDisplay: data.dateDisplay,
+                            plan: data.result,
+                            user: data.user || 'Unknown'
+                        });
+                    });
+
+                    console.log('✅ Loaded', firebaseData.length, 'entries from Firebase');
+
+                    // Sort by timestamp (newest first)
+                    firebaseData.sort((a, b) => b.timestamp - a.timestamp);
+
+                    // Merge with localStorage
+                    const localHistory = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
+
+                    // Create a map to avoid duplicates (use timestamp as key)
+                    const mergedMap = new Map();
+
+                    // Add Firebase data first (it's the source of truth)
+                    firebaseData.forEach(entry => {
+                        mergedMap.set(entry.timestamp, entry);
+                    });
+
+                    // Add local data that's not in Firebase
+                    localHistory.forEach(entry => {
+                        if (!mergedMap.has(entry.timestamp)) {
+                            mergedMap.set(entry.timestamp, entry);
+                        }
+                    });
+
+                    // Convert back to array and sort
+                    const mergedHistory = Array.from(mergedMap.values()).sort((a, b) => b.timestamp - a.timestamp);
+
+                    // Update localStorage with merged data
+                    localStorage.setItem('dailyPlanHistory', JSON.stringify(mergedHistory));
+
+                    // Display merged history
+                    displayDailyPlanHistory(mergedHistory);
+
+                } else {
+                    console.log('ℹ️ No Firebase data found, loading from localStorage');
+                    const localHistory = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
+                    displayDailyPlanHistory(localHistory);
+                }
+
+            } catch (error) {
+                console.error('❌ Failed to load from Firebase:', error);
+                console.error('Error details:', error.message);
+                console.log('⚠️ Falling back to localStorage only');
+
+                // Fallback to localStorage
+                const localHistory = JSON.parse(localStorage.getItem('dailyPlanHistory') || '[]');
+                displayDailyPlanHistory(localHistory);
+            }
+        }
+
+        function displayDailyPlanHistory(history) {
+            const historyList = document.getElementById('daily-plan-history-list');
             if (!historyList) return;
 
             if (history.length === 0) {
@@ -7625,18 +7723,39 @@ Good luck with your trade!`);
                 return;
             }
 
-            historyList.innerHTML = history.map(entry => `
+            historyList.innerHTML = history.map(entry => {
+                const userBadge = entry.user ? `<span style="font-size: 0.75rem; padding: 0.15rem 0.4rem; background: var(--bg-secondary); border-radius: 3px; margin-left: 0.5rem;">${entry.user}</span>` : '';
+                return `
                 <div style="padding: 0.75rem; margin-bottom: 0.75rem; background: var(--bg-primary); border-radius: 4px; border-left: 3px solid var(--accent-blue);">
-                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--accent-blue);">${entry.pair} <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">| ${entry.dateDisplay}</span></div>
+                    <div style="font-weight: 600; margin-bottom: 0.25rem; color: var(--accent-blue);">${entry.pair} <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.85rem;">| ${entry.dateDisplay}</span>${userBadge}</div>
                     <div style="font-size: 0.9rem; line-height: 1.5; color: var(--text-primary);">${entry.plan}</div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
-        function clearDailyPlanHistory() {
-            if (confirm('Are you sure you want to clear all trading plan history?')) {
+        async function clearDailyPlanHistory() {
+            if (confirm('Are you sure you want to clear all trading plan history? This will clear both local and Firebase history.')) {
+                console.log('🗑️ Clearing Daily Trading Plan history...');
+
+                // Clear localStorage
                 localStorage.removeItem('dailyPlanHistory');
-                loadDailyPlanHistory();
+                console.log('✅ localStorage cleared');
+
+                // Clear Firebase
+                try {
+                    console.log('☁️ Clearing Firebase history...');
+                    const dailyPlanRef = db.ref('dailyTradingPlan');
+                    await dailyPlanRef.remove();
+                    console.log('✅ Firebase history cleared successfully!');
+                } catch (error) {
+                    console.error('❌ Failed to clear Firebase history:', error);
+                    console.error('Error details:', error.message);
+                    console.log('⚠️ localStorage cleared but Firebase clear failed');
+                }
+
+                // Reload display
+                await loadDailyPlanHistory();
                 alert('✅ History cleared!');
             }
         }
