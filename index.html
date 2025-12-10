@@ -1995,6 +1995,12 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                min-width: 44px;
+                min-height: 44px;
+                position: relative;
+                z-index: 1001;
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
             }
 
             .mobile-header-title {
@@ -2615,7 +2621,7 @@
 
     <!-- Mobile-Only Header with Hamburger Menu -->
     <div class="mobile-header">
-        <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
             ☰
         </button>
         <div class="mobile-header-title" id="mobilePageTitle">Home</div>
@@ -2641,7 +2647,7 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
     <div class="container">
         <div class="page-wrapper">
@@ -3389,13 +3395,72 @@
 
     <script>
         // ==================== MOBILE MENU SYSTEM ====================
-        function toggleMobileMenu() {
+        function toggleMobileMenu(event) {
+            console.log('🍔 Hamburger menu toggled');
+            console.log('Event type:', event ? event.type : 'programmatic');
+
             const menu = document.getElementById('mobileMenu');
             const overlay = document.getElementById('mobileMenuOverlay');
 
+            if (!menu || !overlay) {
+                console.error('❌ Menu or overlay element not found');
+                return;
+            }
+
+            const isOpening = !menu.classList.contains('open');
+
             menu.classList.toggle('open');
             overlay.classList.toggle('open');
+
+            console.log('Menu state:', isOpening ? 'OPENING' : 'CLOSING');
+            console.log('Menu classes:', menu.className);
+            console.log('Overlay classes:', overlay.className);
+
+            // Prevent event bubbling
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
         }
+
+        // Add event listeners for hamburger button (both click and touch for iOS compatibility)
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const overlay = document.getElementById('mobileMenuOverlay');
+
+            if (hamburgerBtn) {
+                console.log('✓ Hamburger button found, adding event listeners');
+
+                // Add click event
+                hamburgerBtn.addEventListener('click', function(e) {
+                    console.log('👆 Hamburger CLICK event');
+                    toggleMobileMenu(e);
+                });
+
+                // Add touch event for iOS
+                hamburgerBtn.addEventListener('touchstart', function(e) {
+                    console.log('👆 Hamburger TOUCH event');
+                    toggleMobileMenu(e);
+                }, { passive: false });
+
+                console.log('✓ Event listeners added successfully');
+            } else {
+                console.error('❌ Hamburger button not found!');
+            }
+
+            // Add overlay click/touch events
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    console.log('👆 Overlay CLICK event');
+                    toggleMobileMenu(e);
+                });
+
+                overlay.addEventListener('touchstart', function(e) {
+                    console.log('👆 Overlay TOUCH event');
+                    toggleMobileMenu(e);
+                }, { passive: false });
+            }
+        });
 
         function switchMobilePage(pageName) {
             // Update body data attribute to show/hide widgets
