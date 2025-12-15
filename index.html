@@ -1328,6 +1328,104 @@
             font-style: italic;
             padding: 1rem 0;
         }
+        /* Test Outcome Modal Styles */
+        .test-outcome-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        .test-outcome-box {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .test-outcome-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .test-outcome-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .test-outcome-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+        .test-outcome-textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+        }
+        .test-outcome-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        .test-outcome-btn {
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--border-color);
+        }
+        .test-outcome-btn-cancel {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        .test-outcome-btn-cancel:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+        .test-outcome-btn-save {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+        .test-outcome-btn-save:hover {
+            background: #357abd;
+            border-color: #357abd;
+        }
+        .test-item-outcome {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            border-left: 2px solid var(--accent-blue);
+            line-height: 1.4;
+        }
+        .test-outcome-label-display {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
         .prices-header h3 { color: var(--accent-green); }
         .prices-icon { fill: var(--accent-green); }
         .prices-content {
@@ -3387,6 +3485,19 @@
         <div class="news-banner-text" id="newsBannerText"></div>
         <div class="news-banner-alternatives" id="newsBannerAlternatives"></div>
         <div class="news-countdown" id="newsCountdown"></div>
+    </div>
+
+    <!-- Test Outcome Modal -->
+    <div id="testOutcomeModal" class="test-outcome-modal" style="display: none;" onclick="handleModalBackdropClick(event)">
+        <div class="test-outcome-box" onclick="event.stopPropagation()">
+            <div class="test-outcome-title">Test Completed</div>
+            <div class="test-outcome-label">Enter the outcome of this test:</div>
+            <textarea id="testOutcomeTextarea" class="test-outcome-textarea" placeholder="Describe the results of the test..."></textarea>
+            <div class="test-outcome-buttons">
+                <button class="test-outcome-btn test-outcome-btn-cancel" onclick="cancelTestOutcome()">Cancel</button>
+                <button class="test-outcome-btn test-outcome-btn-save" onclick="saveTestOutcome()">Save</button>
+            </div>
+        </div>
     </div>
 
     <!-- Firebase -->
@@ -8995,7 +9106,7 @@ Good luck with your trade!`);
 
                 return `
                     <div class="test-item">
-                        <input type="checkbox" class="test-checkbox" onchange="completeTest('${testId}')">
+                        <input type="checkbox" class="test-checkbox" data-test-id="${testId}" onchange="completeTest('${testId}')">
                         <div class="test-content">
                             <div class="test-item-name">${escapeHtml(test.name)}</div>
                             ${test.notes ? `<div class="test-item-notes">${escapeHtml(test.notes)}</div>` : ''}
@@ -9037,6 +9148,12 @@ Good luck with your trade!`);
                         <div class="test-content">
                             <div class="test-item-name">✓ ${escapeHtml(test.name)}</div>
                             ${test.notes ? `<div class="test-item-notes">${escapeHtml(test.notes)}</div>` : ''}
+                            ${test.outcome ? `
+                                <div class="test-item-outcome">
+                                    <div class="test-outcome-label-display">Outcome:</div>
+                                    ${escapeHtml(test.outcome)}
+                                </div>
+                            ` : ''}
                             <div class="test-item-date">Completed: ${dateCompleted}</div>
                         </div>
                     </div>
@@ -9046,31 +9163,87 @@ Good luck with your trade!`);
             container.innerHTML = testsHtml;
         }
 
+        let currentCompletingTestId = null;
+
         function completeTest(testId) {
             console.log('Completing test:', testId);
 
+            // Store the test ID for later use
+            currentCompletingTestId = testId;
+
+            // Clear any previous outcome text
+            document.getElementById('testOutcomeTextarea').value = '';
+
+            // Show the outcome modal
+            document.getElementById('testOutcomeModal').style.display = 'flex';
+        }
+
+        function handleModalBackdropClick(event) {
+            // Only close if clicking the backdrop, not the modal content
+            if (event.target.id === 'testOutcomeModal') {
+                cancelTestOutcome();
+            }
+        }
+
+        function cancelTestOutcome() {
+            // Hide the modal
+            document.getElementById('testOutcomeModal').style.display = 'none';
+
+            // Uncheck the checkbox
+            if (currentCompletingTestId) {
+                const checkbox = document.querySelector(`input[data-test-id="${currentCompletingTestId}"]`);
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+            }
+
+            // Clear the current test ID
+            currentCompletingTestId = null;
+        }
+
+        function saveTestOutcome() {
+            const outcome = document.getElementById('testOutcomeTextarea').value.trim();
+
+            if (!outcome) {
+                alert('Please enter an outcome for this test');
+                return;
+            }
+
+            if (!currentCompletingTestId) {
+                console.error('No test ID stored');
+                return;
+            }
+
             // Get the test data from active
-            activeTestsRef.child(testId).once('value', (snapshot) => {
+            activeTestsRef.child(currentCompletingTestId).once('value', (snapshot) => {
                 const testData = snapshot.val();
                 if (!testData) {
                     console.error('Test not found');
                     return;
                 }
 
-                // Add completion date
+                // Add completion date and outcome
                 testData.dateCompleted = new Date().toISOString();
+                testData.outcome = outcome;
 
                 // Move to completed
-                completedTestsRef.child(testId).set(testData)
+                completedTestsRef.child(currentCompletingTestId).set(testData)
                     .then(() => {
                         // Remove from active
-                        return activeTestsRef.child(testId).remove();
+                        return activeTestsRef.child(currentCompletingTestId).remove();
                     })
                     .then(() => {
-                        console.log('Test completed successfully');
+                        console.log('Test completed successfully with outcome');
+
+                        // Hide the modal
+                        document.getElementById('testOutcomeModal').style.display = 'none';
+
+                        // Clear the current test ID
+                        currentCompletingTestId = null;
                     })
                     .catch((error) => {
                         console.error('Failed to complete test:', error);
+                        alert('Failed to complete test. Please try again.');
                     });
             });
         }
