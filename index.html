@@ -148,6 +148,279 @@
         }
         .settings-toggle:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.05); }
 
+        /* Session Countdown Timer */
+        .session-countdown {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            min-width: 200px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-family: 'Inter', monospace;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .session-countdown.collapsed {
+            padding: 0.5rem 0.75rem;
+            min-width: auto;
+        }
+        .session-countdown.collapsed .countdown-content {
+            display: none;
+        }
+        .session-countdown.collapsed .countdown-header {
+            margin-bottom: 0;
+        }
+        .session-countdown.user-hidden {
+            display: none !important;
+        }
+        .countdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .countdown-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .countdown-toggle-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0;
+            transition: transform 0.3s ease;
+        }
+        .countdown-toggle-btn:hover {
+            color: #e2e8f0;
+        }
+        .session-countdown.collapsed .countdown-toggle-btn {
+            transform: rotate(180deg);
+        }
+        .countdown-content {
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding-top: 0.75rem;
+        }
+        .countdown-timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            text-align: center;
+            margin-bottom: 0.75rem;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.05em;
+        }
+        .countdown-timer.warning {
+            color: #f59e0b;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .countdown-timer.critical {
+            color: #ef4444;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .countdown-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+        }
+        .countdown-info-row {
+            display: flex;
+            justify-content: space-between;
+            color: #cbd5e1;
+        }
+        .countdown-info-label {
+            color: #94a3b8;
+        }
+        .countdown-info-value {
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+        .countdown-separator {
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            margin: 0.5rem 0;
+        }
+        [data-theme="dark"] .session-countdown {
+            background: rgba(30, 41, 59, 0.98);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+        .session-countdown:not(.collapsed) {
+            cursor: pointer;
+        }
+        .session-countdown:not(.collapsed):hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+        .countdown-edit-icon {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            margin-left: 0.5rem;
+            transition: opacity 0.3s ease;
+        }
+        .session-countdown:hover .countdown-edit-icon {
+            opacity: 1;
+        }
+
+        /* Session Time Edit Modal */
+        .session-time-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease;
+        }
+        .session-time-modal-overlay.show {
+            display: flex;
+        }
+        .session-time-modal {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .modal-close-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+        .modal-field {
+            margin-bottom: 1.25rem;
+        }
+        .modal-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+            font-family: 'Inter', monospace;
+        }
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--bg-primary);
+        }
+        .modal-info {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .modal-info-icon {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        .modal-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-btn-cancel {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .modal-btn-cancel:hover {
+            background: var(--bg-tertiary);
+        }
+        .modal-btn-save {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+        }
+        .modal-btn-save:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
         /* Settings Dropdown Panel */
         .settings-panel {
             position: fixed;
@@ -2354,6 +2627,27 @@
                 min-height: 44px;
                 padding: 0.75rem 1rem;
             }
+
+            /* Session Countdown - Mobile */
+            .session-countdown {
+                top: 70px;
+                left: 0.5rem;
+                min-width: auto;
+                max-width: calc(100vw - 1rem);
+                padding: 0.75rem;
+            }
+            .session-countdown.collapsed {
+                padding: 0.5rem;
+            }
+            .countdown-title {
+                font-size: 0.8rem;
+            }
+            .countdown-timer {
+                font-size: 1.2rem;
+            }
+            .countdown-info {
+                font-size: 0.75rem;
+            }
         }
 
         /* Desktop-only: Hide mobile menu */
@@ -2371,6 +2665,62 @@
     <button class="settings-toggle" onclick="toggleSettingsPanel()" aria-label="Open Settings" title="Settings">
         ⚙️
     </button>
+
+    <!-- Session Countdown Timer -->
+    <div class="session-countdown" id="sessionCountdown" onclick="openSessionTimeModal(event)">
+        <div class="countdown-header" onclick="toggleCountdown(event)">
+            <div class="countdown-title">
+                <span>📅</span>
+                <span>Next Session</span>
+                <span class="countdown-edit-icon">✏️</span>
+            </div>
+            <button class="countdown-toggle-btn" onclick="toggleCountdown(event)" aria-label="Toggle countdown">▼</button>
+        </div>
+        <div class="countdown-content">
+            <div class="countdown-timer" id="countdownTimer">--:--:--</div>
+            <div class="countdown-info">
+                <div class="countdown-info-row">
+                    <span class="countdown-info-label">CET:</span>
+                    <span class="countdown-info-value" id="sessionTimeCET">--:--</span>
+                </div>
+                <div class="countdown-info-row">
+                    <span class="countdown-info-label">Local:</span>
+                    <span class="countdown-info-value" id="sessionTimeLocal">--:--</span>
+                </div>
+                <div class="countdown-separator"></div>
+                <div class="countdown-info-row">
+                    <span class="countdown-info-label">Date:</span>
+                    <span class="countdown-info-value" id="sessionDate">--</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Session Time Edit Modal -->
+    <div class="session-time-modal-overlay" id="sessionTimeModal">
+        <div class="session-time-modal">
+            <div class="modal-header">
+                <div class="modal-title">⏱️ Edit Session Time</div>
+                <button class="modal-close-btn" onclick="closeSessionTimeModal()" aria-label="Close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-field">
+                    <label class="modal-label">Session Time</label>
+                    <input type="time" class="modal-input" id="modalSessionTimeInput" value="08:45">
+                </div>
+                <div class="modal-field">
+                    <div class="modal-info">
+                        <span class="modal-info-icon">🌍</span>
+                        <span>Timezone: <strong>CET (UTC+1)</strong></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" onclick="closeSessionTimeModal()">Cancel</button>
+                <button class="modal-btn modal-btn-save" onclick="saveSessionTime()">Save</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Settings Panel (Dropdown) -->
     <div class="settings-panel" id="settingsPanel">
@@ -2706,6 +3056,32 @@
                     <button class="settings-btn settings-btn-secondary" onclick="resetStartingBalance()" style="width: 100%;">
                         🔄 Reset Starting Balance
                     </button>
+                </div>
+                </div>
+            </div>
+
+            <!-- Session Countdown Timer Settings -->
+            <div class="settings-section">
+                <div class="settings-section-header" onclick="toggleSettingsCategory(this)">
+                    <span class="settings-section-icon">⏱️</span>
+                    <span>Session Countdown Timer</span>
+                    <span class="settings-section-arrow collapsed">▶</span>
+                </div>
+
+                <div class="settings-section-body collapsed">
+                <div class="settings-field">
+                    <label class="settings-label">
+                        <input type="checkbox" id="setting-countdown-enabled" style="margin-right: 0.5rem;">
+                        Enable Countdown Timer
+                    </label>
+                </div>
+
+                <div class="settings-field">
+                    <label class="settings-label">Session Time (CET)</label>
+                    <input type="time" class="settings-input" id="setting-session-time" value="08:45">
+                    <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                        Time in Central European Time (CET)
+                    </div>
                 </div>
                 </div>
             </div>
@@ -3810,7 +4186,9 @@
             telegramToken: '',
             telegramChatId: '',
             enableNotifications: true,
-            startingBalance: 10000
+            startingBalance: 10000,
+            countdownEnabled: true,
+            sessionTime: '08:45'
         };
 
         function toggleSettingsPanel() {
@@ -3876,6 +4254,8 @@
             document.getElementById('setting-telegram-chat-id').value = settings.telegramChatId || '';
             document.getElementById('setting-enable-notifications').checked = settings.enableNotifications;
             document.getElementById('setting-starting-balance').value = settings.startingBalance;
+            document.getElementById('setting-countdown-enabled').checked = settings.countdownEnabled !== undefined ? settings.countdownEnabled : true;
+            document.getElementById('setting-session-time').value = settings.sessionTime || '08:45';
 
             return settings;
         }
@@ -3899,11 +4279,19 @@
                 telegramToken: document.getElementById('setting-telegram-token').value,
                 telegramChatId: document.getElementById('setting-telegram-chat-id').value,
                 enableNotifications: document.getElementById('setting-enable-notifications').checked,
-                startingBalance: parseInt(document.getElementById('setting-starting-balance').value)
+                startingBalance: parseInt(document.getElementById('setting-starting-balance').value),
+                countdownEnabled: document.getElementById('setting-countdown-enabled').checked,
+                sessionTime: document.getElementById('setting-session-time').value
             };
 
             // Save to localStorage
             localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+
+            // Update countdown timer
+            if (typeof updateCountdownVisibility === 'function') {
+                updateCountdownVisibility();
+                initCountdownTimer();
+            }
 
             // Update Firebase starting balance
             db.ref('startingBalance').set(settings.startingBalance);
@@ -3931,6 +4319,404 @@
                 loadSettings();
                 alert('Settings reset to defaults!');
             }
+        }
+
+        // ==================== SESSION COUNTDOWN TIMER ====================
+
+        let countdownInterval = null;
+        let countdownUpdateCount = 0;
+
+        function toggleCountdown(event) {
+            if (event) {
+                event.stopPropagation(); // Prevent modal from opening
+            }
+            const countdown = document.getElementById('sessionCountdown');
+            countdown.classList.toggle('collapsed');
+        }
+
+        function openSessionTimeModal(event) {
+            // Don't open if clicking on the collapse button or header
+            if (event && (
+                event.target.classList.contains('countdown-toggle-btn') ||
+                event.target.closest('.countdown-header')
+            )) {
+                return;
+            }
+
+            // Don't open if timer is collapsed
+            const countdown = document.getElementById('sessionCountdown');
+            if (countdown.classList.contains('collapsed')) {
+                return;
+            }
+
+            console.log('Opening session time edit modal...');
+
+            // Load current session time into modal
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : defaultSettings;
+            const currentTime = settings.sessionTime || '08:45';
+
+            const modalInput = document.getElementById('modalSessionTimeInput');
+            if (modalInput) {
+                modalInput.value = currentTime;
+            }
+
+            // Show modal
+            const modal = document.getElementById('sessionTimeModal');
+            if (modal) {
+                modal.classList.add('show');
+            }
+        }
+
+        function closeSessionTimeModal() {
+            console.log('Closing session time modal...');
+            const modal = document.getElementById('sessionTimeModal');
+            if (modal) {
+                modal.classList.remove('show');
+            }
+        }
+
+        function saveSessionTime() {
+            console.log('Saving session time...');
+
+            const modalInput = document.getElementById('modalSessionTimeInput');
+            if (!modalInput) {
+                console.error('Modal input not found!');
+                return;
+            }
+
+            const newTime = modalInput.value;
+            if (!newTime || !newTime.match(/^\d{2}:\d{2}$/)) {
+                alert('Please enter a valid time in HH:MM format');
+                return;
+            }
+
+            console.log('New session time:', newTime);
+
+            // Load current settings
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : {...defaultSettings};
+
+            // Update session time
+            settings.sessionTime = newTime;
+
+            // Save to localStorage
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            console.log('Session time saved to localStorage');
+
+            // Update the settings panel input if it exists
+            const settingsInput = document.getElementById('setting-session-time');
+            if (settingsInput) {
+                settingsInput.value = newTime;
+            }
+
+            // Restart countdown timer with new time
+            countdownUpdateCount = 0; // Reset to show logs for new time
+            initCountdownTimer();
+            console.log('Countdown timer restarted with new time');
+
+            // Close modal
+            closeSessionTimeModal();
+
+            // Show success message
+            const countdown = document.getElementById('sessionCountdown');
+            if (countdown) {
+                countdown.style.borderColor = 'rgba(16, 185, 129, 0.6)';
+                setTimeout(() => {
+                    countdown.style.borderColor = '';
+                }, 1000);
+            }
+
+            console.log('✓ Session time updated successfully!');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('sessionTimeModal');
+            if (modal && modal.classList.contains('show') && event.target === modal) {
+                closeSessionTimeModal();
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('sessionTimeModal');
+                if (modal && modal.classList.contains('show')) {
+                    closeSessionTimeModal();
+                }
+            }
+        });
+
+        function updateCountdownVisibility() {
+            console.log('=== UPDATE COUNTDOWN VISIBILITY ===');
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : defaultSettings;
+
+            // Default to true if not set (for backward compatibility with old localStorage)
+            const countdownEnabled = settings.countdownEnabled !== undefined ? settings.countdownEnabled : true;
+
+            console.log('Countdown Enabled Setting:', countdownEnabled);
+            console.log('Full Settings:', settings);
+
+            const countdown = document.getElementById('sessionCountdown');
+            if (countdown) {
+                if (countdownEnabled) {
+                    countdown.classList.remove('user-hidden');
+                    console.log('✓ Timer SHOWN - user-hidden class removed');
+                } else {
+                    countdown.classList.add('user-hidden');
+                    console.log('✗ Timer HIDDEN - user-hidden class added');
+                }
+                console.log('Timer element computed display:', window.getComputedStyle(countdown).display);
+                console.log('Timer element visibility:', window.getComputedStyle(countdown).visibility);
+            } else {
+                console.error('✗ Timer element NOT FOUND in DOM!');
+            }
+            console.log('=== END UPDATE COUNTDOWN VISIBILITY ===');
+        }
+
+        function getNextSessionTime(logDetails = false) {
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : defaultSettings;
+            const [sessionHours, sessionMinutes] = (settings.sessionTime || '08:45').split(':').map(Number);
+
+            if (logDetails) {
+                console.log('📅 Getting next session time...');
+                console.log('Session time setting:', settings.sessionTime);
+                console.log('Parsed hours:', sessionHours, 'minutes:', sessionMinutes);
+            }
+
+            // Get current time
+            const now = new Date();
+
+            if (logDetails) {
+                console.log('Current local time:', now.toLocaleString());
+                console.log('Current UTC time:', now.toUTCString());
+            }
+
+            // CET is UTC+1 (standard time) or UTC+2 (daylight saving time)
+            // For simplicity, we'll use UTC+1 (CET standard time)
+            // To get CET time, we need to convert from UTC
+            const cetOffsetHours = 1; // CET = UTC+1
+
+            // Create a date object for today at the session time in CET
+            // We'll work in UTC and add the CET offset
+            const todayUTC = new Date(Date.UTC(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate(),
+                sessionHours - cetOffsetHours, // Convert CET to UTC
+                sessionMinutes,
+                0,
+                0
+            ));
+
+            if (logDetails) {
+                console.log('Today\'s session time (UTC):', todayUTC.toUTCString());
+                console.log('Today\'s session time (local):', todayUTC.toLocaleString());
+            }
+
+            // Check if session time has already passed today
+            let sessionTime;
+            if (now >= todayUTC) {
+                // Session time passed, use tomorrow
+                sessionTime = new Date(todayUTC);
+                sessionTime.setUTCDate(sessionTime.getUTCDate() + 1);
+                if (logDetails) console.log('⏭️ Session time passed today, using tomorrow');
+            } else {
+                // Session time is still ahead today
+                sessionTime = todayUTC;
+                if (logDetails) console.log('✓ Session time is later today');
+            }
+
+            if (logDetails) {
+                console.log('Next session time (UTC):', sessionTime.toUTCString());
+                console.log('Next session time (local):', sessionTime.toLocaleString());
+            }
+
+            return sessionTime;
+        }
+
+        function formatTime(hours, minutes) {
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        }
+
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+        }
+
+        function updateCountdownTimer() {
+            countdownUpdateCount++;
+            const logDebug = countdownUpdateCount <= 3; // Only log first 3 updates
+
+            if (logDebug) console.log(`=== UPDATE COUNTDOWN TIMER (update #${countdownUpdateCount}) ===`);
+
+            const saved = localStorage.getItem(SETTINGS_KEY);
+            const settings = saved ? JSON.parse(saved) : defaultSettings;
+
+            // Default to true if not set
+            const countdownEnabled = settings.countdownEnabled !== undefined ? settings.countdownEnabled : true;
+
+            if (!countdownEnabled) {
+                if (logDebug) console.log('Timer disabled in settings, skipping update');
+                return;
+            }
+
+            const now = new Date();
+            const sessionTime = getNextSessionTime(logDebug); // Pass logDebug to control logging
+            const diff = sessionTime - now;
+
+            if (logDebug) {
+                console.log('⏱️ Countdown calculation:');
+                console.log('  Current time:', now.toLocaleString());
+                console.log('  Next session time:', sessionTime.toLocaleString());
+                console.log('  Time difference (ms):', diff);
+                console.log('  Time difference (minutes):', Math.floor(diff / (1000 * 60)));
+            }
+
+            // Calculate time remaining
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Update timer display
+            const timerElement = document.getElementById('countdownTimer');
+            if (!timerElement) {
+                console.error('❌ countdownTimer element not found!');
+                return;
+            }
+
+            const timeString = `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+            timerElement.textContent = timeString;
+
+            if (logDebug) {
+                console.log('✓ Timer display updated:', timeString);
+                console.log('  Hours:', hours, 'Minutes:', minutes, 'Seconds:', seconds);
+            }
+
+            // Update timer color based on time remaining
+            timerElement.classList.remove('warning', 'critical');
+            if (hours < 1 && minutes < 30) {
+                timerElement.classList.add('critical');
+                if (logDebug) console.log('Timer state: CRITICAL (< 30 min)');
+            } else if (hours < 1) {
+                timerElement.classList.add('warning');
+                if (logDebug) console.log('Timer state: WARNING (< 1 hour)');
+            } else {
+                if (logDebug) console.log('Timer state: NORMAL');
+            }
+
+            // Update session time displays
+            // CET display - show the configured session time (e.g., 08:45 CET)
+            const [sessionHoursCET, sessionMinutesCET] = (settings.sessionTime || '08:45').split(':').map(Number);
+            const cetDisplay = formatTime(sessionHoursCET, sessionMinutesCET);
+            const cetElement = document.getElementById('sessionTimeCET');
+            if (cetElement) {
+                cetElement.textContent = cetDisplay;
+            } else {
+                console.error('❌ sessionTimeCET element not found!');
+            }
+
+            // Local time display - sessionTime is already in local timezone
+            const localHours = sessionTime.getHours();
+            const localMinutes = sessionTime.getMinutes();
+            const localDisplay = formatTime(localHours, localMinutes);
+            const localElement = document.getElementById('sessionTimeLocal');
+            if (localElement) {
+                localElement.textContent = localDisplay;
+            } else {
+                console.error('❌ sessionTimeLocal element not found!');
+            }
+
+            // Update date - show the date of the next session
+            const dateDisplay = formatDate(sessionTime);
+            const dateElement = document.getElementById('sessionDate');
+            if (dateElement) {
+                dateElement.textContent = dateDisplay;
+            } else {
+                console.error('❌ sessionDate element not found!');
+            }
+
+            if (logDebug) {
+                console.log('📊 Display values:');
+                console.log('  CET Time:', cetDisplay);
+                console.log('  Local Time:', localDisplay);
+                console.log('  Date:', dateDisplay);
+                console.log('  Countdown:', timeString);
+            }
+
+            // Reset to next day when countdown reaches 0
+            if (diff <= 0) {
+                if (logDebug) console.log('Countdown reached 0, resetting to next day...');
+                initCountdownTimer();
+            }
+
+            if (logDebug) {
+                const countdown = document.getElementById('sessionCountdown');
+                if (countdown) {
+                    console.log('✓ Countdown element visible:', window.getComputedStyle(countdown).display !== 'none');
+                    console.log('✓ Countdown element classes:', countdown.className);
+                }
+                console.log('=== END UPDATE COUNTDOWN TIMER ===');
+            }
+        }
+
+        function initCountdownTimer() {
+            console.log('=== INIT COUNTDOWN TIMER ===');
+
+            // Clear existing interval
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                console.log('Cleared existing interval');
+            }
+
+            // Update immediately
+            console.log('Calling updateCountdownTimer immediately...');
+            updateCountdownTimer();
+
+            // Update every second
+            countdownInterval = setInterval(updateCountdownTimer, 1000);
+            console.log('✓ Countdown interval started (updates every 1s)');
+            console.log('=== END INIT COUNTDOWN TIMER ===');
+        }
+
+        // Protect timer from being hidden by other scripts
+        function protectCountdownTimer() {
+            const countdown = document.getElementById('sessionCountdown');
+            if (!countdown) {
+                console.error('Cannot protect timer - element not found');
+                return;
+            }
+
+            console.log('Setting up MutationObserver to protect timer visibility...');
+
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                        const saved = localStorage.getItem(SETTINGS_KEY);
+                        const settings = saved ? JSON.parse(saved) : defaultSettings;
+                        const countdownEnabled = settings.countdownEnabled !== undefined ? settings.countdownEnabled : true;
+
+                        if (countdownEnabled && !countdown.classList.contains('user-hidden')) {
+                            // If timer is enabled but something is trying to hide it
+                            const currentDisplay = window.getComputedStyle(countdown).display;
+                            if (currentDisplay === 'none' && !countdown.style.display.includes('!important')) {
+                                console.warn('⚠️ Timer visibility was being overridden! Restoring...');
+                                countdown.style.cssText = 'display: block !important;';
+                            }
+                        }
+                    }
+                });
+            });
+
+            observer.observe(countdown, {
+                attributes: true,
+                attributeFilter: ['style', 'class']
+            });
+
+            console.log('✓ Timer protection active');
         }
 
         // ==================== TRANSACTION SYSTEM ====================
@@ -4416,6 +5202,26 @@
             loadSettings();
             loadForexPrices();
             setInterval(loadForexPrices, 3600000);
+
+            // Initialize countdown timer
+            console.log('=== INITIALIZING SESSION COUNTDOWN TIMER ===');
+            const countdownElement = document.getElementById('sessionCountdown');
+            if (countdownElement) {
+                console.log('✓ Timer element found in DOM');
+                console.log('Timer element tag:', countdownElement.tagName);
+                console.log('Timer element classes:', countdownElement.className);
+                console.log('Timer initial display:', window.getComputedStyle(countdownElement).display);
+                console.log('Timer initial visibility:', window.getComputedStyle(countdownElement).visibility);
+                console.log('Timer z-index:', window.getComputedStyle(countdownElement).zIndex);
+            } else {
+                console.error('✗ CRITICAL: Timer element NOT FOUND in DOM!');
+            }
+
+            updateCountdownVisibility();
+            initCountdownTimer();
+            protectCountdownTimer();
+            console.log('✓ Session countdown timer initialized');
+            console.log('=== END INITIALIZATION ===');
 
             // Test Firebase connection
             db.ref('.info/connected').on('value', (snapshot) => {
